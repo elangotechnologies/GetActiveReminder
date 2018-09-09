@@ -14,3 +14,4 @@ D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\De
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\Debug\NLog.dll
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\Debug\NLog.xml
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\TakeABreakReminder.CustomDialog.resources
+D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\TakeABreakReminder.vbprojResolveAssemblyReference.cache
