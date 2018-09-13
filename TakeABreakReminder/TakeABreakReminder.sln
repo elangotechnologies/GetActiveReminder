@@ -7,6 +7,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TakeABreakReminder", "TakeA
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{C4B6A050-E32D-4A5B-BBE7-397A65EA9F48}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ElaColorChooser", "..\..\ElaColorPickerLibAndDemo\ColorChooserDemo\ElaColorChooser\ElaColorChooser.vbproj", "{77BA7106-C291-4958-9DD8-1B8EF7553753}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{C163591D-5F33-4741-9283-E0CA7CF051CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4B6A050-E32D-4A5B-BBE7-397A65EA9F48}.Debug|Any CPU.ActiveCfg = Debug
 		{C4B6A050-E32D-4A5B-BBE7-397A65EA9F48}.Release|Any CPU.ActiveCfg = Release
+		{77BA7106-C291-4958-9DD8-1B8EF7553753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77BA7106-C291-4958-9DD8-1B8EF7553753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77BA7106-C291-4958-9DD8-1B8EF7553753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77BA7106-C291-4958-9DD8-1B8EF7553753}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

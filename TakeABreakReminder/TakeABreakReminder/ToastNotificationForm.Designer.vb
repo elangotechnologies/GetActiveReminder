@@ -45,11 +45,13 @@ Partial Class ToastNotificationForm
         '
         'lblMessage
         '
+        Me.lblMessage.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lblMessage.Font = New System.Drawing.Font("Segoe UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblMessage.ForeColor = System.Drawing.Color.White
-        Me.lblMessage.Location = New System.Drawing.Point(12, 13)
+        Me.lblMessage.Location = New System.Drawing.Point(10, 10)
+        Me.lblMessage.Margin = New System.Windows.Forms.Padding(3)
         Me.lblMessage.Name = "lblMessage"
-        Me.lblMessage.Size = New System.Drawing.Size(529, 42)
+        Me.lblMessage.Size = New System.Drawing.Size(540, 44)
         Me.lblMessage.TabIndex = 1
         Me.lblMessage.Text = "Message"
         Me.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -66,8 +68,10 @@ Partial Class ToastNotificationForm
         Me.ControlBox = False
         Me.Controls.Add(Me.lblMessage)
         Me.Controls.Add(Me.LblClose)
+        Me.ForeColor = System.Drawing.Color.White
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "ToastNotificationForm"
+        Me.Padding = New System.Windows.Forms.Padding(10, 10, 30, 10)
         Me.RightToLeftLayout = True
         Me.ShowInTaskbar = False
         Me.Text = "ToastNotificationForm"

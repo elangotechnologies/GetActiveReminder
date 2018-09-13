@@ -2,45 +2,41 @@
 
 Public Class ToastNotificationForm
 
-    Public gNotificationDuration As Integer = 6000
-    Public gNotificationMessage As String = ""
-    Public gNotificationWindowSize As Size = Me.Size
     Dim log As Logger = LogManager.GetCurrentClassLogger()
 
     Private Sub ToastNotificationForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         setProperties()
         setTimerToClose()
-        setContent()
+        playNotificationSound()
+    End Sub
+
+    Private Sub playNotificationSound()
+        My.Computer.Audio.Play(My.Resources.ResourceManager.GetObject(My.Settings.notification_sound), AudioPlayMode.Background)
     End Sub
 
     Private Sub setProperties()
-        Me.Size = gNotificationWindowSize
+        Me.Size = New Size(My.Settings.notification_width, My.Settings.notification_height)
         Me.StartPosition = FormStartPosition.Manual
-        Me.Location = New Point(Screen.PrimaryScreen.Bounds.Width - Me.Width - 10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
+        updateLocation()
         Me.TopMost = True
+        LblClose.Location = New Point(Me.Width - LblClose.Width, 0)
+        lblMessage.Text = My.Settings.notification_message
+        lblMessage.ForeColor = My.Settings.notification_forecolor
+        Me.BackColor = My.Settings.notification_backcolor
+        lblMessage.Font = My.Settings.notification_font
+
+    End Sub
+
+    Public Sub updateLocation()
+        Me.Location = New Point(Screen.PrimaryScreen.Bounds.Width - Me.Width - 10, Screen.PrimaryScreen.WorkingArea.Height - Me.Height - 10)
     End Sub
 
     Private Sub setTimerToClose()
-        Dim fadeTriggerTime As Integer = gNotificationDuration * 40 / 100
-        timerClose.Interval = gNotificationDuration - fadeTriggerTime
+        Dim notificationDuration As Integer = My.Settings.notification_duration * 1000
+        Dim fadeTriggerTime As Integer = notificationDuration * 40 / 100
+        timerClose.Interval = notificationDuration - fadeTriggerTime
         timerFade.Interval = fadeTriggerTime / 100
-        log.Debug("timerClose.Interval: " + timerClose.Interval.ToString + ", timerFade.Interval: " + timerFade.Interval.ToString)
         timerClose.Start()
-    End Sub
-
-    Private Sub setContent()
-        adjustCloseButton()
-        attachMessage(gNotificationMessage)
-    End Sub
-
-    Private Sub adjustCloseButton()
-        LblClose.Location = New Point(Me.Width - LblClose.Width, 0)
-    End Sub
-
-    Private Sub attachMessage(message As String)
-        lblMessage.Location = New Point(2, 10)
-        lblMessage.Size = New Size(Me.Width - LblClose.Width, Me.Height - 20)
-        lblMessage.Text = message
     End Sub
 
     Private Sub ToastNotificationForm_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
@@ -49,7 +45,6 @@ Public Class ToastNotificationForm
 
     Private Sub timerClose_Tick(sender As Object, e As EventArgs) Handles timerClose.Tick
         timerClose.Stop()
-        log.Debug("timerClose_Tick")
         timerFade.Start()
     End Sub
 
@@ -59,7 +54,6 @@ Public Class ToastNotificationForm
     End Sub
 
     Private Sub timerFade_Tick(sender As Object, e As EventArgs) Handles timerFade.Tick
-        log.Debug("timerFade_Tick Me.Opacity: " + Me.Opacity.ToString)
         Me.Opacity = Me.Opacity - 0.03
         If Me.Opacity <= 0 Then
             timerFade.Stop()

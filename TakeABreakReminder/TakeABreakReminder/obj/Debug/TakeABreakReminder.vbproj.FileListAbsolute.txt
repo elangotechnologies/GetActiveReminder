@@ -15,3 +15,6 @@ D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\De
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\Debug\NLog.xml
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\TakeABreakReminder.CustomDialog.resources
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\TakeABreakReminder.vbprojResolveAssemblyReference.cache
+D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\Debug\ElaColorChooser.dll
+D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\Debug\ElaColorChooser.pdb
+D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\Debug\ElaColorChooser.xml

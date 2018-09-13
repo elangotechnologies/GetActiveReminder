@@ -14,5 +14,26 @@
     <Setting Name="notification_duration" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
+    <Setting Name="notification_message" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Hey You, Please Take a Break For 2 Mins! Continuous Sitting Causes BACK PAIN, HEART DISEASE and KIDNEY FAILURE. Stand up and Walk 10 Steps, Now!!</Value>
+    </Setting>
+    <Setting Name="notification_font" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Segoe UI, 14.25pt, style=Bold</Value>
+    </Setting>
+    <Setting Name="notification_backcolor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">DeepPink</Value>
+    </Setting>
+    <Setting Name="notification_forecolor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="notification_sound" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="notification_width" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">750</Value>
+    </Setting>
+    <Setting Name="notification_height" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

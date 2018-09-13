@@ -101,6 +101,91 @@ Namespace My
                 Me("notification_duration") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Hey You, Please Take a Break For 2 Mins! Continuous Sitting Causes BACK PAIN, HEA"& _ 
+            "RT DISEASE and KIDNEY FAILURE. Stand up and Walk 10 Steps, Now!!")>  _
+        Public Property notification_message() As String
+            Get
+                Return CType(Me("notification_message"),String)
+            End Get
+            Set
+                Me("notification_message") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Segoe UI, 14.25pt, style=Bold")>  _
+        Public Property notification_font() As Global.System.Drawing.Font
+            Get
+                Return CType(Me("notification_font"),Global.System.Drawing.Font)
+            End Get
+            Set
+                Me("notification_font") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("DeepPink")>  _
+        Public Property notification_backcolor() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("notification_backcolor"),Global.System.Drawing.Color)
+            End Get
+            Set
+                Me("notification_backcolor") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("White")>  _
+        Public Property notification_forecolor() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("notification_forecolor"),Global.System.Drawing.Color)
+            End Get
+            Set
+                Me("notification_forecolor") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property notification_sound() As String
+            Get
+                Return CType(Me("notification_sound"),String)
+            End Get
+            Set
+                Me("notification_sound") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("750")>  _
+        Public Property notification_width() As Integer
+            Get
+                Return CType(Me("notification_width"),Integer)
+            End Get
+            Set
+                Me("notification_width") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("80")>  _
+        Public Property notification_height() As Integer
+            Get
+                Return CType(Me("notification_height"),Integer)
+            End Get
+            Set
+                Me("notification_height") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

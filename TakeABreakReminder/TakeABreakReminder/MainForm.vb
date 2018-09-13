@@ -1,12 +1,16 @@
-﻿Imports NLog
+﻿Imports System.ComponentModel
+Imports System.IO
+Imports Microsoft.VisualBasic.Devices
+Imports NLog
 
 Public Class FrmMain
-    Dim log As Logger = LogManager.GetCurrentClassLogger()
+    Shared log As Logger = LogManager.GetCurrentClassLogger()
     Const HOURS_MILLISECONDS_CONVERTER As Integer = 60 * 60 * 1000
     Const MINUTES_MILLISECONDS_CONVERTER As Integer = 60 * 1000
     Const SECONDS_MILLISECONDS_CONVERTER As Integer = 1000
 
-    Dim gTrackerBarDataKeepers As Dictionary(Of TrackBar, TrackerBarDataKeeper)
+    'Dim gTrackerBarDataKeepers As Dictionary(Of TrackBar, TrackerBarDataKeeper)
+    Dim gSystemSoundMapper As Dictionary(Of Integer, System.Media.SystemSound)
     Dim gRemainingIntervalMilliseconds As Integer = 0
     Dim gIntervalMilliseconds As Integer = 0
     Dim gIsExitClicked As Boolean = False
@@ -23,24 +27,67 @@ Public Class FrmMain
     End Class
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        gTrackerBarDataKeepers = New Dictionary(Of TrackBar, TrackerBarDataKeeper) From
-        {{trackBarHours, New TrackerBarDataKeeper(lblHours, "hours")}, {trackBarMinutes, New TrackerBarDataKeeper(lblMinutes, "minutes")}, {trackBarSeconds, New TrackerBarDataKeeper(lblSeconds, "seconds")}}
+        initReminderDuration()
+        initNotificationData()
+        subscribeForSettingsDataChange()
+    End Sub
 
-        For Each trackerBarDataKeeperPair As KeyValuePair(Of TrackBar, TrackerBarDataKeeper) In gTrackerBarDataKeepers
-            Dim trackBar As TrackBar = trackerBarDataKeeperPair.Key
-            Dim trackerBarDataKeeper As TrackerBarDataKeeper = trackerBarDataKeeperPair.Value
-            trackBar.Value = My.Settings.Item(trackerBarDataKeeperPair.Value.persistentKey)
-        Next
+    Private Sub subscribeForSettingsDataChange()
+        AddHandler My.Settings.PropertyChanged, AddressOf Settings_DataChanged
+    End Sub
 
+    Private Sub Settings_DataChanged(ByVal sender As Object, ByVal e As PropertyChangedEventArgs)
+        Dim settingName As String = e.PropertyName
 
+        Select Case settingName
+            Case "notification_duration"
+                'Only required when the notification form loaded. The setting value accessed there itself.
+            Case "notification_message"
+                ToastNotificationForm.lblMessage.Text = My.Settings.notification_message
+            Case "notification_font"
+                ToastNotificationForm.lblMessage.Font = My.Settings.notification_font
+            Case "notification_backcolor"
+                ToastNotificationForm.BackColor = My.Settings.notification_backcolor
+            Case "notification_forecolor"
+                ToastNotificationForm.lblMessage.ForeColor = My.Settings.notification_forecolor
+            Case "notification_sound"
+                'Only required when the notification form loaded. The setting value accessed there itself.
+            Case "notification_width", "notification_height"
+                ToastNotificationForm.Size = New Size(My.Settings.notification_width, My.Settings.notification_height)
+                ToastNotificationForm.updateLocation()
+        End Select
+    End Sub
 
+    Private Sub initReminderDuration()
+        numHours.Value = My.Settings.hours
+        numMinutes.Value = My.Settings.minutes
+        numSeconds.Value = My.Settings.seconds
+    End Sub
+
+    Private Sub initNotificationData()
         loadNotificationDurationList()
+        loadNotificationSoundList()
 
+        txtNotificationMessage.Text = My.Settings.notification_message
+        colorPickerForeColor.Color = My.Settings.notification_forecolor
+        colorPickerBackColor.Color = My.Settings.notification_backcolor
+        txtNotificaitonFont.Text = getFontInDisplayFormat(My.Settings.notification_font)
+
+        numNotificationWidth.Value = My.Settings.notification_width
+        numNotificationHeight.Value = My.Settings.notification_height
+        numNotificationWidth.Maximum = Screen.PrimaryScreen.Bounds.Width
+        numNotificationHeight.Maximum = Screen.PrimaryScreen.Bounds.Height
     End Sub
 
     Private Sub loadNotificationDurationList()
-        Dim notificaitonDurationList As Dictionary(Of Integer, String) = New Dictionary(Of Integer, String) From
-        {{5, "5 Seconds"}, {10, "10 Seconds"}, {15, "15 Seconds"}}
+
+        Dim notificaitonDurationList As Dictionary(Of Integer, String) = New Dictionary(Of Integer, String)
+
+        For value As Integer = 1 To 12
+            Dim seconds As Integer = value * 5
+            notificaitonDurationList.Add(seconds, seconds.ToString + " Seconds")
+        Next
+
         cmbNotificationDuration.ValueMember = "Key"
         cmbNotificationDuration.DisplayMember = "Value"
         cmbNotificationDuration.DataSource = New BindingSource(notificaitonDurationList, Nothing)
@@ -49,6 +96,56 @@ Public Class FrmMain
         AddHandler cmbNotificationDuration.SelectedIndexChanged, AddressOf cmbNotificationDuration_SelectedIndexChanged
 
     End Sub
+
+    Private Sub loadNotificationSoundList()
+        Dim notificaitonSoundList As Dictionary(Of String, String) = New Dictionary(Of String, String)
+        notificaitonSoundList.Add("None", "None")
+
+        Dim resourceEntry As DictionaryEntry
+        Dim allResources As Object = My.Resources.ResourceManager.GetResourceSet(System.Globalization.CultureInfo.CurrentCulture, False, True)
+        For Each resourceEntry In allResources
+            If (resourceEntry.Value.GetType() Is GetType(UnmanagedMemoryStream)) Then
+                notificaitonSoundList.Add(resourceEntry.Key.ToString, resourceEntry.Key.ToString)
+            End If
+        Next
+
+        cmbNotificationSound.ValueMember = "Key"
+        cmbNotificationSound.DisplayMember = "Value"
+        cmbNotificationSound.DataSource = New BindingSource(notificaitonSoundList, Nothing)
+        cmbNotificationSound.SelectedValue = My.Settings.notification_sound
+
+        AddHandler cmbNotificationSound.SelectedIndexChanged, AddressOf cmbNotificationSound_SelectedIndexChanged
+    End Sub
+
+    Private Sub cmbNotificationDuration_SelectedIndexChanged(sender As Object, e As EventArgs)
+        My.Settings.notification_duration = cmbNotificationDuration.SelectedValue
+    End Sub
+
+    Private Sub cmbNotificationSound_SelectedIndexChanged(sender As Object, e As EventArgs)
+        My.Settings.notification_sound = cmbNotificationSound.SelectedValue
+
+        If cmbNotificationSound.SelectedValue = "None" Then
+            btnPlaySound.Enabled = False
+        Else
+            btnPlaySound.Enabled = True
+        End If
+    End Sub
+
+    Private Sub btnShowNotificationFontDialog_Click(sender As Object, e As EventArgs) Handles btnShowNotificationFontDialog.Click
+        fontdialogNotificationFont.Font = My.Settings.notification_font
+        If fontdialogNotificationFont.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
+            My.Settings.notification_font = fontdialogNotificationFont.Font
+            txtNotificaitonFont.Text = getFontInDisplayFormat(My.Settings.notification_font)
+        End If
+    End Sub
+
+    Private Function getFontInDisplayFormat(myFont As Font) As String
+        Dim fontFamilyName As String = myFont.FontFamily.GetName(0).ToString
+        Dim fontSize As String = myFont.Size.ToString
+        Dim fontStyle As String = myFont.Style.ToString
+
+        Return fontFamilyName + ", " + fontSize + "pt, style=" + fontStyle
+    End Function
 
     Private Sub btnStartStop_Click(sender As Object, e As EventArgs) Handles btnStartStop.Click
         If gIsReminderTimerRunning = False Then
@@ -62,54 +159,63 @@ Public Class FrmMain
     Private Sub startReminder()
         Dim intervalMilliSeconds As Integer = getIntervalAsMilliseconds()
 
-        If intervalMilliSeconds < 30000 Then
+        If intervalMilliSeconds < 1000 Then
             MsgBox("The selected time for reminder must be atleast 30 seconds or more. Current value is : " + getDisplayIntervalFromScreen() + ". Please Retry!")
             Return
         End If
 
+        'For Actual Reminder Timer start
         timerReminder.Interval = intervalMilliSeconds
         gIntervalMilliseconds = intervalMilliSeconds
-        gRemainingIntervalMilliseconds = gIntervalMilliseconds
         timerReminder.Start()
         gIsReminderTimerRunning = True
+
+        'To show countdown time on the status bar
+        gRemainingIntervalMilliseconds = gIntervalMilliseconds
         timerStatusBarUpdater.Start()
         statusRemainingTime.Text = getDisplayIntervalFromMilliseconds(0)
         statusRemainingTime.ForeColor = Color.Maroon
+
+        'Update UI as the timer started
         btnStartStop.Text = "Stop Reminder"
+        grpIntervalDuration.Enabled = False
     End Sub
 
     Private Sub stopReminder()
+        'For Actual Reminder Timer stop
         timerReminder.Stop()
-        timerStatusBarUpdater.Stop()
         gIsReminderTimerRunning = False
+
+        'To stop countdown time on the status bar
+        timerStatusBarUpdater.Stop()
         statusRemainingTime.Text = "No Reminder Running"
         statusRemainingTime.ForeColor = Color.Red
+
+        'Update UI as the timer stopped
         btnStartStop.Text = "Start Reminder"
         ToastNotificationForm.Close()
+        grpIntervalDuration.Enabled = True
     End Sub
 
     Private Sub timerReminder_Tick(sender As Object, e As EventArgs) Handles timerReminder.Tick
-        ToastNotificationForm.gNotificationDuration = My.Settings.notification_duration * 1000
-        ToastNotificationForm.gNotificationWindowSize = New Size(750, 80)
-        ToastNotificationForm.gNotificationMessage = "Hey You, Please Take a Break For 2 Mins! " +
-            "Continuous Sitting Causes BACK PAIN, HEART DISEASE and KIDNEY FAILURE. " +
-            "Stand up and Walk 10 Steps, Now!!"
         ToastNotificationForm.Show()
+
+        'To reset countdown time on the status bar
         gRemainingIntervalMilliseconds = gIntervalMilliseconds
     End Sub
 
     Private Function getIntervalAsMilliseconds() As Integer
-        Dim hours As Integer = Integer.Parse(lblHours.Text.ToString)
-        Dim minutes As Integer = Integer.Parse(lblMinutes.Text.ToString)
-        Dim seconds As Integer = Integer.Parse(lblSeconds.Text.ToString)
+        Dim hours As Integer = numHours.Value
+        Dim minutes As Integer = numMinutes.Value
+        Dim seconds As Integer = numSeconds.Value
 
         Return ((hours * HOURS_MILLISECONDS_CONVERTER) + (minutes * MINUTES_MILLISECONDS_CONVERTER) + (seconds * SECONDS_MILLISECONDS_CONVERTER))
     End Function
 
     Private Function getDisplayIntervalFromScreen() As String
-        Dim hours As Integer = Integer.Parse(lblHours.Text.ToString)
-        Dim minutes As Integer = Integer.Parse(lblMinutes.Text.ToString)
-        Dim seconds As Integer = Integer.Parse(lblSeconds.Text.ToString)
+        Dim hours As Integer = numHours.Value
+        Dim minutes As Integer = numMinutes.Value
+        Dim seconds As Integer = numSeconds.Value
 
         Return getDisplayInterval(hours, minutes, seconds)
     End Function
@@ -128,14 +234,6 @@ Public Class FrmMain
         Return hours.ToString("00") + " Hrs   " + minutes.ToString("00") + " Mins   " + seconds.ToString("00") + " Secs"
     End Function
 
-    Private Sub trackBarHours_ValueChanged(sender As Object, e As EventArgs) Handles trackBarSeconds.ValueChanged, trackBarMinutes.ValueChanged, trackBarHours.ValueChanged
-        Dim trackBar As TrackBar = sender
-        Dim trackerBarDataKeeper As TrackerBarDataKeeper = gTrackerBarDataKeepers.Item(trackBar)
-        trackerBarDataKeeper.displayLabel.Text = trackBar.Value.ToString("00")
-        My.Settings.Item(trackerBarDataKeeper.persistentKey) = trackBar.Value
-        My.Settings.Save()
-    End Sub
-
     Private Sub setPropertiesForCustomDialog()
         CustomDialog.btnOption1.BackColor = Color.Green
         CustomDialog.btnOption1.ForeColor = Color.White
@@ -150,7 +248,7 @@ Public Class FrmMain
     Private Sub FrmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         If gIsExitClicked = False And gIsReminderTimerRunning = True Then
             setPropertiesForCustomDialog()
-            Dim result As Integer = CustomDialog.showMyDialog("Closing Confirmation", "Continue and Minimize to Tray", "Abort Reminder and Exit", "Return to Application")
+            Dim result As Integer = CustomDialog.showMyDialog("Reminder is Running, Confirm Your Action", "Continue and Minimize to Tray", "Abort Reminder and Exit", "Return to Application")
             If result = CustomDialog.OPTION_ONE Then
                 Me.WindowState = FormWindowState.Minimized
                 ShowInTaskbar = False
@@ -205,7 +303,40 @@ Public Class FrmMain
 
     End Sub
 
-    Private Sub cmbNotificationDuration_SelectedIndexChanged(sender As Object, e As EventArgs)
-        My.Settings.notification_duration = cmbNotificationDuration.SelectedValue
+    Private Sub txtNotificationMessage_TextChanged(sender As Object, e As EventArgs) Handles txtNotificationMessage.TextChanged
+        My.Settings.notification_message = txtNotificationMessage.Text
+    End Sub
+
+    Private Sub colorPickerBackColor_ColorChanged(sender As Object, e As EventArgs) Handles colorPickerBackColor.ColorChanged
+        My.Settings.notification_backcolor = colorPickerBackColor.Color
+    End Sub
+
+    Private Sub colorPickerForeColor_ColorChanged(sender As Object, e As EventArgs) Handles colorPickerForeColor.ColorChanged
+        My.Settings.notification_forecolor = colorPickerForeColor.Color
+    End Sub
+
+    Private Sub btnPlaySong_Click(sender As Object, e As EventArgs) Handles btnPlaySound.Click
+        Dim selectedSound As String = cmbNotificationSound.SelectedValue
+        My.Computer.Audio.Play(My.Resources.ResourceManager.GetObject(selectedSound), AudioPlayMode.Background)
+    End Sub
+
+    Private Sub numHours_ValueChanged(sender As Object, e As EventArgs) Handles numHours.ValueChanged
+        My.Settings.hours = numHours.Value
+    End Sub
+
+    Private Sub numMinutes_ValueChanged(sender As Object, e As EventArgs) Handles numMinutes.ValueChanged
+        My.Settings.minutes = numMinutes.Value
+    End Sub
+
+    Private Sub numSeconds_ValueChanged(sender As Object, e As EventArgs) Handles numSeconds.ValueChanged
+        My.Settings.seconds = numSeconds.Value
+    End Sub
+
+    Private Sub numNotificationWidth_ValueChanged(sender As Object, e As EventArgs) Handles numNotificationWidth.ValueChanged
+        My.Settings.notification_width = numNotificationWidth.Value
+    End Sub
+
+    Private Sub numNotificationHeight_ValueChanged(sender As Object, e As EventArgs) Handles numNotificationHeight.ValueChanged
+        My.Settings.notification_height = numNotificationHeight.Value
     End Sub
 End Class
