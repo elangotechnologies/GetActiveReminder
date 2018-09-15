@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
+Imports System.Threading
 Imports Microsoft.VisualBasic.Devices
 Imports NLog
 
@@ -9,7 +10,6 @@ Public Class FrmMain
     Const MINUTES_MILLISECONDS_CONVERTER As Integer = 60 * 1000
     Const SECONDS_MILLISECONDS_CONVERTER As Integer = 1000
 
-    'Dim gTrackerBarDataKeepers As Dictionary(Of TrackBar, TrackerBarDataKeeper)
     Dim gSystemSoundMapper As Dictionary(Of Integer, System.Media.SystemSound)
     Dim gRemainingIntervalMilliseconds As Integer = 0
     Dim gIntervalMilliseconds As Integer = 0
@@ -27,9 +27,15 @@ Public Class FrmMain
     End Class
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ReminderManager.getInstance().cleanSavedReminderTable()
+        loadReminderGrid()
         initReminderDuration()
         initNotificationData()
         subscribeForSettingsDataChange()
+    End Sub
+
+    Sub loadReminderGrid()
+        dgReminderDetails.DataSource = ReminderManager.getInstance().getReminderTable()
     End Sub
 
     Private Sub subscribeForSettingsDataChange()
@@ -338,5 +344,36 @@ Public Class FrmMain
 
     Private Sub numNotificationHeight_ValueChanged(sender As Object, e As EventArgs) Handles numNotificationHeight.ValueChanged
         My.Settings.notification_height = numNotificationHeight.Value
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        ReminderManager.getInstance().saveReminder(1, New Reminder(0, 13, 10, 15))
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim reminder As Reminder = ReminderManager.getInstance().getReminder(1)
+
+        MsgBox(reminder.DurationHours.ToString)
+    End Sub
+
+    Private Sub btnAddReminder_Click(sender As Object, e As EventArgs) Handles btnAddReminder.Click
+        Dim creationStatus As String = btnAddReminder.Tag
+
+        If creationStatus = "CreationNotInProgress" Then
+            btnAddReminder.Tag = "CreationInProgress"
+            btnAddReminder.Text = "Confirm"
+            btnStartStop.Visible = False
+        ElseIf creationStatus = "CreationInProgress" Then
+            btnAddReminder.Tag = "CreationNotInProgress"
+
+            Dim reminderTable As DataTable = dgReminderDetails.DataSource
+            Dim reminderRow As DataRow = reminderTable.NewRow()
+            reminderRow("type") = 1
+            reminderTable.Rows.InsertAt(reminderRow, 0)
+        End If
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        ReminderManager.getInstance().cleanSavedReminderTable()
     End Sub
 End Class
