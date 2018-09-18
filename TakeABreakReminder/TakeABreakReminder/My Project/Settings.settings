@@ -1,39 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" UseMySettingsClassName="true">
   <Profiles />
-  <Settings>
-    <Setting Name="hours" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="minutes" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="seconds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="notification_duration" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
-    </Setting>
-    <Setting Name="notification_message" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Hey You, Please Take a Break For 2 Mins! Continuous Sitting Causes BACK PAIN, HEART DISEASE and KIDNEY FAILURE. Stand up and Walk 10 Steps, Now!!</Value>
-    </Setting>
-    <Setting Name="notification_font" Type="System.Drawing.Font" Scope="User">
-      <Value Profile="(Default)">Segoe UI, 14.25pt, style=Bold</Value>
-    </Setting>
-    <Setting Name="notification_backcolor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">DeepPink</Value>
-    </Setting>
-    <Setting Name="notification_forecolor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">White</Value>
-    </Setting>
-    <Setting Name="notification_sound" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="notification_width" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">750</Value>
-    </Setting>
-    <Setting Name="notification_height" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">80</Value>
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>

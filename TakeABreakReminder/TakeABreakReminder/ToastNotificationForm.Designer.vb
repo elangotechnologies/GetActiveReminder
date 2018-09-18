@@ -74,7 +74,9 @@ Partial Class ToastNotificationForm
         Me.Padding = New System.Windows.Forms.Padding(10, 10, 30, 10)
         Me.RightToLeftLayout = True
         Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "ToastNotificationForm"
+        Me.TopMost = True
         Me.ResumeLayout(False)
 
     End Sub

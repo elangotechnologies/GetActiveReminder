@@ -103,6 +103,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonModule.vb" />
     <Compile Include="CustomDialog.Designer.vb">
       <DependentUpon>CustomDialog.vb</DependentUpon>
     </Compile>
@@ -132,8 +133,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Reminder.vb" />
-    <Compile Include="Settings.vb" />
     <Compile Include="ToastNotificationForm.Designer.vb">
       <DependentUpon>ToastNotificationForm.vb</DependentUpon>
     </Compile>
@@ -160,6 +159,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\blue_bg.jpg" />
     <None Include="Resources\Windows User Account Control.wav" />
     <None Include="Resources\Windows Unlock.wav" />
     <None Include="Resources\Windows Startup.wav" />

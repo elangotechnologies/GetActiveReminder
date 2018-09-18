@@ -1,19 +1,21 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
+Imports System.Globalization
 Imports System.IO
 Imports System.Threading
 Imports Microsoft.VisualBasic.Devices
 Imports NLog
+Imports TakeABreakReminder
 
 Public Class FrmMain
     Shared log As Logger = LogManager.GetCurrentClassLogger()
-    Const HOURS_MILLISECONDS_CONVERTER As Integer = 60 * 60 * 1000
-    Const MINUTES_MILLISECONDS_CONVERTER As Integer = 60 * 1000
-    Const SECONDS_MILLISECONDS_CONVERTER As Integer = 1000
 
-    Dim gSystemSoundMapper As Dictionary(Of Integer, System.Media.SystemSound)
+    Private gIsExitClicked As Boolean = False
+    Private gReminderManager As ReminderManager = ReminderManager.getInstance()
+    Private gSelectedReminderId As Integer = -1
+
     Dim gRemainingIntervalMilliseconds As Integer = 0
     Dim gIntervalMilliseconds As Integer = 0
-    Dim gIsExitClicked As Boolean = False
     Private gIsReminderTimerRunning As Boolean = False
 
     Private Class TrackerBarDataKeeper
@@ -26,63 +28,24 @@ Public Class FrmMain
         End Sub
     End Class
 
+    Private Class RemainingTimeObserver : Implements ReminderManager.IRemainingTimeObserver
+        Private Sub remainingTimeChanged(remainingTimeStr As String) Implements ReminderManager.IRemainingTimeObserver.remainingTimeChanged
+            FrmMain.statusRemainingTimeLabel.Text = remainingTimeStr
+        End Sub
+    End Class
+
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ReminderManager.getInstance().cleanSavedReminderTable()
-        loadReminderGrid()
-        initReminderDuration()
-        initNotificationData()
-        subscribeForSettingsDataChange()
-    End Sub
+        gReminderManager.startAllRunningStatusReminders()
 
-    Sub loadReminderGrid()
-        dgReminderDetails.DataSource = ReminderManager.getInstance().getReminderTable()
-    End Sub
+        gReminderManager.registerForRemainingTime(New RemainingTimeObserver)
 
-    Private Sub subscribeForSettingsDataChange()
-        AddHandler My.Settings.PropertyChanged, AddressOf Settings_DataChanged
-    End Sub
-
-    Private Sub Settings_DataChanged(ByVal sender As Object, ByVal e As PropertyChangedEventArgs)
-        Dim settingName As String = e.PropertyName
-
-        Select Case settingName
-            Case "notification_duration"
-                'Only required when the notification form loaded. The setting value accessed there itself.
-            Case "notification_message"
-                ToastNotificationForm.lblMessage.Text = My.Settings.notification_message
-            Case "notification_font"
-                ToastNotificationForm.lblMessage.Font = My.Settings.notification_font
-            Case "notification_backcolor"
-                ToastNotificationForm.BackColor = My.Settings.notification_backcolor
-            Case "notification_forecolor"
-                ToastNotificationForm.lblMessage.ForeColor = My.Settings.notification_forecolor
-            Case "notification_sound"
-                'Only required when the notification form loaded. The setting value accessed there itself.
-            Case "notification_width", "notification_height"
-                ToastNotificationForm.Size = New Size(My.Settings.notification_width, My.Settings.notification_height)
-                ToastNotificationForm.updateLocation()
-        End Select
-    End Sub
-
-    Private Sub initReminderDuration()
-        numHours.Value = My.Settings.hours
-        numMinutes.Value = My.Settings.minutes
-        numSeconds.Value = My.Settings.seconds
-    End Sub
-
-    Private Sub initNotificationData()
+        setDataGrid(dgReminderDetails, gReminderManager.getReminderTable())
+        dgReminderDetails.ClearSelection()
         loadNotificationDurationList()
         loadNotificationSoundList()
-
-        txtNotificationMessage.Text = My.Settings.notification_message
-        colorPickerForeColor.Color = My.Settings.notification_forecolor
-        colorPickerBackColor.Color = My.Settings.notification_backcolor
-        txtNotificaitonFont.Text = getFontInDisplayFormat(My.Settings.notification_font)
-
-        numNotificationWidth.Value = My.Settings.notification_width
-        numNotificationHeight.Value = My.Settings.notification_height
         numNotificationWidth.Maximum = Screen.PrimaryScreen.Bounds.Width
         numNotificationHeight.Maximum = Screen.PrimaryScreen.Bounds.Height
+        btnAddReminder.Tag = REMINDER_CREATION_STATUS_NONE
     End Sub
 
     Private Sub loadNotificationDurationList()
@@ -97,9 +60,8 @@ Public Class FrmMain
         cmbNotificationDuration.ValueMember = "Key"
         cmbNotificationDuration.DisplayMember = "Value"
         cmbNotificationDuration.DataSource = New BindingSource(notificaitonDurationList, Nothing)
-        cmbNotificationDuration.SelectedValue = My.Settings.notification_duration
-
-        AddHandler cmbNotificationDuration.SelectedIndexChanged, AddressOf cmbNotificationDuration_SelectedIndexChanged
+        'cmbNotificationDuration.SelectedValue = My.Settings.notification_duration
+        cmbNotificationDuration.Tag = cmbNotificationDuration.SelectedIndex
 
     End Sub
 
@@ -118,18 +80,13 @@ Public Class FrmMain
         cmbNotificationSound.ValueMember = "Key"
         cmbNotificationSound.DisplayMember = "Value"
         cmbNotificationSound.DataSource = New BindingSource(notificaitonSoundList, Nothing)
-        cmbNotificationSound.SelectedValue = My.Settings.notification_sound
+        'cmbNotificationSound.SelectedValue = My.Settings.notification_sound
+        cmbNotificationSound.Tag = cmbNotificationSound.SelectedIndex
 
         AddHandler cmbNotificationSound.SelectedIndexChanged, AddressOf cmbNotificationSound_SelectedIndexChanged
     End Sub
 
-    Private Sub cmbNotificationDuration_SelectedIndexChanged(sender As Object, e As EventArgs)
-        My.Settings.notification_duration = cmbNotificationDuration.SelectedValue
-    End Sub
-
     Private Sub cmbNotificationSound_SelectedIndexChanged(sender As Object, e As EventArgs)
-        My.Settings.notification_sound = cmbNotificationSound.SelectedValue
-
         If cmbNotificationSound.SelectedValue = "None" Then
             btnPlaySound.Enabled = False
         Else
@@ -138,107 +95,34 @@ Public Class FrmMain
     End Sub
 
     Private Sub btnShowNotificationFontDialog_Click(sender As Object, e As EventArgs) Handles btnShowNotificationFontDialog.Click
-        fontdialogNotificationFont.Font = My.Settings.notification_font
+        If Not String.IsNullOrEmpty(txtNotificaitonFont.Text) Then
+            fontdialogNotificationFont.Font = getFontObjFromDisplayFormat(txtNotificaitonFont.Text)
+        End If
+
         If fontdialogNotificationFont.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
-            My.Settings.notification_font = fontdialogNotificationFont.Font
-            txtNotificaitonFont.Text = getFontInDisplayFormat(My.Settings.notification_font)
+            txtNotificaitonFont.Text = getFontInDisplayFormat(fontdialogNotificationFont.Font)
         End If
     End Sub
 
-    Private Function getFontInDisplayFormat(myFont As Font) As String
-        Dim fontFamilyName As String = myFont.FontFamily.GetName(0).ToString
-        Dim fontSize As String = myFont.Size.ToString
-        Dim fontStyle As String = myFont.Style.ToString
-
-        Return fontFamilyName + ", " + fontSize + "pt, style=" + fontStyle
-    End Function
-
-    Private Sub btnStartStop_Click(sender As Object, e As EventArgs) Handles btnStartStop.Click
-        If gIsReminderTimerRunning = False Then
-            startReminder()
-        Else
-            stopReminder()
-        End If
-
-    End Sub
-
-    Private Sub startReminder()
-        Dim intervalMilliSeconds As Integer = getIntervalAsMilliseconds()
-
-        If intervalMilliSeconds < 1000 Then
-            MsgBox("The selected time for reminder must be atleast 30 seconds or more. Current value is : " + getDisplayIntervalFromScreen() + ". Please Retry!")
+    Private Sub btnStartStopReminder_Click(sender As Object, e As EventArgs) Handles btnStartStopReminder.Click
+        If gSelectedReminderId = -1 Then
+            MsgBox("Please select a reminder to do this operation")
             Return
         End If
 
-        'For Actual Reminder Timer start
-        timerReminder.Interval = intervalMilliSeconds
-        gIntervalMilliseconds = intervalMilliSeconds
-        timerReminder.Start()
-        gIsReminderTimerRunning = True
+        Dim reminderStatus As String = gReminderManager.getReminderStatus(gSelectedReminderId)
 
-        'To show countdown time on the status bar
-        gRemainingIntervalMilliseconds = gIntervalMilliseconds
-        timerStatusBarUpdater.Start()
-        statusRemainingTime.Text = getDisplayIntervalFromMilliseconds(0)
-        statusRemainingTime.ForeColor = Color.Maroon
+        If reminderStatus = REMINDER_STATUS_NOT_RUNNING Then
+            gReminderManager.startReminder(gSelectedReminderId)
+            btnStartStopReminder.Text = "Stop"
+        ElseIf reminderStatus = REMINDER_STATUS_RUNNING Then
+            gReminderManager.stopReminder(gSelectedReminderId)
+            btnStartStopReminder.Text = "Start"
+        End If
 
-        'Update UI as the timer started
-        btnStartStop.Text = "Stop Reminder"
-        grpIntervalDuration.Enabled = False
+        gReminderManager.updateStatusBar(gSelectedReminderId)
+
     End Sub
-
-    Private Sub stopReminder()
-        'For Actual Reminder Timer stop
-        timerReminder.Stop()
-        gIsReminderTimerRunning = False
-
-        'To stop countdown time on the status bar
-        timerStatusBarUpdater.Stop()
-        statusRemainingTime.Text = "No Reminder Running"
-        statusRemainingTime.ForeColor = Color.Red
-
-        'Update UI as the timer stopped
-        btnStartStop.Text = "Start Reminder"
-        ToastNotificationForm.Close()
-        grpIntervalDuration.Enabled = True
-    End Sub
-
-    Private Sub timerReminder_Tick(sender As Object, e As EventArgs) Handles timerReminder.Tick
-        ToastNotificationForm.Show()
-
-        'To reset countdown time on the status bar
-        gRemainingIntervalMilliseconds = gIntervalMilliseconds
-    End Sub
-
-    Private Function getIntervalAsMilliseconds() As Integer
-        Dim hours As Integer = numHours.Value
-        Dim minutes As Integer = numMinutes.Value
-        Dim seconds As Integer = numSeconds.Value
-
-        Return ((hours * HOURS_MILLISECONDS_CONVERTER) + (minutes * MINUTES_MILLISECONDS_CONVERTER) + (seconds * SECONDS_MILLISECONDS_CONVERTER))
-    End Function
-
-    Private Function getDisplayIntervalFromScreen() As String
-        Dim hours As Integer = numHours.Value
-        Dim minutes As Integer = numMinutes.Value
-        Dim seconds As Integer = numSeconds.Value
-
-        Return getDisplayInterval(hours, minutes, seconds)
-    End Function
-
-    Private Function getDisplayIntervalFromMilliseconds(milliseconds As Integer) As String
-        Dim hours As Integer = milliseconds / HOURS_MILLISECONDS_CONVERTER
-        milliseconds = milliseconds Mod HOURS_MILLISECONDS_CONVERTER
-        Dim minutes As Integer = milliseconds / MINUTES_MILLISECONDS_CONVERTER
-        milliseconds = milliseconds Mod MINUTES_MILLISECONDS_CONVERTER
-        Dim seconds As Integer = milliseconds / SECONDS_MILLISECONDS_CONVERTER
-
-        Return getDisplayInterval(hours, minutes, seconds)
-    End Function
-
-    Private Function getDisplayInterval(hours As Integer, minutes As Integer, seconds As Integer) As String
-        Return hours.ToString("00") + " Hrs   " + minutes.ToString("00") + " Mins   " + seconds.ToString("00") + " Secs"
-    End Function
 
     Private Sub setPropertiesForCustomDialog()
         CustomDialog.btnOption1.BackColor = Color.Green
@@ -272,7 +156,6 @@ Public Class FrmMain
     Private Sub exitApp()
         trayIcon.Visible = False
         gIsExitClicked = True
-        stopReminder()
         Application.Exit()
     End Sub
 
@@ -296,29 +179,8 @@ Public Class FrmMain
     Private Sub contextMenuForTrayIcon_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles contextMenuForTrayIcon.ItemClicked
         Select Case e.ClickedItem.Name
             Case "menuItemExit" : exitApp()
-            Case "menuItemStopReminder" : stopReminder()
             Case "menuItemShowApp" : showMainForm()
         End Select
-    End Sub
-
-    Private Sub timerStatusBarUpdater_Tick(sender As Object, e As EventArgs) Handles timerStatusBarUpdater.Tick
-        gRemainingIntervalMilliseconds -= SECONDS_MILLISECONDS_CONVERTER
-        If Me.WindowState = FormWindowState.Normal Then
-            statusRemainingTime.Text = getDisplayIntervalFromMilliseconds(gRemainingIntervalMilliseconds)
-        End If
-
-    End Sub
-
-    Private Sub txtNotificationMessage_TextChanged(sender As Object, e As EventArgs) Handles txtNotificationMessage.TextChanged
-        My.Settings.notification_message = txtNotificationMessage.Text
-    End Sub
-
-    Private Sub colorPickerBackColor_ColorChanged(sender As Object, e As EventArgs) Handles colorPickerBackColor.ColorChanged
-        My.Settings.notification_backcolor = colorPickerBackColor.Color
-    End Sub
-
-    Private Sub colorPickerForeColor_ColorChanged(sender As Object, e As EventArgs) Handles colorPickerForeColor.ColorChanged
-        My.Settings.notification_forecolor = colorPickerForeColor.Color
     End Sub
 
     Private Sub btnPlaySong_Click(sender As Object, e As EventArgs) Handles btnPlaySound.Click
@@ -326,54 +188,215 @@ Public Class FrmMain
         My.Computer.Audio.Play(My.Resources.ResourceManager.GetObject(selectedSound), AudioPlayMode.Background)
     End Sub
 
-    Private Sub numHours_ValueChanged(sender As Object, e As EventArgs) Handles numHours.ValueChanged
-        My.Settings.hours = numHours.Value
-    End Sub
-
-    Private Sub numMinutes_ValueChanged(sender As Object, e As EventArgs) Handles numMinutes.ValueChanged
-        My.Settings.minutes = numMinutes.Value
-    End Sub
-
-    Private Sub numSeconds_ValueChanged(sender As Object, e As EventArgs) Handles numSeconds.ValueChanged
-        My.Settings.seconds = numSeconds.Value
-    End Sub
-
-    Private Sub numNotificationWidth_ValueChanged(sender As Object, e As EventArgs) Handles numNotificationWidth.ValueChanged
-        My.Settings.notification_width = numNotificationWidth.Value
-    End Sub
-
-    Private Sub numNotificationHeight_ValueChanged(sender As Object, e As EventArgs) Handles numNotificationHeight.ValueChanged
-        My.Settings.notification_height = numNotificationHeight.Value
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        ReminderManager.getInstance().saveReminder(1, New Reminder(0, 13, 10, 15))
-    End Sub
-
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Dim reminder As Reminder = ReminderManager.getInstance().getReminder(1)
-
-        MsgBox(reminder.DurationHours.ToString)
-    End Sub
-
     Private Sub btnAddReminder_Click(sender As Object, e As EventArgs) Handles btnAddReminder.Click
-        Dim creationStatus As String = btnAddReminder.Tag
 
-        If creationStatus = "CreationNotInProgress" Then
-            btnAddReminder.Tag = "CreationInProgress"
+        Dim creationStatus As Integer = btnAddReminder.Tag
+
+        If creationStatus = REMINDER_CREATION_STATUS_NONE Then
+
+            resetScreen()
+            btnAddReminder.Tag = REMINDER_CREATION_STATUS_IN_PROGRESS
             btnAddReminder.Text = "Confirm"
-            btnStartStop.Visible = False
-        ElseIf creationStatus = "CreationInProgress" Then
-            btnAddReminder.Tag = "CreationNotInProgress"
+            btnClearScreen.Text = "Cancel"
 
-            Dim reminderTable As DataTable = dgReminderDetails.DataSource
-            Dim reminderRow As DataRow = reminderTable.NewRow()
-            reminderRow("type") = 1
-            reminderTable.Rows.InsertAt(reminderRow, 0)
+        ElseIf creationStatus = REMINDER_CREATION_STATUS_IN_PROGRESS Then
+
+            If validateReminderData() = False Then
+                Return
+            End If
+
+            Dim newReminderRow As DataRow = gReminderManager.createNewReminderRow()
+            gReminderManager.commitNewReminderRow(fillReminderRowFromScreen(newReminderRow))
+
+            gSelectedReminderId = newReminderRow.Item(COL_REMINDER_ID)
+            selectRowAtDataGridByKey(dgReminderDetails, COL_REMINDER_ID, gSelectedReminderId)
+
+            enableControlsOnReminderSelected(True)
+
+            btnAddReminder.Tag = REMINDER_CREATION_STATUS_NONE
+            btnAddReminder.Text = "New"
+            btnClearScreen.Text = "Clear"
+        End If
+
+        allowEditReminder(True)
+    End Sub
+
+    Private Function fillReminderRowFromScreen(reminderRow As DataRow, Optional isNewRecord As Boolean = True) As DataRow
+        Dim reminderType As String = REMINDER_TYPE_INTERVAL
+        reminderRow(COL_REMINDER_TYPE) = reminderType
+
+        If reminderType = REMINDER_TYPE_INTERVAL Then
+            reminderRow(COL_REMINDER_INTERVAL) = getFormattedInterval(numHours.Value, numMinutes.Value, numSeconds.Value)
+        End If
+
+        reminderRow(COL_REMINDER_STATUS) = REMINDER_STATUS_NOT_RUNNING
+        If isNewRecord Then
+            reminderRow(COL_REMINDER_CREATED_TIME) = DateTime.Now
+        Else
+            reminderRow(COL_REMINDER_UPDATED_TIME) = DateTime.Now
+        End If
+
+        reminderRow(COL_NOTIFICATION_DURATION) = cmbNotificationDuration.SelectedValue
+        reminderRow(COL_NOTIFICATION_SOUND) = cmbNotificationSound.Text
+        reminderRow(COL_NOTIFICATION_MESSAGE) = txtNotificationMessage.Text
+        reminderRow(COL_NOTIFICATION_FONT) = txtNotificaitonFont.Text
+        reminderRow(COL_NOTIFICATION_BACKCOLOR) = colorPickerBackColor.Color.Name.ToString
+        reminderRow(COL_NOTIFICATION_FORECOLOR) = colorPickerForeColor.Color.Name.ToString
+        reminderRow(COL_NOTIFICATION_WIDTH) = numNotificationWidth.Value
+        reminderRow(COL_NOTIFICATION_HEIGHT) = numNotificationHeight.Value
+
+        If isNewRecord Then
+            reminderRow(COL_NOTIFICATION_VISIBLE_STATUS) = REMINDER_CREATION_STATUS_NONE
+        End If
+
+        Return reminderRow
+    End Function
+
+    Private Sub fillScreenFromReminderRow(reminderRow As DataRow)
+        Dim reminderType As String = reminderRow(COL_REMINDER_TYPE)
+
+        If reminderType = REMINDER_TYPE_INTERVAL Then
+            Dim reminderInterval As Double = convertFormattedIntervalToMilliseconds(reminderRow(COL_REMINDER_INTERVAL))
+            numHours.Value = getHours(reminderInterval)
+            numMinutes.Value = getMinutes(reminderInterval)
+            numSeconds.Value = getSeconds(reminderInterval)
+        End If
+
+        cmbNotificationSound.Text = reminderRow(COL_NOTIFICATION_SOUND)
+        cmbNotificationDuration.SelectedValue = reminderRow(COL_NOTIFICATION_DURATION)
+        txtNotificationMessage.Text = reminderRow(COL_NOTIFICATION_MESSAGE)
+        txtNotificaitonFont.Text = reminderRow(COL_NOTIFICATION_FONT)
+        colorPickerBackColor.Color = Color.FromName(reminderRow(COL_NOTIFICATION_BACKCOLOR))
+        colorPickerForeColor.Color = Color.FromName(reminderRow(COL_NOTIFICATION_FORECOLOR))
+        numNotificationWidth.Value = reminderRow(COL_NOTIFICATION_WIDTH)
+        numNotificationHeight.Value = reminderRow(COL_NOTIFICATION_HEIGHT)
+    End Sub
+
+    Private Sub resetScreen()
+        cmbNotificationDuration.SelectedIndex = 0
+        cmbNotificationSound.SelectedIndex = 0
+        txtNotificationMessage.Text = txtNotificationMessage.Tag.ToString
+        txtNotificaitonFont.Text = txtNotificaitonFont.Tag.ToString
+        colorPickerBackColor.Color = Color.FromName(colorPickerBackColor.Tag)
+        colorPickerForeColor.Color = Color.FromName(colorPickerForeColor.Tag)
+        numNotificationWidth.Value = numNotificationWidth.Tag
+        numNotificationHeight.Value = numNotificationHeight.Tag
+        dgReminderDetails.ClearSelection()
+        gSelectedReminderId = -1
+
+        btnAddReminder.Text = "New"
+        btnAddReminder.Tag = REMINDER_CREATION_STATUS_NONE
+        enableControlsOnReminderSelected(False)
+        allowEditReminder(False)
+
+        btnClearScreen.Text = "Clear"
+    End Sub
+
+
+    Private Function validateReminderData() As Boolean
+        If convertTimeToMilliseconds(numHours.Value, numMinutes.Value, numSeconds.Value) < REMINDER_INTERVAL_MINIMUM_LIMIT Then
+            MsgBox("The reminder interval must be 30 seconds or more. Current value is : " + getFormattedInterval(numHours.Value, numMinutes.Value, numSeconds.Value) + ". Please Retry!")
+            Return False
+        End If
+
+        Return True
+    End Function
+
+    Private Sub cmbNotificationDuration_Leave(sender As Object, e As EventArgs) Handles cmbNotificationDuration.Leave
+        If cmbNotificationDuration.SelectedIndex = -1 Then
+            cmbNotificationDuration.SelectedIndex = cmbNotificationDuration.Tag
+        Else
+            cmbNotificationDuration.Tag = cmbNotificationDuration.SelectedIndex
         End If
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        ReminderManager.getInstance().cleanSavedReminderTable()
+    Private Sub cmbNotificationSound_Leave(sender As Object, e As EventArgs) Handles cmbNotificationSound.Leave
+        If cmbNotificationSound.SelectedIndex = -1 Then
+            cmbNotificationSound.SelectedIndex = cmbNotificationSound.Tag
+        Else
+            cmbNotificationSound.Tag = cmbNotificationSound.SelectedIndex
+        End If
+    End Sub
+
+    Private Sub dgReminderDetails_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgReminderDetails.CellClick
+        If e.RowIndex < 0 Then
+            Return
+        End If
+
+        If btnAddReminder.Tag = REMINDER_CREATION_STATUS_IN_PROGRESS Then
+            MessageBox.Show("Sorry, you cannot view any existing reminders because you are in the middle of creating a new reminder. Please compelete the creation or cancel it", "ERROR")
+            dgReminderDetails.ClearSelection()
+            Return
+        End If
+
+        gSelectedReminderId = dgReminderDetails.Item("colReminderId", e.RowIndex).Value
+        Dim reminderRow As DataRow = gReminderManager.getReminderRow(gSelectedReminderId)
+
+        fillScreenFromReminderRow(reminderRow)
+
+        enableControlsOnReminderSelected(True)
+        allowEditReminder(True)
+
+        If reminderRow(COL_REMINDER_STATUS) = REMINDER_STATUS_RUNNING Then
+            btnStartStopReminder.Text = "Stop"
+        Else
+            btnStartStopReminder.Text = "Start"
+        End If
+
+        gReminderManager.updateStatusBar(gSelectedReminderId)
+    End Sub
+
+    Private Sub enableControlsOnReminderSelected(enabledStatus As Boolean)
+        btnUpdateReminder.Enabled = enabledStatus
+        btnStartStopReminder.Enabled = enabledStatus
+        btnDeleteReminder.Enabled = enabledStatus
+    End Sub
+
+    Private Sub allowEditReminder(isAllowed As Boolean)
+        grpIntervalDuration.Enabled = isAllowed
+        grpPopupSettings.Enabled = isAllowed
+        grpReminderType.Enabled = isAllowed
+    End Sub
+
+    Private Sub btnUpdateReminder_Click(sender As Object, e As EventArgs) Handles btnUpdateReminder.Click
+        If gSelectedReminderId = -1 Then
+            MsgBox("Please select a reminder to do this operation")
+            Return
+        End If
+        fillReminderRowFromScreen(gReminderManager.getReminderRow(gSelectedReminderId), False)
+        gReminderManager.commitUpdatedReminderRow()
+    End Sub
+
+    Private Sub btnDeleteReminder_Click(sender As Object, e As EventArgs) Handles btnDeleteReminder.Click
+        If gSelectedReminderId = -1 Then
+            MsgBox("Please select a reminder to do this operation")
+            Return
+        End If
+
+        Dim reminderRow As DataRow = gReminderManager.getReminderRow(gSelectedReminderId)
+        Dim reminderStatus As String = reminderRow(COL_REMINDER_STATUS)
+
+        Dim deletionConfirmed As Boolean = True
+        If reminderStatus = REMINDER_STATUS_RUNNING Then
+            If MessageBox.Show("This reminder is currently running. Do you want to stop this reminder and delete it?", "CONFIRMATION", System.Windows.Forms.MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                gReminderManager.stopReminder(gSelectedReminderId)
+            Else
+                deletionConfirmed = False
+            End If
+        End If
+
+        If deletionConfirmed Then
+            gReminderManager.commitDeletedReminderRow(reminderRow)
+            resetScreen()
+            gSelectedReminderId = -1
+        End If
+
+    End Sub
+
+    Private Sub btnClearScreen_Click(sender As Object, e As EventArgs) Handles btnClearScreen.Click
+        resetScreen()
+    End Sub
+    Private Sub MainForm_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
+        If e.KeyCode = Keys.Escape Then Me.Close()
     End Sub
 End Class
