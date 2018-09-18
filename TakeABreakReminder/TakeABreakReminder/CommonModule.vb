@@ -24,6 +24,7 @@ Module CommonModule
     Public Const COL_REMINDER_UPDATED_TIME As String = "reminder_updated_time"
     Public Const COL_REMINDER_STARTED_TIME As String = "reminder_started_time"
     Public Const COL_REMINDER_NOTIFIED_TIME As String = "reminder_notified_time"
+    Public Const COL_REMINDER_NEXT_NOTIFY_TIME As String = "reminder_next_notify_time"
     Public Const COL_NOTIFICATION_DURATION As String = "notification_duration"
     Public Const COL_NOTIFICATION_SOUND As String = "notification_sound"
     Public Const COL_NOTIFICATION_MESSAGE As String = "notification_message"
@@ -32,13 +33,15 @@ Module CommonModule
     Public Const COL_NOTIFICATION_FORECOLOR As String = "notification_forecolor"
     Public Const COL_NOTIFICATION_WIDTH As String = "notification_width"
     Public Const COL_NOTIFICATION_HEIGHT As String = "notification_height"
-    Public Const COL_NOTIFICATION_VISIBLE_STATUS As String = "notification_visible_status"
 
     Public Const HOURS_MILLISECONDS_CONVERTER As Double = 60 * 60 * 1000
     Public Const MINUTES_MILLISECONDS_CONVERTER As Double = 60 * 1000
     Public Const SECONDS_MILLISECONDS_CONVERTER As Double = 1000
 
-    Public Const REMINDER_INTERVAL_MINIMUM_LIMIT As Double = 1 * SECONDS_MILLISECONDS_CONVERTER
+    Public Const HOURS_SECONDS_CONVERTER As Double = 60 * 60
+    Public Const MINUTES_SECONDS_CONVERTER As Double = 60
+
+    Public Const REMINDER_INTERVAL_MINIMUM_LIMIT_SECONDS As Double = 5
 
     Public Const NOTIFICATION_GAP_OFFSET As Integer = 10
 
@@ -54,7 +57,7 @@ Module CommonModule
         Return fontObject
     End Function
 
-    Public Function getFormattedInterval(milliseconds As Double) As String
+    Public Function getFormattedIntervalFromMilliseconds(milliseconds As Double) As String
         Dim hours As Integer = milliseconds / HOURS_MILLISECONDS_CONVERTER
         milliseconds = milliseconds Mod HOURS_MILLISECONDS_CONVERTER
         Dim minutes As Integer = milliseconds / MINUTES_MILLISECONDS_CONVERTER
@@ -64,8 +67,21 @@ Module CommonModule
         Return getFormattedInterval(hours, minutes, seconds)
     End Function
 
+    Public Function getFormattedIntervalFromSeconds(seconds As Double) As String
+        Dim hours As Integer = seconds / HOURS_SECONDS_CONVERTER
+        seconds = seconds Mod HOURS_SECONDS_CONVERTER
+        Dim minutes As Integer = seconds / MINUTES_SECONDS_CONVERTER
+        seconds = seconds Mod MINUTES_SECONDS_CONVERTER
+
+        Return getFormattedInterval(hours, minutes, seconds)
+    End Function
+
     Public Function getFormattedInterval(hours As Integer, minutes As Integer, seconds As Integer) As String
         Return hours.ToString("00") + " hrs, " + minutes.ToString("00") + " mins, " + seconds.ToString("00") + " secs"
+    End Function
+
+    Public Function convertTimeToSeconds(hours As Integer, minutes As Integer, seconds As Integer) As Double
+        Return hours * HOURS_SECONDS_CONVERTER + minutes * MINUTES_SECONDS_CONVERTER + seconds
     End Function
 
     Public Function convertTimeToMilliseconds(hours As Integer, minutes As Integer, seconds As Integer) As Double
@@ -80,7 +96,18 @@ Module CommonModule
         Dim minutes As Integer = Integer.Parse(timeArray(1))
         Dim seconds As Integer = Integer.Parse(timeArray(2))
 
-        Return hours * HOURS_MILLISECONDS_CONVERTER + minutes * MINUTES_MILLISECONDS_CONVERTER + seconds * SECONDS_MILLISECONDS_CONVERTER
+        Return convertTimeToMilliseconds(hours, minutes, seconds)
+    End Function
+
+    Public Function convertFormattedIntervalToSeconds(ByVal formattedInterval As String) As Double
+        formattedInterval = formattedInterval.Replace("hrs", "").Replace("mins", "").Replace("secs", "").Replace(" ", "")
+        Dim timeArray = formattedInterval.Split(",")
+
+        Dim hours As Integer = Integer.Parse(timeArray(0))
+        Dim minutes As Integer = Integer.Parse(timeArray(1))
+        Dim seconds As Integer = Integer.Parse(timeArray(2))
+
+        Return convertTimeToSeconds(hours, minutes, seconds)
     End Function
 
     Public Function getFontInDisplayFormat(myFont As Font) As String
@@ -108,16 +135,28 @@ Module CommonModule
         End If
     End Sub
 
-    Public Function getHours(milliseconds As Double) As Integer
+    Public Function getHoursFromTotalMilliseconds(milliseconds As Double) As Integer
         Return milliseconds / HOURS_MILLISECONDS_CONVERTER
     End Function
 
-    Public Function getMinutes(milliseconds As Double) As Integer
+    Public Function getMinutesFromTotalMilliseconds(milliseconds As Double) As Integer
         Return (milliseconds Mod HOURS_MILLISECONDS_CONVERTER) / MINUTES_MILLISECONDS_CONVERTER
     End Function
 
-    Public Function getSeconds(milliseconds As Double) As Integer
+    Public Function getSecondsFromTotalMilliseconds(milliseconds As Double) As Integer
         Return ((milliseconds Mod HOURS_MILLISECONDS_CONVERTER) Mod MINUTES_MILLISECONDS_CONVERTER) / SECONDS_MILLISECONDS_CONVERTER
+    End Function
+
+    Public Function getHoursFromTotalSeconds(seconds As Double) As Integer
+        Return seconds / HOURS_SECONDS_CONVERTER
+    End Function
+
+    Public Function getMinutesFromTotalSeconds(seconds As Double) As Integer
+        Return (seconds Mod HOURS_SECONDS_CONVERTER) / MINUTES_SECONDS_CONVERTER
+    End Function
+
+    Public Function getSecondsFromTotalSeconds(seconds As Double) As Integer
+        Return ((seconds Mod HOURS_SECONDS_CONVERTER) Mod MINUTES_SECONDS_CONVERTER)
     End Function
 
     Public Sub updateVisibleNotificationPositions()

@@ -14,8 +14,6 @@ Public Class FrmMain
     Private gReminderManager As ReminderManager = ReminderManager.getInstance()
     Private gSelectedReminderId As Integer = -1
 
-    Dim gRemainingIntervalMilliseconds As Integer = 0
-    Dim gIntervalMilliseconds As Integer = 0
     Private gIsReminderTimerRunning As Boolean = False
 
     Private Class TrackerBarDataKeeper
@@ -120,7 +118,7 @@ Public Class FrmMain
             btnStartStopReminder.Text = "Start"
         End If
 
-        gReminderManager.updateStatusBar(gSelectedReminderId)
+        gReminderManager.updateStatusBar(gReminderManager.getReminderRow(gSelectedReminderId))
 
     End Sub
 
@@ -185,7 +183,11 @@ Public Class FrmMain
 
     Private Sub btnPlaySong_Click(sender As Object, e As EventArgs) Handles btnPlaySound.Click
         Dim selectedSound As String = cmbNotificationSound.SelectedValue
-        My.Computer.Audio.Play(My.Resources.ResourceManager.GetObject(selectedSound), AudioPlayMode.Background)
+
+        If selectedSound <> "None" Then
+            My.Computer.Audio.Play(My.Resources.ResourceManager.GetObject(selectedSound), AudioPlayMode.Background)
+        End If
+
     End Sub
 
     Private Sub btnAddReminder_Click(sender As Object, e As EventArgs) Handles btnAddReminder.Click
@@ -245,10 +247,6 @@ Public Class FrmMain
         reminderRow(COL_NOTIFICATION_WIDTH) = numNotificationWidth.Value
         reminderRow(COL_NOTIFICATION_HEIGHT) = numNotificationHeight.Value
 
-        If isNewRecord Then
-            reminderRow(COL_NOTIFICATION_VISIBLE_STATUS) = REMINDER_CREATION_STATUS_NONE
-        End If
-
         Return reminderRow
     End Function
 
@@ -256,10 +254,10 @@ Public Class FrmMain
         Dim reminderType As String = reminderRow(COL_REMINDER_TYPE)
 
         If reminderType = REMINDER_TYPE_INTERVAL Then
-            Dim reminderInterval As Double = convertFormattedIntervalToMilliseconds(reminderRow(COL_REMINDER_INTERVAL))
-            numHours.Value = getHours(reminderInterval)
-            numMinutes.Value = getMinutes(reminderInterval)
-            numSeconds.Value = getSeconds(reminderInterval)
+            Dim reminderInterval As Double = convertFormattedIntervalToSeconds(reminderRow(COL_REMINDER_INTERVAL))
+            numHours.Value = getHoursFromTotalSeconds(reminderInterval)
+            numMinutes.Value = getMinutesFromTotalSeconds(reminderInterval)
+            numSeconds.Value = getSecondsFromTotalSeconds(reminderInterval)
         End If
 
         cmbNotificationSound.Text = reminderRow(COL_NOTIFICATION_SOUND)
@@ -294,7 +292,7 @@ Public Class FrmMain
 
 
     Private Function validateReminderData() As Boolean
-        If convertTimeToMilliseconds(numHours.Value, numMinutes.Value, numSeconds.Value) < REMINDER_INTERVAL_MINIMUM_LIMIT Then
+        If convertTimeToSeconds(numHours.Value, numMinutes.Value, numSeconds.Value) < REMINDER_INTERVAL_MINIMUM_LIMIT_SECONDS Then
             MsgBox("The reminder interval must be 30 seconds or more. Current value is : " + getFormattedInterval(numHours.Value, numMinutes.Value, numSeconds.Value) + ". Please Retry!")
             Return False
         End If
@@ -343,7 +341,7 @@ Public Class FrmMain
             btnStartStopReminder.Text = "Start"
         End If
 
-        gReminderManager.updateStatusBar(gSelectedReminderId)
+        gReminderManager.updateStatusBar(reminderRow)
     End Sub
 
     Private Sub enableControlsOnReminderSelected(enabledStatus As Boolean)
@@ -353,7 +351,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub allowEditReminder(isAllowed As Boolean)
-        grpIntervalDuration.Enabled = isAllowed
+        grpReminderTypeInterval.Enabled = isAllowed
         grpPopupSettings.Enabled = isAllowed
         grpReminderType.Enabled = isAllowed
     End Sub
@@ -398,5 +396,37 @@ Public Class FrmMain
     End Sub
     Private Sub MainForm_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
         If e.KeyCode = Keys.Escape Then Me.Close()
+    End Sub
+
+    Private Sub radReminderTypeInterval_CheckedChanged(sender As Object, e As EventArgs) Handles radReminderTypeInterval.CheckedChanged
+        updateVisibilityByReminderType(REMINDER_TYPE_INTERVAL, radReminderTypeInterval.Checked)
+    End Sub
+
+    Private Sub radReminderTypeDaily_CheckedChanged(sender As Object, e As EventArgs) Handles radReminderTypeDaily.CheckedChanged
+        updateVisibilityByReminderType(REMINDER_TYPE_DAILY, radReminderTypeDaily.Checked)
+    End Sub
+
+    Private Sub radReminderTypeWeekly_CheckedChanged(sender As Object, e As EventArgs) Handles radReminderTypeWeekly.CheckedChanged
+        updateVisibilityByReminderType(REMINDER_TYPE_WEEKLY, radReminderTypeWeekly.Checked)
+    End Sub
+
+    Private Sub radReminderTypeSpecific_CheckedChanged(sender As Object, e As EventArgs) Handles radReminderTypeSpecific.CheckedChanged
+        updateVisibilityByReminderType(REMINDER_TYPE_SPECIFIC_TIME, radReminderTypeSpecific.Checked)
+    End Sub
+
+    Private Sub updateVisibilityByReminderType(reminderType As String, checked As Boolean)
+        grpReminderTypeInterval.Visible = False
+        grpReminderTypeSpecific.Visible = False
+
+        Select Case reminderType
+            Case REMINDER_TYPE_INTERVAL
+                grpReminderTypeInterval.Visible = True
+            Case REMINDER_TYPE_DAILY
+
+            Case REMINDER_TYPE_WEEKLY
+
+            Case REMINDER_TYPE_SPECIFIC_TIME
+                grpReminderTypeSpecific.Visible = True
+        End Select
     End Sub
 End Class

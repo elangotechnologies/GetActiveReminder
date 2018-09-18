@@ -45,7 +45,6 @@ Public Class ToastNotificationForm
             My.Computer.Audio.Play(My.Resources.ResourceManager.GetObject(gReminderRow.Item(COL_NOTIFICATION_SOUND)), AudioPlayMode.Background)
         End If
 
-        gReminderRow(COL_NOTIFICATION_VISIBLE_STATUS) = REMINDER_NOTIFICATION_VISIBLE_STATUS_SHOWING
         Me.Show()
     End Sub
 

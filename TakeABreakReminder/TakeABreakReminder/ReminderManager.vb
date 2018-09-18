@@ -11,6 +11,8 @@ Public NotInheritable Class ReminderManager
     Shared log As Logger = LogManager.GetCurrentClassLogger()
     Private gReminderTable As DataTable
     Private gRunnningRemindersMap As New Dictionary(Of Integer, RunningReminder)
+
+    Private gReminderTimer As New Timer
     Private gRemainingTimeToNotificationTimer As New Timer
     Private gRemainingTimeObserver As IRemainingTimeObserver
 
@@ -19,8 +21,14 @@ Public NotInheritable Class ReminderManager
 
     Private Sub New()
         '' cleanSavedReminderTable()
-        loadReminders()
+        gReminderTimer.Interval = 1 * SECONDS_MILLISECONDS_CONVERTER
+        AddHandler gReminderTimer.Tick, AddressOf reminderTimer_tick
+
+        gRemainingTimeToNotificationTimer.Interval = 1 * SECONDS_MILLISECONDS_CONVERTER
         AddHandler gRemainingTimeToNotificationTimer.Tick, AddressOf remainingTimeToNotificationTimer_tick
+
+        loadReminders()
+
     End Sub
 
     Public Shared Function getInstance() As ReminderManager
@@ -35,12 +43,10 @@ Public NotInheritable Class ReminderManager
     End Function
 
     Private Class RunningReminder
-        Public timer As Timer
         Public reminderRow As DataRow
         Public toastNotificationForm As ToastNotificationForm
 
-        Public Sub New(timer As Timer, reminderRow As DataRow, toastNotificationForm As ToastNotificationForm)
-            Me.timer = timer
+        Public Sub New(reminderRow As DataRow, toastNotificationForm As ToastNotificationForm)
             Me.reminderRow = reminderRow
             Me.toastNotificationForm = toastNotificationForm
         End Sub
@@ -96,6 +102,7 @@ Public NotInheritable Class ReminderManager
                 New DataColumn(COL_REMINDER_UPDATED_TIME, GetType(DateTime)),
                 New DataColumn(COL_REMINDER_STARTED_TIME, GetType(DateTime)),
                 New DataColumn(COL_REMINDER_NOTIFIED_TIME, GetType(DateTime)),
+                New DataColumn(COL_REMINDER_NEXT_NOTIFY_TIME, GetType(DateTime)),
                 New DataColumn(COL_NOTIFICATION_DURATION, GetType(Integer)),
                 New DataColumn(COL_NOTIFICATION_SOUND, GetType(String)),
                 New DataColumn(COL_NOTIFICATION_MESSAGE, GetType(String)),
@@ -103,8 +110,7 @@ Public NotInheritable Class ReminderManager
                 New DataColumn(COL_NOTIFICATION_BACKCOLOR, GetType(String)),
                 New DataColumn(COL_NOTIFICATION_FORECOLOR, GetType(String)),
                 New DataColumn(COL_NOTIFICATION_WIDTH, GetType(Integer)),
-                New DataColumn(COL_NOTIFICATION_HEIGHT, GetType(Integer)),
-                New DataColumn(COL_NOTIFICATION_VISIBLE_STATUS, GetType(Integer))})
+                New DataColumn(COL_NOTIFICATION_HEIGHT, GetType(Integer))})
         gReminderTable.Columns(COL_REMINDER_ID).AutoIncrement = True
         gReminderTable.Columns(COL_REMINDER_ID).AutoIncrementSeed = 1
         gReminderTable.Columns(COL_REMINDER_ID).AutoIncrementStep = 1
@@ -168,38 +174,57 @@ Public NotInheritable Class ReminderManager
     End Sub
 
     Public Sub startReminder(reminderId As Integer)
+        If gReminderTimer.Enabled = False Then
+            gReminderTimer.Start()
+        End If
+
         Dim reminderRow As DataRow = getReminderRow(reminderId)
 
-        Dim reminderIntervalTimer As New Timer
-        reminderIntervalTimer.Interval = convertFormattedIntervalToMilliseconds(reminderRow.Item(COL_REMINDER_INTERVAL))
-        reminderIntervalTimer.Enabled = False
-        reminderIntervalTimer.Tag = reminderId
-        gRunnningRemindersMap.Item(reminderId) = New RunningReminder(reminderIntervalTimer, reminderRow, New ToastNotificationForm)
-        reminderIntervalTimer.Start()
+        gRunnningRemindersMap.Item(reminderId) = New RunningReminder(reminderRow, New ToastNotificationForm)
 
-        reminderRow.Item(COL_REMINDER_STARTED_TIME) = DateTime.Now
         reminderRow.Item(COL_REMINDER_STATUS) = REMINDER_STATUS_RUNNING
+        reminderRow.Item(COL_REMINDER_STARTED_TIME) = DateTime.Now
+
+        reminderRow.Item(COL_REMINDER_NEXT_NOTIFY_TIME) = DateTime.Now.AddSeconds(getSecondsToNextNotification(reminderRow))
+
+        'Dont change the order. This line shoule come after updating the reminder to 'running' status.
+        updateStatusBar(reminderRow)
 
         commitUpdatedReminderRow()
 
-        AddHandler reminderIntervalTimer.Tick, AddressOf reminderIntervalTimer_tick
-
     End Sub
 
-    Public Sub stopReminder(reminderId As Integer)
-        Dim reminderRow As DataRow = getReminderRow(reminderId)
+    Private Function getSecondsToNextNotification(reminderRow As DataRow) As Double
+        Dim reminderType As String = reminderRow.Item(COL_REMINDER_TYPE)
+        Dim secondsToNextNotification As Double = 0
 
+        Select Case reminderType
+            Case REMINDER_TYPE_INTERVAL
+                secondsToNextNotification = convertFormattedIntervalToSeconds(reminderRow.Item(COL_REMINDER_INTERVAL))
+            Case REMINDER_TYPE_DAILY
+
+            Case REMINDER_TYPE_WEEKLY
+
+            Case REMINDER_TYPE_SPECIFIC_TIME
+
+        End Select
+
+        Return secondsToNextNotification
+    End Function
+
+    Public Sub stopReminder(reminderId As Integer)
         Dim runningReminder As RunningReminder = gRunnningRemindersMap.Item(reminderId)
-        Dim reminderIntervalTimer As Timer = runningReminder.timer
-        ''For Actual Reminder Timer stop
-        reminderIntervalTimer.Stop()
+        Dim reminderRow As DataRow = runningReminder.reminderRow
+
+        gRunnningRemindersMap.Remove(reminderId)
 
         reminderRow.Item(COL_REMINDER_STATUS) = REMINDER_STATUS_NOT_RUNNING
         reminderRow.Item(COL_REMINDER_STARTED_TIME) = DBNull.Value
         reminderRow.Item(COL_REMINDER_NOTIFIED_TIME) = DBNull.Value
+        reminderRow.Item(COL_REMINDER_NEXT_NOTIFY_TIME) = DBNull.Value
 
-        'Dont change the order. This line shoule come after updating the reminder to not running status.
-        updateStatusBar(reminderId)
+        'Dont change the order. This line shoule come after updating the reminder to 'not running' status.
+        updateStatusBar(reminderRow)
 
         commitUpdatedReminderRow()
 
@@ -207,9 +232,9 @@ Public NotInheritable Class ReminderManager
         toastNotificationForm.Close()
     End Sub
 
-    Public Sub updateStatusBar(reminderId As Integer)
-        Dim reminderRow As DataRow = getReminderRow(reminderId)
-        Dim reminderStatus As String = reminderRow.Item(COL_REMINDER_STATUS)
+    Public Sub updateStatusBar(reminderRow As DataRow)
+        Dim reminderId As Integer = reminderRow(COL_REMINDER_ID)
+        Dim reminderStatus As String = reminderRow(COL_REMINDER_STATUS)
 
         If reminderStatus = REMINDER_STATUS_RUNNING Then
             gRemainingTimeObserver.remainingTimeChanged("This reminder is running")
@@ -223,28 +248,25 @@ Public NotInheritable Class ReminderManager
 
     End Sub
 
-    Public Sub clearRemainingTimeToNotification(reminderId As Integer, statusBarLabel As ToolStripStatusLabel)
-        Dim reminderRow As DataRow = getReminderRow(reminderId)
+    Private Sub reminderTimer_tick(ByVal sender As Object, ByVal e As EventArgs)
 
-        statusBarLabel.Text = "This reminder is not running currently"
-        statusBarLabel.ForeColor = Color.Red
+        For Each runningReminderItem As KeyValuePair(Of Integer, RunningReminder) In gRunnningRemindersMap
+            Dim runningReminder As RunningReminder = runningReminderItem.Value
+            Dim reminderRow As DataRow = runningReminder.reminderRow
+            Dim nextNotifyTime As DateTime = reminderRow(COL_REMINDER_NEXT_NOTIFY_TIME)
+            Dim currentTime As DateTime = DateTime.Now
 
-        gRemainingTimeToNotificationTimer.Stop()
-    End Sub
+            If nextNotifyTime <= currentTime Then
+                Dim reminderId As Integer = runningReminderItem.Key
+                Dim toastNotificationForm As ToastNotificationForm = New ToastNotificationForm
+                runningReminder.toastNotificationForm = toastNotificationForm
+                toastNotificationForm.showNotification(reminderRow)
+                reminderRow(COL_REMINDER_NOTIFIED_TIME) = DateTime.Now
+                reminderRow.Item(COL_REMINDER_NEXT_NOTIFY_TIME) = DateTime.Now.AddSeconds(getSecondsToNextNotification(reminderRow))
+                commitUpdatedReminderRow()
+            End If
 
-    Private Sub reminderIntervalTimer_tick(ByVal sender As Object, ByVal e As EventArgs)
-        Dim reminderIntervalTimer As Timer = sender
-        Dim reminderId As Integer = reminderIntervalTimer.Tag
-
-        Dim runningReminder As RunningReminder = gRunnningRemindersMap.Item(reminderId)
-        Dim reminderRow As DataRow = runningReminder.reminderRow
-
-        Dim toastNotificationForm As ToastNotificationForm = New ToastNotificationForm
-        runningReminder.toastNotificationForm = toastNotificationForm
-        toastNotificationForm.showNotification(reminderRow)
-
-        reminderRow(COL_REMINDER_NOTIFIED_TIME) = DateTime.Now
-        commitUpdatedReminderRow()
+        Next
 
     End Sub
 
@@ -260,21 +282,25 @@ Public NotInheritable Class ReminderManager
             Return
         End If
 
-        Dim lastNotifiedTime As DateTime = If(IsDBNull(reminderRow.Item(COL_REMINDER_NOTIFIED_TIME)), Nothing, reminderRow.Item(COL_REMINDER_NOTIFIED_TIME))
-        If lastNotifiedTime = Nothing Then
-            lastNotifiedTime = If(IsDBNull(reminderRow.Item(COL_REMINDER_STARTED_TIME)), Nothing, reminderRow.Item(COL_REMINDER_STARTED_TIME))
-        End If
+        'Dim lastNotifiedTime As DateTime = If(IsDBNull(reminderRow.Item(COL_REMINDER_NOTIFIED_TIME)), Nothing, reminderRow.Item(COL_REMINDER_NOTIFIED_TIME))
+        'If lastNotifiedTime = Nothing Then
+        '    lastNotifiedTime = If(IsDBNull(reminderRow.Item(COL_REMINDER_STARTED_TIME)), Nothing, reminderRow.Item(COL_REMINDER_STARTED_TIME))
+        'End If
 
-        If lastNotifiedTime = Nothing Then
-            Return
-        End If
+        'If lastNotifiedTime = Nothing Then
+        '    Return
+        'End If
+
+        'Dim currentTime As DateTime = DateTime.Now
+        'Dim elapsedTime As Double = currentTime.Subtract(lastNotifiedTime).TotalMilliseconds
+        'Dim intervalDuration As Double = convertFormattedIntervalToMilliseconds(reminderRow.Item(COL_REMINDER_INTERVAL))
+        'Dim remainingTime As Double = intervalDuration - elapsedTime
 
         Dim currentTime As DateTime = DateTime.Now
-        Dim elapsedTime As Double = currentTime.Subtract(lastNotifiedTime).TotalMilliseconds
-        Dim intervalDuration As Double = convertFormattedIntervalToMilliseconds(reminderRow.Item(COL_REMINDER_INTERVAL))
-        Dim remainingTime As Double = intervalDuration - elapsedTime
+        Dim nextNotifyTime As DateTime = reminderRow(COL_REMINDER_NEXT_NOTIFY_TIME)
+        Dim remainingTime As Double = nextNotifyTime.Subtract(currentTime).TotalSeconds
 
-        gRemainingTimeObserver.remainingTimeChanged(getFormattedInterval(remainingTime))
+        gRemainingTimeObserver.remainingTimeChanged(getFormattedIntervalFromSeconds(remainingTime))
     End Sub
 
 
