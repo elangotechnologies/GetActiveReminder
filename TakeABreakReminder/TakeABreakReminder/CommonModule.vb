@@ -18,8 +18,11 @@ Module CommonModule
 
     Public Const COL_REMINDER_ID As String = "reminder_id"
     Public Const COL_REMINDER_TYPE As String = "reminder_type"
+    Public Const COL_REMINDER_REPEAT_MAX As String = "reminder_repeat_max"
+    Public Const COL_REMINDER_REPEAT_ELAPSED As String = "reminder_repeat_elapsed"
     Public Const COL_REMINDER_STATUS As String = "reminder_status"
     Public Const COL_REMINDER_INTERVAL As String = "reminder_interval"
+    Public Const COL_REMINDER_SPECIFIC_TIME As String = "reminder_specific_time"
     Public Const COL_REMINDER_CREATED_TIME As String = "reminder_created_time"
     Public Const COL_REMINDER_UPDATED_TIME As String = "reminder_updated_time"
     Public Const COL_REMINDER_STARTED_TIME As String = "reminder_started_time"

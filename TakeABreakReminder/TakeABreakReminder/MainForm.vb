@@ -26,16 +26,22 @@ Public Class FrmMain
         End Sub
     End Class
 
-    Private Class RemainingTimeObserver : Implements ReminderManager.IRemainingTimeObserver
-        Private Sub remainingTimeChanged(remainingTimeStr As String) Implements ReminderManager.IRemainingTimeObserver.remainingTimeChanged
+    Private Class ReminderUpdateObserver : Implements ReminderManager.IReminderUpdateObserver
+
+        Public Sub reminderStopped() Implements ReminderManager.IReminderUpdateObserver.reminderStopped
+            FrmMain.btnStartStopReminder.Text = "Start"
+        End Sub
+
+        Private Sub remainingTimeChanged(remainingTimeStr As String) Implements ReminderManager.IReminderUpdateObserver.remainingTimeChanged
             FrmMain.statusRemainingTimeLabel.Text = remainingTimeStr
         End Sub
     End Class
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         gReminderManager.startAllRunningStatusReminders()
+        setRadioBoxReminderTypes()
 
-        gReminderManager.registerForRemainingTime(New RemainingTimeObserver)
+        gReminderManager.registerForRemainingTime(New ReminderUpdateObserver)
 
         setDataGrid(dgReminderDetails, gReminderManager.getReminderTable())
         dgReminderDetails.ClearSelection()
@@ -45,6 +51,14 @@ Public Class FrmMain
         numNotificationHeight.Maximum = Screen.PrimaryScreen.Bounds.Height
         btnAddReminder.Tag = REMINDER_CREATION_STATUS_NONE
     End Sub
+
+    Private Sub setRadioBoxReminderTypes()
+        radReminderTypeInterval.Tag = REMINDER_TYPE_INTERVAL
+        radReminderTypeDaily.Tag = REMINDER_TYPE_DAILY
+        radReminderTypeWeekly.Tag = REMINDER_TYPE_WEEKLY
+        radReminderTypeSpecific.Tag = REMINDER_TYPE_SPECIFIC_TIME
+    End Sub
+
 
     Private Sub loadNotificationDurationList()
 
@@ -108,7 +122,14 @@ Public Class FrmMain
             Return
         End If
 
-        Dim reminderStatus As String = gReminderManager.getReminderStatus(gSelectedReminderId)
+        Dim reminderRow As DataRow = gReminderManager.getReminderRow(gSelectedReminderId)
+        Dim reminderStatus As String = reminderRow(COL_REMINDER_STATUS)
+        Dim reminderType As String = reminderRow.Item(COL_REMINDER_TYPE)
+        Dim currentTime As DateTime = DateTime.Now
+        If reminderType = REMINDER_TYPE_SPECIFIC_TIME AndAlso reminderRow(COL_REMINDER_SPECIFIC_TIME) <= currentTime Then
+            MsgBox("Sorry, the time for this reminder has already passed. Please set a new time to start the reminder")
+            Return
+        End If
 
         If reminderStatus = REMINDER_STATUS_NOT_RUNNING Then
             gReminderManager.startReminder(gSelectedReminderId)
@@ -118,7 +139,7 @@ Public Class FrmMain
             btnStartStopReminder.Text = "Start"
         End If
 
-        gReminderManager.updateStatusBar(gReminderManager.getReminderRow(gSelectedReminderId))
+        gReminderManager.updateStatusBar(reminderRow)
 
     End Sub
 
@@ -134,7 +155,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub FrmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If gIsExitClicked = False And gIsReminderTimerRunning = True Then
+        If gIsExitClicked = False AndAlso gIsReminderTimerRunning = True Then
             setPropertiesForCustomDialog()
             Dim result As Integer = CustomDialog.showMyDialog("Reminder is Running, Confirm Your Action", "Continue and Minimize to Tray", "Abort Reminder and Exit", "Return to Application")
             If result = CustomDialog.OPTION_ONE Then
@@ -224,20 +245,31 @@ Public Class FrmMain
     End Sub
 
     Private Function fillReminderRowFromScreen(reminderRow As DataRow, Optional isNewRecord As Boolean = True) As DataRow
-        Dim reminderType As String = REMINDER_TYPE_INTERVAL
+        Dim reminderType As String = getSelectedReminderType()
         reminderRow(COL_REMINDER_TYPE) = reminderType
+        reminderRow(COL_REMINDER_REPEAT_MAX) = numRepeat.Value
+        reminderRow(COL_REMINDER_INTERVAL) = "none"
 
-        If reminderType = REMINDER_TYPE_INTERVAL Then
-            reminderRow(COL_REMINDER_INTERVAL) = getFormattedInterval(numHours.Value, numMinutes.Value, numSeconds.Value)
-        End If
+        Select Case reminderType
+            Case REMINDER_TYPE_INTERVAL
+                reminderRow(COL_REMINDER_INTERVAL) = getFormattedInterval(numHours.Value, numMinutes.Value, numSeconds.Value)
+            Case REMINDER_TYPE_SPECIFIC_TIME
+                reminderRow(COL_REMINDER_SPECIFIC_TIME) = dtSpecific.Value
+                reminderRow(COL_REMINDER_REPEAT_MAX) = 1
+            Case REMINDER_TYPE_DAILY
 
-        reminderRow(COL_REMINDER_STATUS) = REMINDER_STATUS_NOT_RUNNING
+            Case REMINDER_TYPE_WEEKLY
+
+        End Select
+
         If isNewRecord Then
             reminderRow(COL_REMINDER_CREATED_TIME) = DateTime.Now
+            reminderRow(COL_REMINDER_REPEAT_ELAPSED) = 0
         Else
             reminderRow(COL_REMINDER_UPDATED_TIME) = DateTime.Now
         End If
 
+        reminderRow(COL_REMINDER_STATUS) = REMINDER_STATUS_NOT_RUNNING
         reminderRow(COL_NOTIFICATION_DURATION) = cmbNotificationDuration.SelectedValue
         reminderRow(COL_NOTIFICATION_SOUND) = cmbNotificationSound.Text
         reminderRow(COL_NOTIFICATION_MESSAGE) = txtNotificationMessage.Text
@@ -259,7 +291,7 @@ Public Class FrmMain
             numMinutes.Value = getMinutesFromTotalSeconds(reminderInterval)
             numSeconds.Value = getSecondsFromTotalSeconds(reminderInterval)
         End If
-
+        numRepeat.Value = reminderRow(COL_REMINDER_REPEAT_MAX)
         cmbNotificationSound.Text = reminderRow(COL_NOTIFICATION_SOUND)
         cmbNotificationDuration.SelectedValue = reminderRow(COL_NOTIFICATION_DURATION)
         txtNotificationMessage.Text = reminderRow(COL_NOTIFICATION_MESSAGE)
@@ -279,6 +311,7 @@ Public Class FrmMain
         colorPickerForeColor.Color = Color.FromName(colorPickerForeColor.Tag)
         numNotificationWidth.Value = numNotificationWidth.Tag
         numNotificationHeight.Value = numNotificationHeight.Tag
+        numRepeat.Value = numRepeat.Tag
         dgReminderDetails.ClearSelection()
         gSelectedReminderId = -1
 
@@ -292,10 +325,22 @@ Public Class FrmMain
 
 
     Private Function validateReminderData() As Boolean
-        If convertTimeToSeconds(numHours.Value, numMinutes.Value, numSeconds.Value) < REMINDER_INTERVAL_MINIMUM_LIMIT_SECONDS Then
-            MsgBox("The reminder interval must be 30 seconds or more. Current value is : " + getFormattedInterval(numHours.Value, numMinutes.Value, numSeconds.Value) + ". Please Retry!")
-            Return False
-        End If
+        Dim reminderType As String = getSelectedReminderType()
+
+        Select Case reminderType
+            Case REMINDER_TYPE_INTERVAL
+                If convertTimeToSeconds(numHours.Value, numMinutes.Value, numSeconds.Value) < REMINDER_INTERVAL_MINIMUM_LIMIT_SECONDS Then
+                    MsgBox("The reminder interval must be 30 seconds or more. Current value is : " + getFormattedInterval(numHours.Value, numMinutes.Value, numSeconds.Value) + ". Please Retry!")
+                    Return False
+                End If
+            Case REMINDER_TYPE_SPECIFIC_TIME
+                ''compare with current time
+
+            Case REMINDER_TYPE_DAILY
+
+            Case REMINDER_TYPE_WEEKLY
+
+        End Select
 
         Return True
     End Function
@@ -429,4 +474,8 @@ Public Class FrmMain
                 grpReminderTypeSpecific.Visible = True
         End Select
     End Sub
+
+    Private Function getSelectedReminderType() As String
+        Return grpReminderType.Controls.OfType(Of RadioButton).FirstOrDefault(Function(r) r.Checked = True).Tag
+    End Function
 End Class

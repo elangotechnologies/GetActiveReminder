@@ -26,9 +26,9 @@ Partial Class FrmMain
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmMain))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -36,6 +36,7 @@ Partial Class FrmMain
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.btnStartStopReminder = New System.Windows.Forms.Button()
         Me.statusLblTimerStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.trayIcon = New System.Windows.Forms.NotifyIcon(Me.components)
@@ -82,11 +83,16 @@ Partial Class FrmMain
         Me.btnDeleteReminder = New System.Windows.Forms.Button()
         Me.btnClearScreen = New System.Windows.Forms.Button()
         Me.grpReminderTypeSpecific = New System.Windows.Forms.GroupBox()
-        Me.dtReminderTypeSpecific = New System.Windows.Forms.DateTimePicker()
+        Me.dtSpecific = New System.Windows.Forms.DateTimePicker()
+        Me.numRepeat = New System.Windows.Forms.NumericUpDown()
+        Me.grpRepeat = New System.Windows.Forms.GroupBox()
         Me.colReminderId = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colReminderType = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colReminderRepeatMax = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colReminderRepeatElapsed = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colReminderStatus = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colIntervalDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colReminderSpecificTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colReminderCreateTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colReminderLastUpdatedTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colReminderStartTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -112,6 +118,8 @@ Partial Class FrmMain
         CType(Me.dgReminderDetails, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpReminderType.SuspendLayout()
         Me.grpReminderTypeSpecific.SuspendLayout()
+        CType(Me.numRepeat, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grpRepeat.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnStartStopReminder
@@ -520,15 +528,15 @@ Partial Class FrmMain
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgReminderDetails.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgReminderDetails.ColumnHeadersHeight = 65
-        Me.dgReminderDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colReminderId, Me.colReminderType, Me.colReminderStatus, Me.colIntervalDuration, Me.colReminderCreateTime, Me.colReminderLastUpdatedTime, Me.colReminderStartTime, Me.colReminderLastNotifiedTime, Me.colReminderNextNotifyTime, Me.colNotificationDuration, Me.colNotificationSound, Me.colNotificationMessage, Me.colNotificationFont, Me.colNotificationBackColor, Me.colNotificationForeColor, Me.colNotificationWidth, Me.colNotificationHeight})
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.Color.LightSteelBlue
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.SteelBlue
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgReminderDetails.DefaultCellStyle = DataGridViewCellStyle10
+        Me.dgReminderDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colReminderId, Me.colReminderType, Me.colReminderRepeatMax, Me.colReminderRepeatElapsed, Me.colReminderStatus, Me.colIntervalDuration, Me.colReminderSpecificTime, Me.colReminderCreateTime, Me.colReminderLastUpdatedTime, Me.colReminderStartTime, Me.colReminderLastNotifiedTime, Me.colReminderNextNotifyTime, Me.colNotificationDuration, Me.colNotificationSound, Me.colNotificationMessage, Me.colNotificationFont, Me.colNotificationBackColor, Me.colNotificationForeColor, Me.colNotificationWidth, Me.colNotificationHeight})
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.LightSteelBlue
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.SteelBlue
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgReminderDetails.DefaultCellStyle = DataGridViewCellStyle11
         Me.dgReminderDetails.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.dgReminderDetails.EnableHeadersVisualStyles = False
         Me.dgReminderDetails.GridColor = System.Drawing.Color.DarkGray
@@ -537,20 +545,20 @@ Partial Class FrmMain
         Me.dgReminderDetails.Name = "dgReminderDetails"
         Me.dgReminderDetails.ReadOnly = True
         Me.dgReminderDetails.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgReminderDetails.RowHeadersDefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgReminderDetails.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
         Me.dgReminderDetails.RowHeadersVisible = False
-        DataGridViewCellStyle12.BackColor = System.Drawing.Color.Lavender
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!)
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.Teal
-        Me.dgReminderDetails.RowsDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle13.BackColor = System.Drawing.Color.Lavender
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!)
+        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.Teal
+        Me.dgReminderDetails.RowsDefaultCellStyle = DataGridViewCellStyle13
         Me.dgReminderDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgReminderDetails.Size = New System.Drawing.Size(1360, 313)
         Me.dgReminderDetails.TabIndex = 33
@@ -684,8 +692,7 @@ Partial Class FrmMain
         'grpReminderTypeSpecific
         '
         Me.grpReminderTypeSpecific.BackColor = System.Drawing.Color.Transparent
-        Me.grpReminderTypeSpecific.Controls.Add(Me.dtReminderTypeSpecific)
-        Me.grpReminderTypeSpecific.Enabled = False
+        Me.grpReminderTypeSpecific.Controls.Add(Me.dtSpecific)
         Me.grpReminderTypeSpecific.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!)
         Me.grpReminderTypeSpecific.ForeColor = System.Drawing.Color.White
         Me.grpReminderTypeSpecific.Location = New System.Drawing.Point(41, 270)
@@ -696,14 +703,39 @@ Partial Class FrmMain
         Me.grpReminderTypeSpecific.Text = "Specific Time"
         Me.grpReminderTypeSpecific.Visible = False
         '
-        'dtReminderTypeSpecific
+        'dtSpecific
         '
-        Me.dtReminderTypeSpecific.CustomFormat = "dd/MMM/yyyy hh:mm:sstt"
-        Me.dtReminderTypeSpecific.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtReminderTypeSpecific.Location = New System.Drawing.Point(22, 53)
-        Me.dtReminderTypeSpecific.Name = "dtReminderTypeSpecific"
-        Me.dtReminderTypeSpecific.Size = New System.Drawing.Size(330, 30)
-        Me.dtReminderTypeSpecific.TabIndex = 0
+        Me.dtSpecific.CustomFormat = "dd/MMM/yyyy hh:mm:sstt"
+        Me.dtSpecific.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtSpecific.Location = New System.Drawing.Point(22, 53)
+        Me.dtSpecific.Name = "dtSpecific"
+        Me.dtSpecific.Size = New System.Drawing.Size(330, 30)
+        Me.dtSpecific.TabIndex = 0
+        '
+        'numRepeat
+        '
+        Me.numRepeat.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
+        Me.numRepeat.Location = New System.Drawing.Point(43, 33)
+        Me.numRepeat.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.numRepeat.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.numRepeat.Name = "numRepeat"
+        Me.numRepeat.Size = New System.Drawing.Size(143, 26)
+        Me.numRepeat.TabIndex = 38
+        Me.numRepeat.Tag = "1"
+        Me.numRepeat.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'grpRepeat
+        '
+        Me.grpRepeat.BackColor = System.Drawing.Color.Transparent
+        Me.grpRepeat.Controls.Add(Me.numRepeat)
+        Me.grpRepeat.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!)
+        Me.grpRepeat.ForeColor = System.Drawing.Color.White
+        Me.grpRepeat.Location = New System.Drawing.Point(288, 148)
+        Me.grpRepeat.Name = "grpRepeat"
+        Me.grpRepeat.Size = New System.Drawing.Size(229, 79)
+        Me.grpRepeat.TabIndex = 38
+        Me.grpRepeat.TabStop = False
+        Me.grpRepeat.Text = "Repeat"
         '
         'colReminderId
         '
@@ -719,6 +751,20 @@ Partial Class FrmMain
         Me.colReminderType.HeaderText = "Type"
         Me.colReminderType.Name = "colReminderType"
         Me.colReminderType.ReadOnly = True
+        '
+        'colReminderRepeatMax
+        '
+        Me.colReminderRepeatMax.DataPropertyName = "reminder_repeat_max"
+        Me.colReminderRepeatMax.HeaderText = "Repeat"
+        Me.colReminderRepeatMax.Name = "colReminderRepeatMax"
+        Me.colReminderRepeatMax.ReadOnly = True
+        '
+        'colReminderRepeatElapsed
+        '
+        Me.colReminderRepeatElapsed.DataPropertyName = "reminder_repeat_elapsed"
+        Me.colReminderRepeatElapsed.HeaderText = "Repeated"
+        Me.colReminderRepeatElapsed.Name = "colReminderRepeatElapsed"
+        Me.colReminderRepeatElapsed.ReadOnly = True
         '
         'colReminderStatus
         '
@@ -738,12 +784,23 @@ Partial Class FrmMain
         Me.colIntervalDuration.ReadOnly = True
         Me.colIntervalDuration.Width = 170
         '
+        'colReminderSpecificTime
+        '
+        Me.colReminderSpecificTime.DataPropertyName = "reminder_specific_time"
+        DataGridViewCellStyle4.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle4.NullValue = "none"
+        Me.colReminderSpecificTime.DefaultCellStyle = DataGridViewCellStyle4
+        Me.colReminderSpecificTime.HeaderText = "Specific"
+        Me.colReminderSpecificTime.Name = "colReminderSpecificTime"
+        Me.colReminderSpecificTime.ReadOnly = True
+        Me.colReminderSpecificTime.Width = 165
+        '
         'colReminderCreateTime
         '
         Me.colReminderCreateTime.DataPropertyName = "reminder_created_time"
-        DataGridViewCellStyle4.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.colReminderCreateTime.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle5.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle5.NullValue = "none"
+        Me.colReminderCreateTime.DefaultCellStyle = DataGridViewCellStyle5
         Me.colReminderCreateTime.HeaderText = "Created"
         Me.colReminderCreateTime.Name = "colReminderCreateTime"
         Me.colReminderCreateTime.ReadOnly = True
@@ -752,9 +809,9 @@ Partial Class FrmMain
         'colReminderLastUpdatedTime
         '
         Me.colReminderLastUpdatedTime.DataPropertyName = "reminder_updated_time"
-        DataGridViewCellStyle5.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle5.NullValue = "none"
-        Me.colReminderLastUpdatedTime.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle6.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle6.NullValue = "none"
+        Me.colReminderLastUpdatedTime.DefaultCellStyle = DataGridViewCellStyle6
         Me.colReminderLastUpdatedTime.HeaderText = "Updated"
         Me.colReminderLastUpdatedTime.Name = "colReminderLastUpdatedTime"
         Me.colReminderLastUpdatedTime.ReadOnly = True
@@ -763,9 +820,9 @@ Partial Class FrmMain
         'colReminderStartTime
         '
         Me.colReminderStartTime.DataPropertyName = "reminder_started_time"
-        DataGridViewCellStyle6.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle6.NullValue = "none"
-        Me.colReminderStartTime.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle7.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle7.NullValue = "none"
+        Me.colReminderStartTime.DefaultCellStyle = DataGridViewCellStyle7
         Me.colReminderStartTime.HeaderText = "Started"
         Me.colReminderStartTime.Name = "colReminderStartTime"
         Me.colReminderStartTime.ReadOnly = True
@@ -774,9 +831,9 @@ Partial Class FrmMain
         'colReminderLastNotifiedTime
         '
         Me.colReminderLastNotifiedTime.DataPropertyName = "reminder_notified_time"
-        DataGridViewCellStyle7.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle7.NullValue = "none"
-        Me.colReminderLastNotifiedTime.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle8.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle8.NullValue = "none"
+        Me.colReminderLastNotifiedTime.DefaultCellStyle = DataGridViewCellStyle8
         Me.colReminderLastNotifiedTime.HeaderText = "Notified"
         Me.colReminderLastNotifiedTime.Name = "colReminderLastNotifiedTime"
         Me.colReminderLastNotifiedTime.ReadOnly = True
@@ -785,9 +842,9 @@ Partial Class FrmMain
         'colReminderNextNotifyTime
         '
         Me.colReminderNextNotifyTime.DataPropertyName = "reminder_next_notify_time"
-        DataGridViewCellStyle8.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle8.NullValue = "none"
-        Me.colReminderNextNotifyTime.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle9.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle9.NullValue = "none"
+        Me.colReminderNextNotifyTime.DefaultCellStyle = DataGridViewCellStyle9
         Me.colReminderNextNotifyTime.HeaderText = "Next Notify"
         Me.colReminderNextNotifyTime.Name = "colReminderNextNotifyTime"
         Me.colReminderNextNotifyTime.ReadOnly = True
@@ -796,9 +853,9 @@ Partial Class FrmMain
         'colNotificationDuration
         '
         Me.colNotificationDuration.DataPropertyName = "notification_duration"
-        DataGridViewCellStyle9.Format = "0 secs"
-        DataGridViewCellStyle9.NullValue = "0 secs"
-        Me.colNotificationDuration.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle10.Format = "0 secs"
+        DataGridViewCellStyle10.NullValue = "0 secs"
+        Me.colNotificationDuration.DefaultCellStyle = DataGridViewCellStyle10
         Me.colNotificationDuration.HeaderText = "Notification Duration"
         Me.colNotificationDuration.Name = "colNotificationDuration"
         Me.colNotificationDuration.ReadOnly = True
@@ -867,6 +924,7 @@ Partial Class FrmMain
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1360, 962)
+        Me.Controls.Add(Me.grpRepeat)
         Me.Controls.Add(Me.grpReminderTypeSpecific)
         Me.Controls.Add(Me.btnClearScreen)
         Me.Controls.Add(Me.btnDeleteReminder)
@@ -901,6 +959,8 @@ Partial Class FrmMain
         Me.grpReminderType.ResumeLayout(False)
         Me.grpReminderType.PerformLayout()
         Me.grpReminderTypeSpecific.ResumeLayout(False)
+        CType(Me.numRepeat, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grpRepeat.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -952,11 +1012,16 @@ Partial Class FrmMain
     Friend WithEvents btnDeleteReminder As Button
     Friend WithEvents btnClearScreen As Button
     Friend WithEvents grpReminderTypeSpecific As GroupBox
-    Friend WithEvents dtReminderTypeSpecific As DateTimePicker
+    Friend WithEvents dtSpecific As DateTimePicker
+    Friend WithEvents numRepeat As NumericUpDown
+    Friend WithEvents grpRepeat As GroupBox
     Friend WithEvents colReminderId As DataGridViewTextBoxColumn
     Friend WithEvents colReminderType As DataGridViewTextBoxColumn
+    Friend WithEvents colReminderRepeatMax As DataGridViewTextBoxColumn
+    Friend WithEvents colReminderRepeatElapsed As DataGridViewTextBoxColumn
     Friend WithEvents colReminderStatus As DataGridViewTextBoxColumn
     Friend WithEvents colIntervalDuration As DataGridViewTextBoxColumn
+    Friend WithEvents colReminderSpecificTime As DataGridViewTextBoxColumn
     Friend WithEvents colReminderCreateTime As DataGridViewTextBoxColumn
     Friend WithEvents colReminderLastUpdatedTime As DataGridViewTextBoxColumn
     Friend WithEvents colReminderStartTime As DataGridViewTextBoxColumn

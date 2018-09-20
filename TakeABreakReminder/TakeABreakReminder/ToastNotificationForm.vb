@@ -62,7 +62,7 @@ Public Class ToastNotificationForm
     End Sub
 
     Private Sub ToastNotificationForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        ''gSumOfNotificationHeights -= (Me.Height + NOTIFICATION_GAP_OFFSET)
+        ''gReminderRow(COL_REMINDER_REPEAT_ELAPSED) += 1
         gVisibleNotifications.Remove(Me)
         updateVisibleNotificationPositions()
     End Sub
