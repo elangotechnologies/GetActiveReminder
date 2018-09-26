@@ -94,13 +94,14 @@ Public NotInheritable Class ReminderManager
         Dim fileReader As New FileStream("Reminders.dat", FileMode.OpenOrCreate, FileAccess.Read)
         Dim binaryFormatter As New BinaryFormatter
         gReminderTable = New DataTable
-        gReminderTable.Columns.AddRange(New DataColumn(19) _
+        gReminderTable.Columns.AddRange(New DataColumn(20) _
                 {New DataColumn(COL_REMINDER_ID, GetType(Integer)),
                 New DataColumn(COL_REMINDER_TYPE, GetType(String)),
                 New DataColumn(COL_REMINDER_REPEAT_MAX, GetType(Integer)),
                 New DataColumn(COL_REMINDER_REPEAT_ELAPSED, GetType(Integer)),
                 New DataColumn(COL_REMINDER_STATUS, GetType(String)),
                 New DataColumn(COL_REMINDER_INTERVAL, GetType(String)),
+                New DataColumn(COL_REMINDER_DAILY, GetType(String)),
                 New DataColumn(COL_REMINDER_SPECIFIC_TIME, GetType(DateTime)),
                 New DataColumn(COL_REMINDER_CREATED_TIME, GetType(DateTime)),
                 New DataColumn(COL_REMINDER_UPDATED_TIME, GetType(DateTime)),
@@ -164,16 +165,25 @@ Public NotInheritable Class ReminderManager
 
     Public Function getReminderRow(reminderId As Integer) As DataRow
         gReminderTable.PrimaryKey = New DataColumn() {gReminderTable.Columns(COL_REMINDER_ID)}
+        If gReminderTable.Rows.Count <= 0 Then
+            Return Nothing
+        End If
         Return gReminderTable.Rows.Find(reminderId)
     End Function
 
     Public Function getReminderStatus(reminderId As Integer) As String
         Dim reminderRow As DataRow = getReminderRow(reminderId)
+        If reminderRow Is Nothing Then
+            Return REMINDER_STATUS_NONE
+        End If
         Return reminderRow.Item(COL_REMINDER_STATUS)
     End Function
 
     Public Sub updateReminderStatus(reminderId As Integer, reminderStatus As String)
         Dim reminderRow As DataRow = getReminderRow(reminderId)
+        If reminderRow Is Nothing Then
+            Return
+        End If
         reminderRow.Item(COL_REMINDER_STATUS) = reminderStatus
     End Sub
 
@@ -183,6 +193,9 @@ Public NotInheritable Class ReminderManager
         End If
 
         Dim reminderRow As DataRow = getReminderRow(reminderId)
+        If reminderRow Is Nothing Then
+            Return
+        End If
 
         gRunnningRemindersMap.Item(reminderId) = New RunningReminder(reminderRow, New ToastNotificationForm)
 
@@ -191,7 +204,6 @@ Public NotInheritable Class ReminderManager
         reminderRow.Item(COL_REMINDER_REPEAT_ELAPSED) = 0
 
         updateNextNotifyTime(reminderRow)
-        ''reminderRow.Item(COL_REMINDER_NEXT_NOTIFY_TIME) = DateTime.Now.AddSeconds(getSecondsToNextNotification(reminderRow))
 
         'Dont change the order. This line shoule come after updating the reminder to 'running' status.
         updateStatusBar(reminderRow)
@@ -207,11 +219,38 @@ Public NotInheritable Class ReminderManager
             Case REMINDER_TYPE_INTERVAL
                 reminderRow.Item(COL_REMINDER_NEXT_NOTIFY_TIME) = DateTime.Now.AddSeconds(convertFormattedIntervalToSeconds(reminderRow.Item(COL_REMINDER_INTERVAL)))
             Case REMINDER_TYPE_DAILY
-
-            Case REMINDER_TYPE_WEEKLY
-
+                reminderRow.Item(COL_REMINDER_NEXT_NOTIFY_TIME) = getNextNotificationTimeForDailyReminder(reminderRow)
             Case REMINDER_TYPE_SPECIFIC_TIME
                 reminderRow.Item(COL_REMINDER_NEXT_NOTIFY_TIME) = reminderRow.Item(COL_REMINDER_SPECIFIC_TIME)
+        End Select
+
+    End Sub
+
+    Private Sub updateRepeatElapsed(reminderRow As DataRow)
+        Dim reminderType As String = reminderRow.Item(COL_REMINDER_TYPE)
+
+        Select Case reminderType
+            Case REMINDER_TYPE_INTERVAL
+                reminderRow(COL_REMINDER_REPEAT_ELAPSED) += 1
+            Case REMINDER_TYPE_DAILY
+                'to cehck if both dates falls in same week
+                Dim notifiedTime As DateTime = reminderRow(COL_REMINDER_NOTIFIED_TIME)
+                Dim nextNotifyTime As DateTime = reminderRow(COL_REMINDER_NEXT_NOTIFY_TIME)
+
+                Dim dayOftheWeek As Integer = If(notifiedTime.DayOfWeek = 0, 7, notifiedTime.DayOfWeek)
+                Dim mondayOfNotifiedTime As DateTime = notifiedTime.AddDays((dayOftheWeek - 1) * -1)
+                log.Debug("mondayOfNotifiedTime: " + mondayOfNotifiedTime.ToString)
+                dayOftheWeek = If(nextNotifyTime.DayOfWeek = 0, 7, nextNotifyTime.DayOfWeek)
+                Dim mondayOfNextNotifyTime As DateTime = nextNotifyTime.AddDays((dayOftheWeek - 1) * -1)
+                log.Debug("mondayOfNextNotifyTime: " + mondayOfNextNotifyTime.ToString)
+                If mondayOfNotifiedTime.Date <> mondayOfNextNotifyTime.Date Then
+                    'Increase occurance as the next notification falls in next week
+                    reminderRow(COL_REMINDER_REPEAT_ELAPSED) += 1
+                    log.Debug("Increasing the repeat count")
+                End If
+
+            Case REMINDER_TYPE_SPECIFIC_TIME
+                reminderRow(COL_REMINDER_REPEAT_ELAPSED) += 1
         End Select
 
     End Sub
@@ -219,6 +258,10 @@ Public NotInheritable Class ReminderManager
     Public Sub stopReminder(reminderId As Integer)
         Dim runningReminder As RunningReminder = gRunnningRemindersMap.Item(reminderId)
         Dim reminderRow As DataRow = runningReminder.reminderRow
+
+        If reminderRow Is Nothing Then
+            Return
+        End If
 
         gRunnningRemindersMap.Remove(reminderId)
 
@@ -256,6 +299,11 @@ Public NotInheritable Class ReminderManager
         For Each runningReminderItem As KeyValuePair(Of Integer, RunningReminder) In gRunnningRemindersMap
             Dim runningReminder As RunningReminder = runningReminderItem.Value
             Dim reminderRow As DataRow = runningReminder.reminderRow
+
+            If reminderRow Is Nothing Then
+                Return
+            End If
+
             Dim nextNotifyTime As DateTime = reminderRow(COL_REMINDER_NEXT_NOTIFY_TIME)
             Dim currentTime As DateTime = DateTime.Now
             Dim reminderId As Integer = runningReminderItem.Key
@@ -273,12 +321,12 @@ Public NotInheritable Class ReminderManager
                 toastNotificationForm = New ToastNotificationForm
                 runningReminder.toastNotificationForm = toastNotificationForm
                 toastNotificationForm.showNotification(reminderRow)
-                reminderRow(COL_REMINDER_REPEAT_ELAPSED) += 1
                 reminderRow(COL_REMINDER_NOTIFIED_TIME) = DateTime.Now
                 updateNextNotifyTime(reminderRow)
+                'This line should come after updating next notify time
+                updateRepeatElapsed(reminderRow)
                 commitUpdatedReminderRow()
             End If
-
         Next
 
     End Sub
@@ -295,13 +343,54 @@ Public NotInheritable Class ReminderManager
             Return
         End If
 
+        If reminderRow(COL_REMINDER_STATUS) = REMINDER_STATUS_RUNNING AndAlso reminderRow(COL_REMINDER_REPEAT_ELAPSED) >= reminderRow(COL_REMINDER_REPEAT_MAX) Then
+            Return
+        End If
+
         Dim currentTime As DateTime = DateTime.Now
         Dim nextNotifyTime As DateTime = reminderRow(COL_REMINDER_NEXT_NOTIFY_TIME)
         Dim remainingTime As Double = nextNotifyTime.Subtract(currentTime).TotalSeconds
+
+        If remainingTime < 0 Then
+            Return
+        End If
 
         gReminderUpdateObserver.remainingTimeChanged(getFormattedIntervalFromSeconds(remainingTime))
     End Sub
 
 
+    Private Function getNextNotificationTimeForDailyReminder(reminderRow As DataRow) As DateTime
+        Dim nextNotificationTime As DateTime = Nothing
 
+        Dim dailyReminderTime As String = reminderRow(COL_REMINDER_DAILY)
+        Dim dailyReminderTimeArray As Array = dailyReminderTime.Split(" ")
+        Dim daysArray As Array = dailyReminderTimeArray(0).ToString.Split("|")
+        Dim timeStr As String = dailyReminderTimeArray(1) + " " + dailyReminderTimeArray(2)
+        Dim reminderTime As DateTime = DateTime.ParseExact(timeStr, "hh:mm:ss tt", CultureInfo.InvariantCulture)
+
+        Dim dateTimeNow As DateTime = DateTime.Now
+        Dim dayOftheWeek As Integer = dateTimeNow.DayOfWeek
+        dayOftheWeek = If(dayOftheWeek = 0, 7, dayOftheWeek)
+
+        For Each day As String In daysArray
+            Dim indexOfReminderDay As Integer = daysToIndexMap(day)
+            Dim daysToAdd As Integer = If(indexOfReminderDay <= dayOftheWeek, (dayOftheWeek - indexOfReminderDay) * -1, (indexOfReminderDay - dayOftheWeek))
+            Dim reminderDateTime As DateTime = dateTimeNow.AddDays(daysToAdd)
+            reminderDateTime = New DateTime(reminderDateTime.Year, reminderDateTime.Month, reminderDateTime.Day,
+                                                    reminderTime.Hour, reminderTime.Minute, reminderTime.Second, 0)
+            If reminderDateTime >= dateTimeNow Then
+                nextNotificationTime = reminderDateTime
+                Exit For
+            End If
+        Next
+
+        If nextNotificationTime = Nothing Then
+            Dim indexOfReminderDayNextWeek As Integer = daysToIndexMap(daysArray(0))
+            Dim daysToAdd As Integer = (7 - dayOftheWeek) + indexOfReminderDayNextWeek
+            Dim reminderDateTime As DateTime = dateTimeNow.AddDays(daysToAdd)
+            nextNotificationTime = New DateTime(reminderDateTime.Year, reminderDateTime.Month, reminderDateTime.Day,
+                                                    reminderTime.Hour, reminderTime.Minute, reminderTime.Second, 0)
+        End If
+        Return nextNotificationTime
+    End Function
 End Class

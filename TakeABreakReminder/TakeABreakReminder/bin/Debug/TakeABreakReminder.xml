@@ -22,6 +22,16 @@ TakeABreakReminder
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:TakeABreakReminder.My.Resources.Resources._new">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources._stop">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:TakeABreakReminder.My.Resources.Resources.Alarm01">
 <summary>
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
@@ -72,7 +82,12 @@ TakeABreakReminder
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
 </summary>
 </member>
-<member name="P:TakeABreakReminder.My.Resources.Resources.blue_bg">
+<member name="P:TakeABreakReminder.My.Resources.Resources.cancel">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.cancel_disabled">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
@@ -87,9 +102,54 @@ TakeABreakReminder
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
 </summary>
 </member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.clear">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.clear_disabled">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.confirm">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.confirm_disabled">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.contentbg">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.delete">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.delete_disabled">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:TakeABreakReminder.My.Resources.Resources.ding">
 <summary>
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.edit">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.edit_disabled">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
 <member name="P:TakeABreakReminder.My.Resources.Resources.ir_begin">
@@ -105,6 +165,11 @@ TakeABreakReminder
 <member name="P:TakeABreakReminder.My.Resources.Resources.ir_inter">
 <summary>
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.new_disabled">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
 <member name="P:TakeABreakReminder.My.Resources.Resources.notify">
@@ -177,6 +242,11 @@ TakeABreakReminder
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
 </summary>
 </member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.sidemenubg">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:TakeABreakReminder.My.Resources.Resources.Speech_Disambiguation">
 <summary>
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
@@ -200,6 +270,21 @@ TakeABreakReminder
 <member name="P:TakeABreakReminder.My.Resources.Resources.Speech_Sleep">
 <summary>
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.start">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.start_disabled">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:TakeABreakReminder.My.Resources.Resources.stop_disabled">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
 <member name="P:TakeABreakReminder.My.Resources.Resources.tada">

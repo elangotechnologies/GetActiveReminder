@@ -2,17 +2,36 @@
 Imports System.Globalization
 
 Module CommonModule
-    Public Const REMINDER_TYPE_INTERVAL As String = "interval"
-    Public Const REMINDER_TYPE_DAILY As String = "daily"
-    Public Const REMINDER_TYPE_WEEKLY As String = "weekly"
-    Public Const REMINDER_TYPE_SPECIFIC_TIME As String = "specific"
+    Public Const REMINDER_TYPE_NONE As String = "none"
+    Public Const REMINDER_TYPE_INTERVAL As String = "Interval"
+    Public Const REMINDER_TYPE_DAILY As String = "Daily"
+    Public Const REMINDER_TYPE_SPECIFIC_TIME As String = "Specific"
 
-    Public Const REMINDER_CREATION_STATUS_NONE As Integer = 0
-    Public Const REMINDER_CREATION_STATUS_IN_PROGRESS As Integer = 1
+    Public Const OPERATION_NONE As Integer = -1
+    Public Const OPERATION_SCREEN_LOADED As Integer = 0
+    Public Const OPERATION_SCREEN_CLEARED As Integer = 1
+    Public Const OPERATION_SCREEN_VALUES_RESET As Integer = 2
+    Public Const OPERATION_ADD_STARTED As Integer = 3
+    Public Const OPERATION_ADD_COMPLETED As Integer = 4
+    Public Const OPERATION_ADD_CANCELED As Integer = 5
+    Public Const OPERATION_EDIT_STARTED As Integer = 6
+    Public Const OPERATION_EDIT_COMPLETED As Integer = 7
+    Public Const OPERATION_EDIT_CANCELED As Integer = 8
+    Public Const OPERATION_DELETE_COMPLETED As Integer = 9
+    Public Const OPERATION_REMINDER_STARTED As Integer = 10
+    Public Const OPERATION_REMINDER_STOPPED As Integer = 11
+    Public Const OPERATION_REMINDER_SELECTED As Integer = 12
+    Public Const OPERATION_REMINDER_TYPE_INTERVAL_CHECKED As Integer = 13
+    Public Const OPERATION_REMINDER_TYPE_DAILY_CHECKED As Integer = 14
+    Public Const OPERATION_REMINDER_TYPE_SPECIFIC_CHECKED As Integer = 15
+    Public Const OPERATION_REMINDER_TYPE_INTERVAL_UNCHECKED As Integer = 16
+    Public Const OPERATION_REMINDER_TYPE_DAILY_UNCHECKED As Integer = 17
+    Public Const OPERATION_REMINDER_TYPE_SPECIFIC_UNCHECKED As Integer = 18
 
     Public Const REMINDER_NOTIFICATION_VISIBLE_STATUS_NONE As Integer = 0
     Public Const REMINDER_NOTIFICATION_VISIBLE_STATUS_SHOWING As Integer = 1
 
+    Public Const REMINDER_STATUS_NONE As String = "none"
     Public Const REMINDER_STATUS_RUNNING As String = "running"
     Public Const REMINDER_STATUS_NOT_RUNNING As String = "not running"
 
@@ -23,6 +42,7 @@ Module CommonModule
     Public Const COL_REMINDER_STATUS As String = "reminder_status"
     Public Const COL_REMINDER_INTERVAL As String = "reminder_interval"
     Public Const COL_REMINDER_SPECIFIC_TIME As String = "reminder_specific_time"
+    Public Const COL_REMINDER_DAILY As String = "reminder_daily"
     Public Const COL_REMINDER_CREATED_TIME As String = "reminder_created_time"
     Public Const COL_REMINDER_UPDATED_TIME As String = "reminder_updated_time"
     Public Const COL_REMINDER_STARTED_TIME As String = "reminder_started_time"
@@ -46,11 +66,18 @@ Module CommonModule
 
     Public Const REMINDER_INTERVAL_MINIMUM_LIMIT_SECONDS As Double = 5
 
+    Public Const REMINDER_ID_NONE As Integer = -1
+
     Public Const NOTIFICATION_GAP_OFFSET As Integer = 10
 
     Public gVisibleNotifications As New List(Of ToastNotificationForm)
 
     Public gSumOfNotificationHeights As Integer = 0
+
+    Private BUTTON_MOUSE_HOVER_OFFSET As Integer = 20
+
+    Public ReadOnly indexToDaysMap As Dictionary(Of Integer, String) = New Dictionary(Of Integer, String) From {{1, "Mon"}, {2, "Tue"}, {3, "Wed"}, {4, "Thu"}, {5, "Fri"}, {6, "Sat"}, {7, "Sun"}}
+    Public ReadOnly daysToIndexMap As Dictionary(Of String, Integer) = New Dictionary(Of String, Integer) From {{"Mon", 1}, {"Tue", 2}, {"Wed", 3}, {"Thu", 4}, {"Fri", 5}, {"Sat", 6}, {"Sun", 7}}
 
     Public Function getFontObjFromDisplayFormat(fontDisplayString As String) As Font
         Dim typeConverter As TypeConverter = TypeDescriptor.GetConverter(GetType(Font))
@@ -61,19 +88,19 @@ Module CommonModule
     End Function
 
     Public Function getFormattedIntervalFromMilliseconds(milliseconds As Double) As String
-        Dim hours As Integer = milliseconds / HOURS_MILLISECONDS_CONVERTER
+        Dim hours As Integer = Math.Floor(milliseconds / HOURS_MILLISECONDS_CONVERTER)
         milliseconds = milliseconds Mod HOURS_MILLISECONDS_CONVERTER
-        Dim minutes As Integer = milliseconds / MINUTES_MILLISECONDS_CONVERTER
+        Dim minutes As Integer = Math.Floor(milliseconds / MINUTES_MILLISECONDS_CONVERTER)
         milliseconds = milliseconds Mod MINUTES_MILLISECONDS_CONVERTER
-        Dim seconds As Integer = milliseconds / SECONDS_MILLISECONDS_CONVERTER
+        Dim seconds As Integer = Math.Floor(milliseconds / SECONDS_MILLISECONDS_CONVERTER)
 
         Return getFormattedInterval(hours, minutes, seconds)
     End Function
 
     Public Function getFormattedIntervalFromSeconds(seconds As Double) As String
-        Dim hours As Integer = seconds / HOURS_SECONDS_CONVERTER
+        Dim hours As Integer = Math.Floor(seconds / HOURS_SECONDS_CONVERTER)
         seconds = seconds Mod HOURS_SECONDS_CONVERTER
-        Dim minutes As Integer = seconds / MINUTES_SECONDS_CONVERTER
+        Dim minutes As Integer = Math.Floor(seconds / MINUTES_SECONDS_CONVERTER)
         seconds = seconds Mod MINUTES_SECONDS_CONVERTER
 
         Return getFormattedInterval(hours, minutes, seconds)
@@ -139,23 +166,23 @@ Module CommonModule
     End Sub
 
     Public Function getHoursFromTotalMilliseconds(milliseconds As Double) As Integer
-        Return milliseconds / HOURS_MILLISECONDS_CONVERTER
+        Return Math.Floor(milliseconds / HOURS_MILLISECONDS_CONVERTER)
     End Function
 
     Public Function getMinutesFromTotalMilliseconds(milliseconds As Double) As Integer
-        Return (milliseconds Mod HOURS_MILLISECONDS_CONVERTER) / MINUTES_MILLISECONDS_CONVERTER
+        Return Math.Floor((milliseconds Mod HOURS_MILLISECONDS_CONVERTER) / MINUTES_MILLISECONDS_CONVERTER)
     End Function
 
     Public Function getSecondsFromTotalMilliseconds(milliseconds As Double) As Integer
-        Return ((milliseconds Mod HOURS_MILLISECONDS_CONVERTER) Mod MINUTES_MILLISECONDS_CONVERTER) / SECONDS_MILLISECONDS_CONVERTER
+        Return Math.Floor(((milliseconds Mod HOURS_MILLISECONDS_CONVERTER) Mod MINUTES_MILLISECONDS_CONVERTER) / SECONDS_MILLISECONDS_CONVERTER)
     End Function
 
     Public Function getHoursFromTotalSeconds(seconds As Double) As Integer
-        Return seconds / HOURS_SECONDS_CONVERTER
+        Return Math.Floor(seconds / HOURS_SECONDS_CONVERTER)
     End Function
 
     Public Function getMinutesFromTotalSeconds(seconds As Double) As Integer
-        Return (seconds Mod HOURS_SECONDS_CONVERTER) / MINUTES_SECONDS_CONVERTER
+        Return Math.Floor((seconds Mod HOURS_SECONDS_CONVERTER) / MINUTES_SECONDS_CONVERTER)
     End Function
 
     Public Function getSecondsFromTotalSeconds(seconds As Double) As Integer
@@ -184,5 +211,27 @@ Module CommonModule
         Return sumOfNotificationsHeight
 
     End Function
+
+    Public Sub addButtonAppearnceEventHandlers(buttonsList As List(Of PictureBox))
+        For Each button As PictureBox In buttonsList
+            AddHandler button.MouseEnter, AddressOf showFocusedButtonAppearance
+            AddHandler button.MouseUp, AddressOf showFocusedButtonAppearance
+            AddHandler button.MouseLeave, AddressOf showNormalButtonAppearance
+            AddHandler button.MouseDown, AddressOf showNormalButtonAppearance
+        Next
+    End Sub
+
+    Private Sub showNormalButtonAppearance(sender As Object, e As EventArgs)
+        setButtonApperance(sender, BUTTON_MOUSE_HOVER_OFFSET * -1)
+    End Sub
+
+    Private Sub showFocusedButtonAppearance(sender As Object, e As EventArgs)
+        setButtonApperance(sender, BUTTON_MOUSE_HOVER_OFFSET)
+    End Sub
+
+    Public Sub setButtonApperance(button As Object, offset As Integer)
+        button.Size = New Size(button.Width + offset, button.Height + offset)
+        button.Location = New Point(button.Location.X + ((offset / 2) * -1), button.Location.Y + ((offset / 2) * -1))
+    End Sub
 
 End Module
