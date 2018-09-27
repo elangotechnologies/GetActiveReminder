@@ -1,11 +1,6 @@
-﻿Imports System.ComponentModel
-Imports System.Drawing.Drawing2D
-Imports System.Globalization
+﻿Imports System.Globalization
 Imports System.IO
-Imports System.Threading
-Imports Microsoft.VisualBasic.Devices
 Imports NLog
-Imports TakeABreakReminder
 
 Public Class FrmMain
     Shared log As Logger = LogManager.GetCurrentClassLogger()
@@ -38,13 +33,16 @@ Public Class FrmMain
     End Class
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
         Dim buttonsList As New List(Of PictureBox) From {btnAddReminder, btnDeleteReminder, btnStartStopReminder, btnClearScreen, btnEditReminder}
         addButtonAppearnceEventHandlers(buttonsList)
         gReminderManager.registerForRemainingTime(New ReminderUpdateObserver)
         loadNotificationDurationList()
         loadNotificationSoundList()
         setDataGrid(dgReminderDetails, gReminderManager.getReminderTable())
+
+        lblReminderTypeInterval.Location = New Point(panelReminderTypeContent.Location.X + radReminderTypeInterval.Location.X + 15, panelReminderTypeContent.Location.Y + radReminderTypeInterval.Location.Y)
+        lblReminderTypeDaily.Location = New Point(panelReminderTypeContent.Location.X + radReminderTypeDaily.Location.X + 15, panelReminderTypeContent.Location.Y + radReminderTypeDaily.Location.Y)
+        lblReminderTypeSpecific.Location = New Point(panelReminderTypeContent.Location.X + radReminderTypeSpecific.Location.X + 15, panelReminderTypeContent.Location.Y + radReminderTypeSpecific.Location.Y)
 
         radReminderTypeInterval.Tag = REMINDER_TYPE_INTERVAL
         radReminderTypeDaily.Tag = REMINDER_TYPE_DAILY
@@ -233,7 +231,7 @@ Public Class FrmMain
         Else
             reminderRow(COL_REMINDER_UPDATED_TIME) = DateTime.Now
         End If
-        reminderRow(COL_REMINDER_NEXT_NOTIFY_TIME) = DBNull.Value
+        ''reminderRow(COL_REMINDER_NEXT_NOTIFY_TIME) = DBNull.Value
 
         reminderRow(COL_REMINDER_STATUS) = REMINDER_STATUS_NOT_RUNNING
         reminderRow(COL_NOTIFICATION_DURATION) = cmbNotificationDuration.SelectedValue
@@ -745,6 +743,7 @@ Public Class FrmMain
                 numMinutes.Value = numMinutes.Tag
                 numSeconds.Value = numSeconds.Tag
                 numRepeat.Value = numRepeat.Tag
+                numRepeat.Enabled = True
 
             Case OPERATION_REMINDER_TYPE_DAILY_CHECKED
                 grpReminderTypeDaily.Visible = True
@@ -753,11 +752,13 @@ Public Class FrmMain
                 Next
                 dtDailyTime.Value = DateTime.Now
                 numRepeat.Value = numRepeat.Tag
+                numRepeat.Enabled = True
 
             Case OPERATION_REMINDER_TYPE_SPECIFIC_CHECKED
                 grpReminderTypeSpecific.Visible = True
                 dtSpecific.Value = DateTime.Now
                 numRepeat.Value = numRepeat.Tag
+                numRepeat.Enabled = False
 
             Case OPERATION_REMINDER_TYPE_INTERVAL_UNCHECKED
                 grpReminderTypeInterval.Visible = False

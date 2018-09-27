@@ -21,6 +21,7 @@ Public NotInheritable Class ReminderManager
 
     Private Sub New()
         '' cleanSavedReminderTable()
+
         gReminderTimer.Interval = 1 * SECONDS_MILLISECONDS_CONVERTER
         AddHandler gReminderTimer.Tick, AddressOf reminderTimer_tick
 
@@ -126,7 +127,7 @@ Public NotInheritable Class ReminderManager
             Console.WriteLine("loadReminders: DeSerialization failed. Reason: " & ex.Message)
         Catch ex As TargetInvocationException
             Dim iEX = ex.InnerException
-            MsgBox(iEX.Message)
+            MsgBox("TargetInvocationException catched: " + iEX.Message)
         Finally
             fileReader.Close()
         End Try
