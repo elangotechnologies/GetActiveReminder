@@ -632,6 +632,8 @@ Public Class FrmMain
                 panelReminderTypeIntervalContent.Enabled = True
                 panelReminderTypeDailyContent.Enabled = True
                 panelReminderTypeSpecificContent.Enabled = True
+                panelNotificationSettingsContent.Enabled = True
+                panelRepeatContent.Enabled = True
 
                 radReminderTypeInterval.Checked = True
 
