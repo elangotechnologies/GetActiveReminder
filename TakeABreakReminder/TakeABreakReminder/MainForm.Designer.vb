@@ -131,6 +131,17 @@ Partial Class FrmMain
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lblReminderContentTipRight = New System.Windows.Forms.Label()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HistoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UserActionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RemindedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.contextMenuForTrayIcon.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.dgReminderDetails, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -177,6 +188,7 @@ Partial Class FrmMain
         Me.panelNotificationSettingsContent.SuspendLayout()
         CType(Me.numNotificationHeight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numNotificationWidth, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'statusLblTimerStatus
@@ -285,7 +297,7 @@ Partial Class FrmMain
         DataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.Teal
         Me.dgReminderDetails.RowsDefaultCellStyle = DataGridViewCellStyle13
         Me.dgReminderDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgReminderDetails.Size = New System.Drawing.Size(1439, 270)
+        Me.dgReminderDetails.Size = New System.Drawing.Size(1439, 262)
         Me.dgReminderDetails.TabIndex = 33
         '
         'colReminderId
@@ -517,9 +529,9 @@ Partial Class FrmMain
         Me.btnAddReminder.BackColor = System.Drawing.Color.Transparent
         Me.btnAddReminder.BackgroundImage = CType(resources.GetObject("btnAddReminder.BackgroundImage"), System.Drawing.Image)
         Me.btnAddReminder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.btnAddReminder.Location = New System.Drawing.Point(10, 14)
+        Me.btnAddReminder.Location = New System.Drawing.Point(20, 50)
         Me.btnAddReminder.Name = "btnAddReminder"
-        Me.btnAddReminder.Size = New System.Drawing.Size(64, 64)
+        Me.btnAddReminder.Size = New System.Drawing.Size(48, 48)
         Me.btnAddReminder.TabIndex = 41
         Me.btnAddReminder.TabStop = False
         '
@@ -528,9 +540,9 @@ Partial Class FrmMain
         Me.btnClearScreen.BackColor = System.Drawing.Color.Transparent
         Me.btnClearScreen.BackgroundImage = CType(resources.GetObject("btnClearScreen.BackgroundImage"), System.Drawing.Image)
         Me.btnClearScreen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.btnClearScreen.Location = New System.Drawing.Point(11, 466)
+        Me.btnClearScreen.Location = New System.Drawing.Point(20, 474)
         Me.btnClearScreen.Name = "btnClearScreen"
-        Me.btnClearScreen.Size = New System.Drawing.Size(64, 64)
+        Me.btnClearScreen.Size = New System.Drawing.Size(48, 48)
         Me.btnClearScreen.TabIndex = 42
         Me.btnClearScreen.TabStop = False
         '
@@ -539,9 +551,9 @@ Partial Class FrmMain
         Me.btnStartStopReminder.BackColor = System.Drawing.Color.Transparent
         Me.btnStartStopReminder.BackgroundImage = CType(resources.GetObject("btnStartStopReminder.BackgroundImage"), System.Drawing.Image)
         Me.btnStartStopReminder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.btnStartStopReminder.Location = New System.Drawing.Point(11, 240)
+        Me.btnStartStopReminder.Location = New System.Drawing.Point(20, 262)
         Me.btnStartStopReminder.Name = "btnStartStopReminder"
-        Me.btnStartStopReminder.Size = New System.Drawing.Size(64, 64)
+        Me.btnStartStopReminder.Size = New System.Drawing.Size(48, 48)
         Me.btnStartStopReminder.TabIndex = 43
         Me.btnStartStopReminder.TabStop = False
         '
@@ -550,9 +562,9 @@ Partial Class FrmMain
         Me.btnDeleteReminder.BackColor = System.Drawing.Color.Transparent
         Me.btnDeleteReminder.BackgroundImage = CType(resources.GetObject("btnDeleteReminder.BackgroundImage"), System.Drawing.Image)
         Me.btnDeleteReminder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.btnDeleteReminder.Location = New System.Drawing.Point(11, 353)
+        Me.btnDeleteReminder.Location = New System.Drawing.Point(20, 368)
         Me.btnDeleteReminder.Name = "btnDeleteReminder"
-        Me.btnDeleteReminder.Size = New System.Drawing.Size(64, 64)
+        Me.btnDeleteReminder.Size = New System.Drawing.Size(48, 48)
         Me.btnDeleteReminder.TabIndex = 44
         Me.btnDeleteReminder.TabStop = False
         '
@@ -561,9 +573,9 @@ Partial Class FrmMain
         Me.btnEditReminder.BackColor = System.Drawing.Color.Transparent
         Me.btnEditReminder.BackgroundImage = CType(resources.GetObject("btnEditReminder.BackgroundImage"), System.Drawing.Image)
         Me.btnEditReminder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.btnEditReminder.Location = New System.Drawing.Point(11, 127)
+        Me.btnEditReminder.Location = New System.Drawing.Point(20, 156)
         Me.btnEditReminder.Name = "btnEditReminder"
-        Me.btnEditReminder.Size = New System.Drawing.Size(64, 64)
+        Me.btnEditReminder.Size = New System.Drawing.Size(48, 48)
         Me.btnEditReminder.TabIndex = 45
         Me.btnEditReminder.TabStop = False
         '
@@ -573,7 +585,7 @@ Partial Class FrmMain
         Me.scMainContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.scMainContainer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.scMainContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
-        Me.scMainContainer.Location = New System.Drawing.Point(0, 0)
+        Me.scMainContainer.Location = New System.Drawing.Point(0, 29)
         Me.scMainContainer.Name = "scMainContainer"
         '
         'scMainContainer.Panel1
@@ -591,7 +603,7 @@ Partial Class FrmMain
         Me.scMainContainer.Panel2.BackColor = System.Drawing.Color.Transparent
         Me.scMainContainer.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.scMainContainer.Panel2.Controls.Add(Me.scMainContentContainer)
-        Me.scMainContainer.Size = New System.Drawing.Size(1533, 932)
+        Me.scMainContainer.Size = New System.Drawing.Size(1533, 903)
         Me.scMainContainer.SplitterDistance = 90
         Me.scMainContainer.SplitterWidth = 2
         Me.scMainContainer.TabIndex = 48
@@ -611,8 +623,8 @@ Partial Class FrmMain
         'scMainContentContainer.Panel2
         '
         Me.scMainContentContainer.Panel2.Controls.Add(Me.scContentContainer)
-        Me.scMainContentContainer.Size = New System.Drawing.Size(1439, 930)
-        Me.scMainContentContainer.SplitterDistance = 62
+        Me.scMainContentContainer.Size = New System.Drawing.Size(1439, 901)
+        Me.scMainContentContainer.SplitterDistance = 60
         Me.scMainContentContainer.TabIndex = 41
         '
         'panelReminderType
@@ -626,13 +638,13 @@ Partial Class FrmMain
         Me.panelReminderType.Dock = System.Windows.Forms.DockStyle.Fill
         Me.panelReminderType.Location = New System.Drawing.Point(0, 0)
         Me.panelReminderType.Name = "panelReminderType"
-        Me.panelReminderType.Size = New System.Drawing.Size(1439, 62)
+        Me.panelReminderType.Size = New System.Drawing.Size(1439, 60)
         Me.panelReminderType.TabIndex = 0
         '
         'lblReminderTypeSpecific
         '
         Me.lblReminderTypeSpecific.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!)
-        Me.lblReminderTypeSpecific.ForeColor = System.Drawing.Color.White
+        Me.lblReminderTypeSpecific.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.lblReminderTypeSpecific.Location = New System.Drawing.Point(1110, 12)
         Me.lblReminderTypeSpecific.Name = "lblReminderTypeSpecific"
         Me.lblReminderTypeSpecific.Size = New System.Drawing.Size(142, 32)
@@ -642,7 +654,7 @@ Partial Class FrmMain
         'lblReminderTypeDaily
         '
         Me.lblReminderTypeDaily.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!)
-        Me.lblReminderTypeDaily.ForeColor = System.Drawing.Color.White
+        Me.lblReminderTypeDaily.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.lblReminderTypeDaily.Location = New System.Drawing.Point(983, 12)
         Me.lblReminderTypeDaily.Name = "lblReminderTypeDaily"
         Me.lblReminderTypeDaily.Size = New System.Drawing.Size(78, 32)
@@ -652,7 +664,7 @@ Partial Class FrmMain
         'lblReminderTypeInterval
         '
         Me.lblReminderTypeInterval.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!)
-        Me.lblReminderTypeInterval.ForeColor = System.Drawing.Color.White
+        Me.lblReminderTypeInterval.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.lblReminderTypeInterval.Location = New System.Drawing.Point(837, 12)
         Me.lblReminderTypeInterval.Name = "lblReminderTypeInterval"
         Me.lblReminderTypeInterval.Size = New System.Drawing.Size(100, 32)
@@ -664,6 +676,7 @@ Partial Class FrmMain
         Me.panelReminderTypeContent.Controls.Add(Me.radReminderTypeInterval)
         Me.panelReminderTypeContent.Controls.Add(Me.radReminderTypeSpecific)
         Me.panelReminderTypeContent.Controls.Add(Me.radReminderTypeDaily)
+        Me.panelReminderTypeContent.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.panelReminderTypeContent.Location = New System.Drawing.Point(334, 9)
         Me.panelReminderTypeContent.Name = "panelReminderTypeContent"
         Me.panelReminderTypeContent.Size = New System.Drawing.Size(471, 46)
@@ -673,7 +686,7 @@ Partial Class FrmMain
         '
         Me.lblReminderType.AutoSize = True
         Me.lblReminderType.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblReminderType.ForeColor = System.Drawing.Color.White
+        Me.lblReminderType.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.lblReminderType.Location = New System.Drawing.Point(135, 16)
         Me.lblReminderType.Name = "lblReminderType"
         Me.lblReminderType.Size = New System.Drawing.Size(166, 24)
@@ -687,7 +700,7 @@ Partial Class FrmMain
         Me.lblReminderTypeTip.ForeColor = System.Drawing.Color.White
         Me.lblReminderTypeTip.Location = New System.Drawing.Point(0, 0)
         Me.lblReminderTypeTip.Name = "lblReminderTypeTip"
-        Me.lblReminderTypeTip.Size = New System.Drawing.Size(1439, 62)
+        Me.lblReminderTypeTip.Size = New System.Drawing.Size(1439, 60)
         Me.lblReminderTypeTip.TabIndex = 40
         Me.lblReminderTypeTip.Text = "Reminder TYPE configuration appears here..."
         Me.lblReminderTypeTip.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -709,8 +722,8 @@ Partial Class FrmMain
         'scContentContainer.Panel2
         '
         Me.scContentContainer.Panel2.Controls.Add(Me.dgReminderDetails)
-        Me.scContentContainer.Size = New System.Drawing.Size(1439, 864)
-        Me.scContentContainer.SplitterDistance = 592
+        Me.scContentContainer.Size = New System.Drawing.Size(1439, 837)
+        Me.scContentContainer.SplitterDistance = 573
         Me.scContentContainer.SplitterWidth = 2
         Me.scContentContainer.TabIndex = 40
         '
@@ -721,7 +734,7 @@ Partial Class FrmMain
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1439, 592)
+        Me.Panel1.Size = New System.Drawing.Size(1439, 573)
         Me.Panel1.TabIndex = 41
         '
         'scSubContentSpliter
@@ -740,7 +753,7 @@ Partial Class FrmMain
         '
         Me.scSubContentSpliter.Panel2.Controls.Add(Me.panelNotificationSettings)
         Me.scSubContentSpliter.Panel2.Controls.Add(Me.lblReminderContentTipRight)
-        Me.scSubContentSpliter.Size = New System.Drawing.Size(1435, 588)
+        Me.scSubContentSpliter.Size = New System.Drawing.Size(1435, 569)
         Me.scSubContentSpliter.SplitterDistance = 756
         Me.scSubContentSpliter.SplitterWidth = 1
         Me.scSubContentSpliter.TabIndex = 41
@@ -751,7 +764,7 @@ Partial Class FrmMain
         Me.panelReminderTimeConfig.Dock = System.Windows.Forms.DockStyle.Fill
         Me.panelReminderTimeConfig.Location = New System.Drawing.Point(0, 0)
         Me.panelReminderTimeConfig.Name = "panelReminderTimeConfig"
-        Me.panelReminderTimeConfig.Size = New System.Drawing.Size(752, 584)
+        Me.panelReminderTimeConfig.Size = New System.Drawing.Size(752, 565)
         Me.panelReminderTimeConfig.TabIndex = 41
         '
         'grpReminderTimeConfig
@@ -984,7 +997,7 @@ Partial Class FrmMain
         Me.lblReminderContentTipLeft.ForeColor = System.Drawing.Color.White
         Me.lblReminderContentTipLeft.Location = New System.Drawing.Point(0, 0)
         Me.lblReminderContentTipLeft.Name = "lblReminderContentTipLeft"
-        Me.lblReminderContentTipLeft.Size = New System.Drawing.Size(752, 584)
+        Me.lblReminderContentTipLeft.Size = New System.Drawing.Size(752, 565)
         Me.lblReminderContentTipLeft.TabIndex = 4
         Me.lblReminderContentTipLeft.Text = "Reminder TIME configuration appears here..."
         Me.lblReminderContentTipLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -995,7 +1008,7 @@ Partial Class FrmMain
         Me.panelNotificationSettings.Dock = System.Windows.Forms.DockStyle.Fill
         Me.panelNotificationSettings.Location = New System.Drawing.Point(0, 0)
         Me.panelNotificationSettings.Name = "panelNotificationSettings"
-        Me.panelNotificationSettings.Size = New System.Drawing.Size(674, 584)
+        Me.panelNotificationSettings.Size = New System.Drawing.Size(674, 565)
         Me.panelNotificationSettings.TabIndex = 41
         '
         'grpNotificationSettings
@@ -1253,10 +1266,85 @@ Partial Class FrmMain
         Me.lblReminderContentTipRight.ForeColor = System.Drawing.Color.White
         Me.lblReminderContentTipRight.Location = New System.Drawing.Point(0, 0)
         Me.lblReminderContentTipRight.Name = "lblReminderContentTipRight"
-        Me.lblReminderContentTipRight.Size = New System.Drawing.Size(674, 584)
+        Me.lblReminderContentTipRight.Size = New System.Drawing.Size(674, 565)
         Me.lblReminderContentTipRight.TabIndex = 40
         Me.lblReminderContentTipRight.Text = "Reminder NOTIFICATION configuration appears here..."
         Me.lblReminderContentTipRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'MenuStrip1
+        '
+        Me.MenuStrip1.BackColor = System.Drawing.Color.White
+        Me.MenuStrip1.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.ToolsToolStripMenuItem, Me.HistoryToolStripMenuItem, Me.HelpToolStripMenuItem})
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(1533, 29)
+        Me.MenuStrip1.TabIndex = 49
+        Me.MenuStrip1.Text = "MenuStrip1"
+        '
+        'FileToolStripMenuItem
+        '
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExitToolStripMenuItem, Me.ExitToolStripMenuItem1})
+        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(46, 25)
+        Me.FileToolStripMenuItem.Text = "File"
+        '
+        'ExitToolStripMenuItem
+        '
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 26)
+        Me.ExitToolStripMenuItem.Text = "Minimize"
+        '
+        'ToolsToolStripMenuItem
+        '
+        Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OptionsToolStripMenuItem})
+        Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
+        Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(57, 25)
+        Me.ToolsToolStripMenuItem.Text = "Tools"
+        '
+        'OptionsToolStripMenuItem
+        '
+        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(152, 26)
+        Me.OptionsToolStripMenuItem.Text = "Options"
+        '
+        'HelpToolStripMenuItem
+        '
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem})
+        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(54, 25)
+        Me.HelpToolStripMenuItem.Text = "Help"
+        '
+        'AboutToolStripMenuItem
+        '
+        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(152, 26)
+        Me.AboutToolStripMenuItem.Text = "About"
+        '
+        'ExitToolStripMenuItem1
+        '
+        Me.ExitToolStripMenuItem1.Name = "ExitToolStripMenuItem1"
+        Me.ExitToolStripMenuItem1.Size = New System.Drawing.Size(152, 26)
+        Me.ExitToolStripMenuItem1.Text = "Exit"
+        '
+        'HistoryToolStripMenuItem
+        '
+        Me.HistoryToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UserActionsToolStripMenuItem, Me.RemindedToolStripMenuItem})
+        Me.HistoryToolStripMenuItem.Name = "HistoryToolStripMenuItem"
+        Me.HistoryToolStripMenuItem.Size = New System.Drawing.Size(72, 25)
+        Me.HistoryToolStripMenuItem.Text = "History"
+        '
+        'UserActionsToolStripMenuItem
+        '
+        Me.UserActionsToolStripMenuItem.Name = "UserActionsToolStripMenuItem"
+        Me.UserActionsToolStripMenuItem.Size = New System.Drawing.Size(167, 26)
+        Me.UserActionsToolStripMenuItem.Text = "User Actions"
+        '
+        'RemindedToolStripMenuItem
+        '
+        Me.RemindedToolStripMenuItem.Name = "RemindedToolStripMenuItem"
+        Me.RemindedToolStripMenuItem.Size = New System.Drawing.Size(167, 26)
+        Me.RemindedToolStripMenuItem.Text = "Reminded"
         '
         'FrmMain
         '
@@ -1267,10 +1355,12 @@ Partial Class FrmMain
         Me.ClientSize = New System.Drawing.Size(1533, 962)
         Me.Controls.Add(Me.scMainContainer)
         Me.Controls.Add(Me.StatusStrip1)
+        Me.Controls.Add(Me.MenuStrip1)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
+        Me.MainMenuStrip = Me.MenuStrip1
         Me.MaximizeBox = False
         Me.Name = "FrmMain"
         Me.ShowInTaskbar = False
@@ -1326,6 +1416,8 @@ Partial Class FrmMain
         Me.panelNotificationSettingsContent.ResumeLayout(False)
         CType(Me.numNotificationHeight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.numNotificationWidth, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1424,4 +1516,15 @@ Partial Class FrmMain
     Friend WithEvents lblReminderTypeSpecific As Label
     Friend WithEvents lblReminderTypeDaily As Label
     Friend WithEvents lblReminderTypeInterval As Label
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ExitToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ToolsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents OptionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents HistoryToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents UserActionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RemindedToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
 End Class
