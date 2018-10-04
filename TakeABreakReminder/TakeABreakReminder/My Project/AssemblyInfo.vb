@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("TakeABreakReminder")>
+<Assembly: AssemblyTitle("RemindMe")>
 <Assembly: AssemblyDescription("To remind you to take break from long sitting")>
 <Assembly: AssemblyCompany("ElangoUtilities")>
-<Assembly: AssemblyProduct("TakeABreakReminder")>
+<Assembly: AssemblyProduct("RemindMe")>
 <Assembly: AssemblyCopyright("Copyright ©  2018")>
 <Assembly: AssemblyTrademark("")>
 

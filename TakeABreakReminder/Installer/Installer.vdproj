@@ -17,7 +17,7 @@
         "Entry"
         {
         "MsmKey" = "8:_10E5264185223829B0A3471DC44BCD8D"
-        "OwnerKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+        "OwnerKey" = "8:_4F64B7401E984199B57676AAFEA30FA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -29,7 +29,7 @@
         "Entry"
         {
         "MsmKey" = "8:_4CE1F3A575AA49934DEC8CA05041A687"
-        "OwnerKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+        "OwnerKey" = "8:_4F64B7401E984199B57676AAFEA30FA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -40,20 +40,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4F64B7401E984199B57676AAFEA30FA2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_805BA7D0CA05D5E25FA3AAB7EC5DF645"
-        "OwnerKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+        "OwnerKey" = "8:_4F64B7401E984199B57676AAFEA30FA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_B1E524CA2C818185D5C8BA3C92A44A3E"
-        "OwnerKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4F64B7401E984199B57676AAFEA30FA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -65,7 +65,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+        "OwnerKey" = "8:_4F64B7401E984199B57676AAFEA30FA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -111,6 +111,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
         "Release"
@@ -135,6 +143,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -142,59 +158,59 @@
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_77DE21B1025B467999D9144CAC6E369F"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_03F4BA2C5BF74ED7AB7E04DB2FF0FEB4"
             {
             "Name" = "8:Primary output from RemindMe (Active)"
             "Condition" = "8:"
-            "Object" = "8:_D730F9527BB04AD1B90181CF4C38722B"
-            "FileType" = "3:2"
-            "InstallAction" = "3:4"
-            "Arguments" = "8:"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_07991A4F_D931_4C32_AB08_532C7A93ACEF"
-            "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_D1FB9F99EC39493688B4BCF4A91B5496"
-            {
-            "Name" = "8:Primary output from RemindMe (Active)"
-            "Condition" = "8:"
-            "Object" = "8:_D730F9527BB04AD1B90181CF4C38722B"
-            "FileType" = "3:2"
-            "InstallAction" = "3:3"
-            "Arguments" = "8:"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_953E5E23_F619_43F7_BBBB_0F4B3254E8AF"
-            "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_D30749794B8846D09CBFFCD4FCF1BE23"
-            {
-            "Name" = "8:Primary output from RemindMe (Active)"
-            "Condition" = "8:"
-            "Object" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+            "Object" = "8:_4F64B7401E984199B57676AAFEA30FA2"
             "FileType" = "3:2"
             "InstallAction" = "3:1"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_1C69C241_B23A_48C1_B127_D39F2419D71B"
+            "Identifier" = "8:_C1DD8828_71F2_47E8_AF4C_D8E0DE298ADE"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_EF7B1E8E8133432EBF85EA11FF77054B"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_7DBFE28EF1C844AAAFBEFBD0023EE08F"
             {
             "Name" = "8:Primary output from RemindMe (Active)"
             "Condition" = "8:"
-            "Object" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+            "Object" = "8:_4F64B7401E984199B57676AAFEA30FA2"
             "FileType" = "3:2"
             "InstallAction" = "3:2"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_DD01A535_FEBA_4721_8E3B_E4CEC249DD2D"
+            "Identifier" = "8:_E030A05E_F362_4A16_895B_90EA8837EA22"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_CCE05B43FF1149F09ED55DC387DB045A"
+            {
+            "Name" = "8:Primary output from RemindMe (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_4F64B7401E984199B57676AAFEA30FA2"
+            "FileType" = "3:2"
+            "InstallAction" = "3:4"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_6E1F8160_748B_47A1_A02A_EA6168A5496D"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_DDD2374A69CF4429B8C69165C5312A27"
+            {
+            "Name" = "8:Primary output from RemindMe (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_4F64B7401E984199B57676AAFEA30FA2"
+            "FileType" = "3:2"
+            "InstallAction" = "3:3"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_88EC8EF4_A75B_4C86_AD24_940C77B29E7D"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
@@ -420,9 +436,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:TakeABreak"
+        "ProductName" = "8:RemindMe"
         "ProductCode" = "8:{F51313F3-499B-40DE-80A7-C2B5211EDE26}"
-        "PackageCode" = "8:{548AE3E9-B8A7-4416-9990-5524EEE55DA5}"
+        "PackageCode" = "8:{60EC06DD-FE14-4166-8DE9-1214FDB1CD41}"
         "UpgradeCode" = "8:{503984AA-32A6-4AA0-9F8B-652CCDA4C458}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -433,7 +449,7 @@
         "Manufacturer" = "8:ElangoUtilities"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:TakeABreakInstaller"
+        "Title" = "8:RemindMe"
         "Subject" = "8:"
         "ARPCONTACT" = "8:ElangoUtilities"
         "Keywords" = "8:"
@@ -542,34 +558,6 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_59124170E1A447E483820B16AEEC0B98"
-            {
-            "Name" = "8:TakeABreakReminder"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:"
-            "Folder" = "8:_867B1AA41BC547AE8ECCEFBF75472331"
-            "WorkingFolder" = "8:_BD388502384A4076A263C1A2D4AC2F75"
-            "Icon" = "8:_2CE6452E39F346DD9450DBED723F6049"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D2EA35C427DE4263850732B2AF700643"
-            {
-            "Name" = "8:TakeABreakReminder"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:"
-            "Folder" = "8:_D64E8276BEE248ECA88AB97967CCBD44"
-            "WorkingFolder" = "8:_BD388502384A4076A263C1A2D4AC2F75"
-            "Icon" = "8:_2CE6452E39F346DD9450DBED723F6049"
-            "Feature" = "8:"
-            }
         }
         "UserInterface"
         {
@@ -969,9 +957,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D730F9527BB04AD1B90181CF4C38722B"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4F64B7401E984199B57676AAFEA30FA2"
             {
-            "SourcePath" = "8:..\\TakeABreakReminder\\obj\\Debug\\TakeABreakReminder.exe"
+            "SourcePath" = "8:..\\TakeABreakReminder\\obj\\Debug\\RemindMe.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_BD388502384A4076A263C1A2D4AC2F75"

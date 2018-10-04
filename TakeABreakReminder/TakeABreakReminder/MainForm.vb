@@ -33,16 +33,16 @@ Public Class FrmMain
     End Class
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.WindowState = FormWindowState.Minimized
+        My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).SetValue(Application.ProductName, Application.ExecutablePath)
+
         Dim buttonsList As New List(Of PictureBox) From {btnAddReminder, btnDeleteReminder, btnStartStopReminder, btnClearScreen, btnEditReminder}
         addButtonAppearnceEventHandlers(buttonsList)
         gReminderManager.registerForRemainingTime(New ReminderUpdateObserver)
         loadNotificationDurationList()
         loadNotificationSoundList()
         setDataGrid(dgReminderDetails, gReminderManager.getReminderTable())
-
-        lblReminderTypeInterval.Location = New Point(panelReminderTypeContent.Location.X + radReminderTypeInterval.Location.X + 15, panelReminderTypeContent.Location.Y + radReminderTypeInterval.Location.Y)
-        lblReminderTypeDaily.Location = New Point(panelReminderTypeContent.Location.X + radReminderTypeDaily.Location.X + 15, panelReminderTypeContent.Location.Y + radReminderTypeDaily.Location.Y)
-        lblReminderTypeSpecific.Location = New Point(panelReminderTypeContent.Location.X + radReminderTypeSpecific.Location.X + 15, panelReminderTypeContent.Location.Y + radReminderTypeSpecific.Location.Y)
+        setlblReminderTypes()
 
         radReminderTypeInterval.Tag = REMINDER_TYPE_INTERVAL
         radReminderTypeDaily.Tag = REMINDER_TYPE_DAILY
@@ -55,6 +55,20 @@ Public Class FrmMain
         'this should be in last
         gReminderManager.startAllRunningStatusReminders()
     End Sub
+
+    Private Sub setlblReminderTypes()
+        lblReminderTypeInterval.Location = getRadioButtonLocation(radReminderTypeInterval)
+        lblReminderTypeDaily.Location = getRadioButtonLocation(radReminderTypeDaily)
+        lblReminderTypeSpecific.Location = getRadioButtonLocation(radReminderTypeSpecific)
+
+        lblReminderTypeInterval.Text = radReminderTypeInterval.Text
+        lblReminderTypeDaily.Text = radReminderTypeDaily.Text
+        lblReminderTypeSpecific.Text = radReminderTypeSpecific.Text
+    End Sub
+
+    Private Function getRadioButtonLocation(radioButton As RadioButton) As Point
+        Return New Point(grpReminderType.Location.X + panelReminderTypeContent.Location.X + radioButton.Location.X + 15, grpReminderType.Location.Y + panelReminderTypeContent.Location.Y + radioButton.Location.Y + 2)
+    End Function
 
     Private Sub loadNotificationDurationList()
 
@@ -188,6 +202,7 @@ Public Class FrmMain
     Private Sub FrmMain_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
         If Me.WindowState = FormWindowState.Minimized Then
             trayIcon.Visible = True
+            trayIcon.ShowBalloonTip(1, "RemindMe Application", "I'm running in background. You can launch me from system tray.", ToolTipIcon.Info)
             ShowInTaskbar = False
         End If
     End Sub
@@ -574,7 +589,6 @@ Public Class FrmMain
     End Sub
 
     Private Sub setVisibilityByByOperation(operation As Integer)
-        Console.WriteLine("operation: " + operation.ToString)
         Select Case operation
             Case OPERATION_NONE
                 ''Nothing
