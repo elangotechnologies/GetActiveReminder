@@ -1273,8 +1273,9 @@ Partial Class FrmMain
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.Name = "FrmMain"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Delete"
+        Me.Text = "RemindMe - Reminder Buddy"
         Me.contextMenuForTrayIcon.ResumeLayout(False)
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()

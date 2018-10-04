@@ -16,32 +16,74 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_10E5264185223829B0A3471DC44BCD8D"
+        "OwnerKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2CE6452E39F346DD9450DBED723F6049"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_509A42B6781DE8C7045A9CC897A4A879"
-        "OwnerKey" = "8:_59B06813FEFA4F6DBB6A53790D22687E"
+        "MsmKey" = "8:_4CE1F3A575AA49934DEC8CA05041A687"
+        "OwnerKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_59B06813FEFA4F6DBB6A53790D22687E"
+        "MsmKey" = "8:_4CE1F3A575AA49934DEC8CA05041A687"
+        "OwnerKey" = "8:_10E5264185223829B0A3471DC44BCD8D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_805BA7D0CA05D5E25FA3AAB7EC5DF645"
+        "OwnerKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B1E524CA2C818185D5C8BA3C92A44A3E"
+        "OwnerKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_509A42B6781DE8C7045A9CC897A4A879"
+        "OwnerKey" = "8:_4CE1F3A575AA49934DEC8CA05041A687"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_59B06813FEFA4F6DBB6A53790D22687E"
+        "OwnerKey" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_10E5264185223829B0A3471DC44BCD8D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_805BA7D0CA05D5E25FA3AAB7EC5DF645"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_B1E524CA2C818185D5C8BA3C92A44A3E"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -62,6 +104,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -78,12 +128,76 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_77DE21B1025B467999D9144CAC6E369F"
+            {
+            "Name" = "8:Primary output from RemindMe (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+            "FileType" = "3:2"
+            "InstallAction" = "3:4"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_07991A4F_D931_4C32_AB08_532C7A93ACEF"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_D1FB9F99EC39493688B4BCF4A91B5496"
+            {
+            "Name" = "8:Primary output from RemindMe (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+            "FileType" = "3:2"
+            "InstallAction" = "3:3"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_953E5E23_F619_43F7_BBBB_0F4B3254E8AF"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_D30749794B8846D09CBFFCD4FCF1BE23"
+            {
+            "Name" = "8:Primary output from RemindMe (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_1C69C241_B23A_48C1_B127_D39F2419D71B"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_EF7B1E8E8133432EBF85EA11FF77054B"
+            {
+            "Name" = "8:Primary output from RemindMe (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_D730F9527BB04AD1B90181CF4C38722B"
+            "FileType" = "3:2"
+            "InstallAction" = "3:2"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_DD01A535_FEBA_4721_8E3B_E4CEC249DD2D"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
         }
         "DefaultFeature"
         {
@@ -107,6 +221,37 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_10E5264185223829B0A3471DC44BCD8D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_10E5264185223829B0A3471DC44BCD8D"
+                    {
+                    "Name" = "8:NLog.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:NLog.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_BD388502384A4076A263C1A2D4AC2F75"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2CE6452E39F346DD9450DBED723F6049"
             {
             "SourcePath" = "8:..\\..\\Assets\\appicon_Nkf_icon.ico"
@@ -127,14 +272,76 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_509A42B6781DE8C7045A9CC897A4A879"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4CE1F3A575AA49934DEC8CA05041A687"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                "ScatterAssemblies"
+                {
+                    "_4CE1F3A575AA49934DEC8CA05041A687"
+                    {
+                    "Name" = "8:System.IO.Compression.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.IO.Compression.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_BD388502384A4076A263C1A2D4AC2F75"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_805BA7D0CA05D5E25FA3AAB7EC5DF645"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ElaColorChooser, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_805BA7D0CA05D5E25FA3AAB7EC5DF645"
+                    {
+                    "Name" = "8:ElaColorChooser.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ElaColorChooser.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_BD388502384A4076A263C1A2D4AC2F75"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B1E524CA2C818185D5C8BA3C92A44A3E"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_509A42B6781DE8C7045A9CC897A4A879"
+                    "_B1E524CA2C818185D5C8BA3C92A44A3E"
                     {
                     "Name" = "8:System.Net.Http.dll"
                     "Attributes" = "3:512"
@@ -230,7 +437,7 @@
         "Subject" = "8:"
         "ARPCONTACT" = "8:ElangoUtilities"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:To remind you to take break from long sitting"
+        "ARPCOMMENTS" = "8:To keep you reminded of everything that is important to you"
         "ARPURLINFOABOUT" = "8:"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
@@ -343,7 +550,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_59B06813FEFA4F6DBB6A53790D22687E"
+            "Target" = "8:"
             "Folder" = "8:_867B1AA41BC547AE8ECCEFBF75472331"
             "WorkingFolder" = "8:_BD388502384A4076A263C1A2D4AC2F75"
             "Icon" = "8:_2CE6452E39F346DD9450DBED723F6049"
@@ -357,7 +564,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_59B06813FEFA4F6DBB6A53790D22687E"
+            "Target" = "8:"
             "Folder" = "8:_D64E8276BEE248ECA88AB97967CCBD44"
             "WorkingFolder" = "8:_BD388502384A4076A263C1A2D4AC2F75"
             "Icon" = "8:_2CE6452E39F346DD9450DBED723F6049"
@@ -762,7 +969,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_59B06813FEFA4F6DBB6A53790D22687E"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D730F9527BB04AD1B90181CF4C38722B"
             {
             "SourcePath" = "8:..\\TakeABreakReminder\\obj\\Debug\\TakeABreakReminder.exe"
             "TargetName" = "8:"

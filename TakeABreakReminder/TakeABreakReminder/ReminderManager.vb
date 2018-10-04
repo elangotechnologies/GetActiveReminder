@@ -1,11 +1,9 @@
-﻿Imports System.IO
-Imports System.Runtime.Serialization.Formatters.Binary
-Imports System.Runtime.Serialization
-Imports NLog
+﻿Imports System.Globalization
+Imports System.IO
 Imports System.Reflection
-Imports System.ComponentModel
-Imports System.Globalization
-Imports TakeABreakReminder
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Formatters.Binary
+Imports NLog
 
 Public NotInheritable Class ReminderManager
     Shared log As Logger = LogManager.GetCurrentClassLogger()
