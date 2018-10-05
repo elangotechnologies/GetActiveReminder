@@ -59,13 +59,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3C4CF7D6149DA97764A51E8C21454C4F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5D413694D25C9BA8E0DA64C7AFF670B6"
+        "OwnerKey" = "8:_9154D2123C0A2BED3EAC579B1ECE15BE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -77,7 +71,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9154D2123C0A2BED3EAC579B1ECE15BE"
+        "OwnerKey" = "8:_5D413694D25C9BA8E0DA64C7AFF670B6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3C4CF7D6149DA97764A51E8C21454C4F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -137,6 +137,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -184,7 +192,7 @@
             "Sequence" = "3:1"
             "Identifier" = "8:_1C6326E5_9886_43C3_AF6E_FCE19B5DD21F"
             "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
+            "CustomActionData" = "8:/target=\"[TARGETDIR]\\\""
             }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_DD355737A7A546618AC7AA1536A715D3"
             {
@@ -230,11 +238,6 @@
             "AssemblyAsmDisplayName" = "8:NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_3C4CF7D6149DA97764A51E8C21454C4F"
-                    {
-                    "Name" = "8:NLog.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:NLog.dll"
             "TargetName" = "8:"
@@ -261,11 +264,6 @@
             "AssemblyAsmDisplayName" = "8:ElaColorChooser, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_5D413694D25C9BA8E0DA64C7AFF670B6"
-                    {
-                    "Name" = "8:ElaColorChooser.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:ElaColorChooser.dll"
             "TargetName" = "8:"
@@ -292,11 +290,6 @@
             "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 "ScatterAssemblies"
                 {
-                    "_9154D2123C0A2BED3EAC579B1ECE15BE"
-                    {
-                    "Name" = "8:System.IO.Compression.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.IO.Compression.dll"
             "TargetName" = "8:"
@@ -323,11 +316,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_9E46FF77C00BA16685DF0BF0206CA81F"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -404,7 +392,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RemindMe"
         "ProductCode" = "8:{CF0387E4-6504-4A5A-8E92-566F01950F63}"
-        "PackageCode" = "8:{C097C1BB-C034-480F-9F48-7FEE583A14DB}"
+        "PackageCode" = "8:{274085A8-7B33-4475-AE08-3A402FBBBFFF}"
         "UpgradeCode" = "8:{DDD56940-8AAD-490C-A1EA-02A1FFD8609C}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -479,15 +467,65 @@
                     "Transitive" = "11:FALSE"
                         "Keys"
                         {
-                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_6F9D7DAA00EE478D89762B5319399B33"
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E92A40FD79BE49AFB23C4371D551A7D3"
                             {
-                            "Name" = "8:[Manufacturer]"
+                            "Name" = "8:Microsoft"
                             "Condition" = "8:"
                             "AlwaysCreate" = "11:FALSE"
                             "DeleteAtUninstall" = "11:FALSE"
                             "Transitive" = "11:FALSE"
                                 "Keys"
                                 {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_066CF480977D4BF5B6DC9810F8B997D7"
+                                    {
+                                    "Name" = "8:Windows"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_20BD9E63329F4BD3BCA066FE00D5B4F2"
+                                            {
+                                            "Name" = "8:CurrentVersion"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E3260834191548669D69E92FBD4D8A60"
+                                                    {
+                                                    "Name" = "8:Run"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                        }
+                                                        "Values"
+                                                        {
+                                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_D076F49CE24642B78EB2355750AD3472"
+                                                            {
+                                                            "Name" = "8:RemindMe"
+                                                            "Condition" = "8:"
+                                                            "Transitive" = "11:FALSE"
+                                                            "ValueTypes" = "3:1"
+                                                            "Value" = "8:[TARGETDIR]Remindme.exe"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
                                 }
                                 "Values"
                                 {
@@ -524,21 +562,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_926F5380252C47FFB392C275752D560B"
-            {
-            "Name" = "8:RemindMe"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_DBF87BD4FDC54F87B8A251F6BE9F24BF"
-            "Folder" = "8:_62D6BA177CD844F7AD5DCB09C8115593"
-            "WorkingFolder" = "8:_184217FB3CA948DCAA69C58D9BA9A119"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F5B86978440A4674893D092FEBF6D065"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7DD22DA991BD4D448518FA3B08E9BB09"
             {
             "Name" = "8:RemindMe"
             "Arguments" = "8:"
@@ -548,6 +572,20 @@
             "Transitive" = "11:FALSE"
             "Target" = "8:_DBF87BD4FDC54F87B8A251F6BE9F24BF"
             "Folder" = "8:_6C8EE83CFB2D4B3FBDF86E1B19E61823"
+            "WorkingFolder" = "8:_184217FB3CA948DCAA69C58D9BA9A119"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_853D707DC35D48AF88DAD450ABFE108F"
+            {
+            "Name" = "8:RemindMe"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_DBF87BD4FDC54F87B8A251F6BE9F24BF"
+            "Folder" = "8:_62D6BA177CD844F7AD5DCB09C8115593"
             "WorkingFolder" = "8:_184217FB3CA948DCAA69C58D9BA9A119"
             "Icon" = "8:"
             "Feature" = "8:"

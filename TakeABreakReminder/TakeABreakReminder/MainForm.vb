@@ -34,7 +34,7 @@ Public Class FrmMain
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.WindowState = FormWindowState.Minimized
-        My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).SetValue(Application.ProductName, Application.ExecutablePath)
+        ''My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).SetValue(Application.ProductName, Application.ExecutablePath)
 
         Dim buttonsList As New List(Of PictureBox) From {btnAddReminder, btnDeleteReminder, btnStartStopReminder, btnClearScreen, btnEditReminder}
         addButtonAppearnceEventHandlers(buttonsList)

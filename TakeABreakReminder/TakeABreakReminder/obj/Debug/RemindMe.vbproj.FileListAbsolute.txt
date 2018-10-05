@@ -1,3 +1,4 @@
+D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.Resources.resources
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\Debug\NLog.config
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\Debug\RemindMe.exe.config
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\Debug\RemindMe.exe
@@ -11,7 +12,6 @@ D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\bin\De
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.vbprojResolveAssemblyReference.cache
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.CustomDialog.resources
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.FrmMain.resources
-D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.Resources.resources
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.ToastNotificationForm.resources
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.vbproj.GenerateResource.Cache
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.vbproj.CoreCompileInputs.cache
