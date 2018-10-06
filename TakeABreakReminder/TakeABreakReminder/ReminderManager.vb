@@ -67,7 +67,7 @@ Public NotInheritable Class ReminderManager
 
     Private Sub saveRemindersInPermenantStorage(dataTable As DataTable)
 
-        Dim fileWriter As New FileStream("Reminders.dat", FileMode.Create, FileAccess.Write, FileShare.None)
+        Dim fileWriter As New FileStream(getDataPath(), FileMode.Create, FileAccess.Write, FileShare.None)
         Dim binaryFormatter As New BinaryFormatter
 
         Try
@@ -84,13 +84,17 @@ Public NotInheritable Class ReminderManager
     End Sub
 
     Public Sub cleanSavedReminderTable()
-        Dim fileWriter As FileStream = File.Create("Reminders.dat")
-        ''Dim fileWriter As New FileStream("Reminders.dat", FileMode.Create, FileAccess.Write, FileShare.None)
+        Dim fileWriter As FileStream = File.Create(getDataPath())
+        ''Dim fileWriter As New FileStream(getDataPath(), FileMode.Create, FileAccess.Write, FileShare.None)
         fileWriter.Close()
     End Sub
 
+    Private Function getDataPath() As String
+        Return Application.CommonAppDataPath + "\Reminders.dat"
+    End Function
+
     Private Sub loadReminders()
-        Dim fileReader As New FileStream("Reminders.dat", FileMode.OpenOrCreate, FileAccess.Read)
+        Dim fileReader As New FileStream(getDataPath(), FileMode.OpenOrCreate, FileAccess.Read)
         Dim binaryFormatter As New BinaryFormatter
         gReminderTable = New DataTable
         gReminderTable.Columns.AddRange(New DataColumn(20) _

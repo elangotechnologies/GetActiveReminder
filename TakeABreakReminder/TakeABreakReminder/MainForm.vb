@@ -8,8 +8,7 @@ Public Class FrmMain
     Private gIsExitClicked As Boolean = False
     Private gReminderManager As ReminderManager = ReminderManager.getInstance()
     Private gSelectedReminderId As Integer = REMINDER_ID_NONE
-
-    Private gIsReminderTimerRunning As Boolean = False
+    Private gWindowState As FormWindowState = FormWindowState.Normal
 
     Private Class TrackerBarDataKeeper
         Public displayLabel As Label
@@ -33,7 +32,7 @@ Public Class FrmMain
     End Class
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.WindowState = FormWindowState.Minimized
+        ''Me.WindowState = FormWindowState.Minimized
         ''My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).SetValue(Application.ProductName, Application.ExecutablePath)
 
         Dim buttonsList As New List(Of PictureBox) From {btnAddReminder, btnDeleteReminder, btnStartStopReminder, btnClearScreen, btnEditReminder}
@@ -77,6 +76,11 @@ Public Class FrmMain
         For value As Integer = 1 To 12
             Dim seconds As Integer = value * 5
             notificaitonDurationList.Add(seconds, seconds.ToString + " Seconds")
+        Next
+
+        For value As Integer = 2 To 10
+            Dim seconds As Integer = value * MINUTES_SECONDS_CONVERTER
+            notificaitonDurationList.Add(seconds, value.ToString + " Minutes")
         Next
 
         cmbNotificationDuration.ValueMember = "Key"
@@ -166,7 +170,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub FrmMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If gIsExitClicked = False AndAlso gIsReminderTimerRunning = True Then
+        If gIsExitClicked = False Then
             setPropertiesForCustomDialog()
             Dim result As Integer = CustomDialog.showMyDialog("Reminder is Running, Confirm Your Action", "Continue and Minimize to Tray", "Abort Reminder and Exit", "Return to Application")
             If result = CustomDialog.OPTION_ONE Then
@@ -194,17 +198,25 @@ Public Class FrmMain
     End Sub
 
     Public Sub showMainForm()
-        ShowInTaskbar = True
         Me.WindowState = FormWindowState.Normal
-        trayIcon.Visible = False
     End Sub
 
     Private Sub FrmMain_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-        If Me.WindowState = FormWindowState.Minimized Then
-            trayIcon.Visible = True
-            trayIcon.ShowBalloonTip(1, "RemindMe Application", "I'm running in background. You can launch me from system tray.", ToolTipIcon.Info)
-            ShowInTaskbar = False
+        If gWindowState <> Me.WindowState Then
+            If Me.WindowState = FormWindowState.Minimized Then
+                trayIcon.Visible = True
+                trayIcon.ShowBalloonTip(1, "RemindMe Application", "I'm running in background. You can launch me from system tray.", ToolTipIcon.Info)
+                ShowInTaskbar = False
+            ElseIf Me.WindowState = FormWindowState.Normal Then
+                trayIcon.Visible = False
+                ShowInTaskbar = True
+            End If
+            gWindowState = Me.WindowState
         End If
+    End Sub
+
+    Private Sub trayIcon_BalloonTipClicked(sender As Object, e As EventArgs) Handles trayIcon.BalloonTipClicked
+        showMainForm()
     End Sub
 
     Private Sub contextMenuForTrayIcon_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles contextMenuForTrayIcon.ItemClicked
@@ -794,4 +806,5 @@ Public Class FrmMain
         lblReminderTypeDaily.Visible = Not sender.Enabled
         lblReminderTypeSpecific.Visible = Not sender.Enabled
     End Sub
+
 End Class

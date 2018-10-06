@@ -37,7 +37,7 @@ Public Class ToastNotificationForm
 
         ''TODO dont calculate percentage here. just subtract 3 seconds for hide and fade
         Dim notificationDuration As Integer = gReminderRow.Item(COL_NOTIFICATION_DURATION) * 1000
-        Dim fadeTriggerTime As Integer = notificationDuration * 40 / 100
+        Dim fadeTriggerTime As Integer = 3000
         timerClose.Interval = notificationDuration - fadeTriggerTime
         timerFade.Interval = fadeTriggerTime / 100
         timerClose.Start()
@@ -67,4 +67,5 @@ Public Class ToastNotificationForm
         gVisibleNotifications.Remove(Me)
         updateVisibleNotificationPositions()
     End Sub
+
 End Class
