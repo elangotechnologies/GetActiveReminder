@@ -59,13 +59,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9154D2123C0A2BED3EAC579B1ECE15BE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9E46FF77C00BA16685DF0BF0206CA81F"
+        "OwnerKey" = "8:_3C4CF7D6149DA97764A51E8C21454C4F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -77,7 +71,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3C4CF7D6149DA97764A51E8C21454C4F"
+        "OwnerKey" = "8:_9E46FF77C00BA16685DF0BF0206CA81F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9154D2123C0A2BED3EAC579B1ECE15BE"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -238,6 +238,11 @@
             "AssemblyAsmDisplayName" = "8:NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_3C4CF7D6149DA97764A51E8C21454C4F"
+                    {
+                    "Name" = "8:NLog.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:NLog.dll"
             "TargetName" = "8:"
@@ -264,6 +269,11 @@
             "AssemblyAsmDisplayName" = "8:ElaColorChooser, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_5D413694D25C9BA8E0DA64C7AFF670B6"
+                    {
+                    "Name" = "8:ElaColorChooser.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:ElaColorChooser.dll"
             "TargetName" = "8:"
@@ -290,6 +300,11 @@
             "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 "ScatterAssemblies"
                 {
+                    "_9154D2123C0A2BED3EAC579B1ECE15BE"
+                    {
+                    "Name" = "8:System.IO.Compression.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.IO.Compression.dll"
             "TargetName" = "8:"
@@ -316,6 +331,11 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
+                    "_9E46FF77C00BA16685DF0BF0206CA81F"
+                    {
+                    "Name" = "8:System.Net.Http.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -392,7 +412,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RemindMe"
         "ProductCode" = "8:{CF0387E4-6504-4A5A-8E92-566F01950F63}"
-        "PackageCode" = "8:{274085A8-7B33-4475-AE08-3A402FBBBFFF}"
+        "PackageCode" = "8:{43D1F4A3-988A-45AB-9D20-6823C0761E50}"
         "UpgradeCode" = "8:{DDD56940-8AAD-490C-A1EA-02A1FFD8609C}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -512,7 +532,7 @@
                                                             "Condition" = "8:"
                                                             "Transitive" = "11:FALSE"
                                                             "ValueTypes" = "3:1"
-                                                            "Value" = "8:[TARGETDIR]Remindme.exe"
+                                                            "Value" = "8:[TARGETDIR]RemindMe.exe arg1"
                                                             }
                                                         }
                                                     }

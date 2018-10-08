@@ -53,6 +53,54 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property start_at_windows_boot() As Boolean
+            Get
+                Return CType(Me("start_at_windows_boot"),Boolean)
+            End Get
+            Set
+                Me("start_at_windows_boot") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property minimize_on_close() As Boolean
+            Get
+                Return CType(Me("minimize_on_close"),Boolean)
+            End Get
+            Set
+                Me("minimize_on_close") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property notify_on_minimize_to_tray() As Boolean
+            Get
+                Return CType(Me("notify_on_minimize_to_tray"),Boolean)
+            End Get
+            Set
+                Me("notify_on_minimize_to_tray") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property confirm_before_delete() As Boolean
+            Get
+                Return CType(Me("confirm_before_delete"),Boolean)
+            End Get
+            Set
+                Me("confirm_before_delete") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

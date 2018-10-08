@@ -35,7 +35,6 @@ Public Class ToastNotificationForm
         Me.BackColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_BACKCOLOR))
         lblMessage.Font = getFontObjFromDisplayFormat(gReminderRow.Item(COL_NOTIFICATION_FONT))
 
-        ''TODO dont calculate percentage here. just subtract 3 seconds for hide and fade
         Dim notificationDuration As Integer = gReminderRow.Item(COL_NOTIFICATION_DURATION) * 1000
         Dim fadeTriggerTime As Integer = 3000
         timerClose.Interval = notificationDuration - fadeTriggerTime

@@ -104,11 +104,23 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.Designer.vb">
+      <DependentUpon>About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="About.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CommonModule.vb" />
     <Compile Include="CustomDialog.Designer.vb">
       <DependentUpon>CustomDialog.vb</DependentUpon>
     </Compile>
     <Compile Include="CustomDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemindersHistory.Designer.vb">
+      <DependentUpon>RemindersHistory.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RemindersHistory.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ReminderManager.vb" />
@@ -134,11 +146,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="RemindMeInstaller.Designer.vb">
-      <DependentUpon>RemindMeInstaller.vb</DependentUpon>
+    <Compile Include="Settings.Designer.vb">
+      <DependentUpon>Settings.vb</DependentUpon>
     </Compile>
-    <Compile Include="RemindMeInstaller.vb">
-      <SubType>Component</SubType>
+    <Compile Include="Settings.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="ToastNotificationForm.Designer.vb">
       <DependentUpon>ToastNotificationForm.vb</DependentUpon>
@@ -148,9 +160,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CustomDialog.resx">
       <DependentUpon>CustomDialog.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemindersHistory.resx">
+      <DependentUpon>RemindersHistory.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
@@ -160,6 +178,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.resx">
+      <DependentUpon>Settings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ToastNotificationForm.resx">
       <DependentUpon>ToastNotificationForm.vb</DependentUpon>

@@ -45,6 +45,7 @@ Module CommonModule
     Public Const COL_REMINDER_DAILY As String = "reminder_daily"
     Public Const COL_REMINDER_CREATED_TIME As String = "reminder_created_time"
     Public Const COL_REMINDER_UPDATED_TIME As String = "reminder_updated_time"
+    Public Const COL_REMINDER_DELETED_TIME As String = "reminder_deleted_time"
     Public Const COL_REMINDER_STARTED_TIME As String = "reminder_started_time"
     Public Const COL_REMINDER_NOTIFIED_TIME As String = "reminder_notified_time"
     Public Const COL_REMINDER_NEXT_NOTIFY_TIME As String = "reminder_next_notify_time"
@@ -56,6 +57,9 @@ Module CommonModule
     Public Const COL_NOTIFICATION_FORECOLOR As String = "notification_forecolor"
     Public Const COL_NOTIFICATION_WIDTH As String = "notification_width"
     Public Const COL_NOTIFICATION_HEIGHT As String = "notification_height"
+
+    Public Const STORAGE_REMINDER_OPERATION As Integer = 0
+    Public Const STORAGE_REMINDER_HISTORY_OPERATION As Integer = 1
 
     Public Const HOURS_MILLISECONDS_CONVERTER As Double = 60 * 60 * 1000
     Public Const MINUTES_MILLISECONDS_CONVERTER As Double = 60 * 1000
@@ -118,6 +122,10 @@ Module CommonModule
         Return hours * HOURS_MILLISECONDS_CONVERTER + minutes * MINUTES_MILLISECONDS_CONVERTER + seconds * SECONDS_MILLISECONDS_CONVERTER
     End Function
 
+    Public Function convertMilliSecondsToSeconds(milliseconds As Double) As Double
+        Return milliseconds / SECONDS_MILLISECONDS_CONVERTER
+    End Function
+
     Public Function convertFormattedIntervalToMilliseconds(ByVal formattedInterval As String) As Double
         formattedInterval = formattedInterval.Replace("hrs", "").Replace("mins", "").Replace("secs", "").Replace(" ", "")
         Dim timeArray = formattedInterval.Split(",")
@@ -156,6 +164,7 @@ Module CommonModule
     End Sub
 
     Public Sub setDataGrid(lDataGridView As DataGridView, lDataTable As DataTable)
+        Console.WriteLine("lDataTable: " + lDataTable.Rows.Count.ToString)
         Dim lBindingSource As New BindingSource()
         lBindingSource.DataSource = lDataTable
         lDataGridView.DataSource = lBindingSource
@@ -163,6 +172,15 @@ Module CommonModule
         If lDataTable.Rows.Count > 0 Then
             lDataGridView.FirstDisplayedScrollingRowIndex = lDataTable.Rows.Count - 1
         End If
+    End Sub
+
+    Sub clearDataSet(lDataGridView As DataGridView)
+        Dim lDataBindingSource As BindingSource = lDataGridView.DataSource
+        If lDataBindingSource Is Nothing Then
+            Return
+        End If
+        Dim lDataTableFromBinding As DataTable = lDataBindingSource.DataSource
+        lDataTableFromBinding.Rows.Clear()
     End Sub
 
     Public Function getHoursFromTotalMilliseconds(milliseconds As Double) As Integer

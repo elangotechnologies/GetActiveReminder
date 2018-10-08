@@ -7,7 +7,8 @@ Imports NLog
 
 Public NotInheritable Class ReminderManager
     Shared log As Logger = LogManager.GetCurrentClassLogger()
-    Private gReminderTable As DataTable
+    Private gReminderTable As DataTable = Nothing
+    Private gReminderHistoryTable As DataTable = Nothing
     Private gRunnningRemindersMap As New Dictionary(Of Integer, RunningReminder)
 
     Private gReminderTimer As New Timer
@@ -60,20 +61,34 @@ Public NotInheritable Class ReminderManager
         Return gReminderTable
     End Function
 
+    Public Function getReminderHistoryTable() As DataTable
+        If gReminderHistoryTable Is Nothing Then
+            loadRemindersHistory()
+        End If
+
+        Return gReminderHistoryTable
+    End Function
+
     Public Sub registerForRemainingTime(reminderUpdateObserver As IReminderUpdateObserver)
         gReminderUpdateObserver = reminderUpdateObserver
     End Sub
 
 
-    Private Sub saveRemindersInPermenantStorage(dataTable As DataTable)
+    Private Sub saveDataInPermenantStorage(dataTable As DataTable, Optional operationType As Integer = STORAGE_REMINDER_OPERATION)
+        Dim dbPath As String = ""
+        If operationType = STORAGE_REMINDER_OPERATION Then
+            dbPath = getRemindersDBPath()
+        ElseIf operationType = STORAGE_REMINDER_HISTORY_OPERATION Then
+            dbPath = getRemindersHistoryDBPath()
+        End If
 
-        Dim fileWriter As New FileStream(getDataPath(), FileMode.Create, FileAccess.Write, FileShare.None)
+        Dim fileWriter As New FileStream(dbPath, FileMode.Create, FileAccess.Write, FileShare.None)
         Dim binaryFormatter As New BinaryFormatter
 
         Try
             binaryFormatter.Serialize(fileWriter, dataTable)
         Catch ex As SerializationException
-            Console.WriteLine("saveReminder: Serialization failed. Reason: " & ex.Message)
+            Console.WriteLine("saveDataInPermenantStorage: Serialization failed. Reason: " & ex.Message)
         Catch ex As TargetInvocationException
             Dim iEX = ex.InnerException
             MsgBox(iEX.Message)
@@ -83,21 +98,34 @@ Public NotInheritable Class ReminderManager
 
     End Sub
 
-    Public Sub cleanSavedReminderTable()
-        Dim fileWriter As FileStream = File.Create(getDataPath())
-        ''Dim fileWriter As New FileStream(getDataPath(), FileMode.Create, FileAccess.Write, FileShare.None)
+    Public Sub resetSavedReminderDB(Optional operationType As Integer = STORAGE_REMINDER_OPERATION)
+
+        Dim dbPath As String = ""
+        If operationType = STORAGE_REMINDER_OPERATION Then
+            dbPath = getRemindersDBPath()
+            gReminderTable.Rows.Clear()
+        ElseIf operationType = STORAGE_REMINDER_HISTORY_OPERATION Then
+            dbPath = getRemindersHistoryDBPath()
+            getReminderHistoryTable().Rows.Clear()
+        End If
+
+        Dim fileWriter As FileStream = File.Create(dbPath)
         fileWriter.Close()
     End Sub
 
-    Private Function getDataPath() As String
+    Private Function getRemindersDBPath() As String
         Return Application.CommonAppDataPath + "\Reminders.dat"
     End Function
 
+    Private Function getRemindersHistoryDBPath() As String
+        Return Application.CommonAppDataPath + "\RemindersHistory.dat"
+    End Function
+
     Private Sub loadReminders()
-        Dim fileReader As New FileStream(getDataPath(), FileMode.OpenOrCreate, FileAccess.Read)
+        Dim fileReader As New FileStream(getRemindersDBPath(), FileMode.OpenOrCreate, FileAccess.Read)
         Dim binaryFormatter As New BinaryFormatter
         gReminderTable = New DataTable
-        gReminderTable.Columns.AddRange(New DataColumn(20) _
+        gReminderTable.Columns.AddRange(New DataColumn(21) _
                 {New DataColumn(COL_REMINDER_ID, GetType(Integer)),
                 New DataColumn(COL_REMINDER_TYPE, GetType(String)),
                 New DataColumn(COL_REMINDER_REPEAT_MAX, GetType(Integer)),
@@ -108,6 +136,7 @@ Public NotInheritable Class ReminderManager
                 New DataColumn(COL_REMINDER_SPECIFIC_TIME, GetType(DateTime)),
                 New DataColumn(COL_REMINDER_CREATED_TIME, GetType(DateTime)),
                 New DataColumn(COL_REMINDER_UPDATED_TIME, GetType(DateTime)),
+                New DataColumn(COL_REMINDER_DELETED_TIME, GetType(DateTime)),
                 New DataColumn(COL_REMINDER_STARTED_TIME, GetType(DateTime)),
                 New DataColumn(COL_REMINDER_NOTIFIED_TIME, GetType(DateTime)),
                 New DataColumn(COL_REMINDER_NEXT_NOTIFY_TIME, GetType(DateTime)),
@@ -136,6 +165,24 @@ Public NotInheritable Class ReminderManager
 
     End Sub
 
+    Private Sub loadRemindersHistory()
+        Dim fileReader As New FileStream(getRemindersHistoryDBPath(), FileMode.OpenOrCreate, FileAccess.Read)
+        Dim binaryFormatter As New BinaryFormatter
+        gReminderHistoryTable = gReminderTable.Clone
+
+        Try
+            gReminderHistoryTable = DirectCast(binaryFormatter.Deserialize(fileReader), DataTable)
+        Catch ex As SerializationException
+            Console.WriteLine("loadRemindersHistory: DeSerialization failed. Reason: " & ex.Message)
+        Catch ex As TargetInvocationException
+            Dim iEX = ex.InnerException
+            MsgBox("TargetInvocationException catched: " + iEX.Message)
+        Finally
+            fileReader.Close()
+        End Try
+
+    End Sub
+
     Public Sub startAllRunningStatusReminders()
 
         For Each reminderRow As DataRow In gReminderTable.Rows
@@ -154,17 +201,87 @@ Public NotInheritable Class ReminderManager
 
     Public Sub commitNewReminderRow(reminderRow As DataRow)
         gReminderTable.Rows.Add(reminderRow)
-        saveRemindersInPermenantStorage(gReminderTable)
+        saveDataInPermenantStorage(gReminderTable)
+        commitNewReminderHistoryRow(reminderRow)
     End Sub
 
-    Public Sub commitUpdatedReminderRow()
-        saveRemindersInPermenantStorage(gReminderTable)
+    Public Sub commitNewReminderHistoryRow(ByVal reminderRow As DataRow)
+        Dim remindersHistoryTable As DataTable = getReminderHistoryTable()
+        Dim reminderRowClone As DataRow = cloneReminderRow(reminderRow)
+        ''remindersHistoryTable.ImportRow(reminderRow)
+        remindersHistoryTable.Rows.InsertAt(reminderRowClone, 0)
+        saveDataInPermenantStorage(remindersHistoryTable, STORAGE_REMINDER_HISTORY_OPERATION)
     End Sub
 
-    Public Sub commitDeletedReminderRow(reminderRow As DataRow)
+    Public Sub commitUpdatedReminderRow(reminderRow As DataRow)
+        saveDataInPermenantStorage(gReminderTable)
+        commitUpdatedReminderHistoryRow(reminderRow)
+    End Sub
+
+    Public Sub commitUpdatedReminderHistoryRow(ByVal reminderRow As DataRow)
+        Dim remindersHistoryTable As DataTable = getReminderHistoryTable()
+        Dim reminderId As Integer = reminderRow(COL_REMINDER_ID)
+        Dim reminderHistoryRow As DataRow = getReminderHistoryRow(reminderId)
+
+        If reminderHistoryRow IsNot Nothing Then
+            remindersHistoryTable.Rows.Remove(reminderHistoryRow)
+        End If
+
+        commitNewReminderHistoryRow(reminderRow)
+
+    End Sub
+
+    Public Sub commitDeletedReminderRow(ByVal reminderRow As DataRow)
+        Dim reminderRowClone As DataRow = cloneReminderRow(reminderRow)
+
         gReminderTable.Rows.Remove(reminderRow)
-        saveRemindersInPermenantStorage(gReminderTable)
+        saveDataInPermenantStorage(gReminderTable)
+
+        commitDeletedReminderHistoryRow(reminderRowClone)
     End Sub
+
+    Public Sub commitDeletedReminderHistoryRow(reminderRowClone As DataRow)
+        Dim remindersHistoryTable As DataTable = getReminderHistoryTable()
+        Dim reminderId As Integer = reminderRowClone(COL_REMINDER_ID)
+        Dim reminderHistoryRow As DataRow = getReminderHistoryRow(reminderId)
+
+        If reminderHistoryRow IsNot Nothing Then
+            remindersHistoryTable.Rows.Remove(reminderHistoryRow)
+        End If
+
+        reminderRowClone(COL_REMINDER_DELETED_TIME) = DateTime.Now
+        remindersHistoryTable.Rows.InsertAt(reminderRowClone, 0)
+        saveDataInPermenantStorage(remindersHistoryTable, STORAGE_REMINDER_HISTORY_OPERATION)
+    End Sub
+
+    Private Function cloneReminderRow(ByVal reminderRow As DataRow) As DataRow
+        Dim reminderRowClone As DataRow = getReminderHistoryTable.NewRow()
+
+        reminderRowClone(COL_REMINDER_ID) = reminderRow(COL_REMINDER_ID)
+        reminderRowClone(COL_REMINDER_TYPE) = reminderRow(COL_REMINDER_TYPE)
+        reminderRowClone(COL_REMINDER_REPEAT_MAX) = reminderRow(COL_REMINDER_REPEAT_MAX)
+        reminderRowClone(COL_REMINDER_REPEAT_ELAPSED) = reminderRow(COL_REMINDER_REPEAT_ELAPSED)
+        reminderRowClone(COL_REMINDER_STATUS) = reminderRow(COL_REMINDER_STATUS)
+        reminderRowClone(COL_REMINDER_INTERVAL) = reminderRow(COL_REMINDER_INTERVAL)
+        reminderRowClone(COL_REMINDER_DAILY) = reminderRow(COL_REMINDER_DAILY)
+        reminderRowClone(COL_REMINDER_SPECIFIC_TIME) = reminderRow(COL_REMINDER_SPECIFIC_TIME)
+        reminderRowClone(COL_REMINDER_CREATED_TIME) = reminderRow(COL_REMINDER_CREATED_TIME)
+        reminderRowClone(COL_REMINDER_UPDATED_TIME) = reminderRow(COL_REMINDER_UPDATED_TIME)
+        reminderRowClone(COL_REMINDER_STARTED_TIME) = reminderRow(COL_REMINDER_STARTED_TIME)
+        reminderRowClone(COL_REMINDER_NOTIFIED_TIME) = reminderRow(COL_REMINDER_NOTIFIED_TIME)
+        reminderRowClone(COL_REMINDER_NEXT_NOTIFY_TIME) = reminderRow(COL_REMINDER_NEXT_NOTIFY_TIME)
+        reminderRowClone(COL_NOTIFICATION_DURATION) = reminderRow(COL_NOTIFICATION_DURATION)
+        reminderRowClone(COL_NOTIFICATION_SOUND) = reminderRow(COL_NOTIFICATION_SOUND)
+        reminderRowClone(COL_NOTIFICATION_MESSAGE) = reminderRow(COL_NOTIFICATION_MESSAGE)
+        reminderRowClone(COL_NOTIFICATION_FONT) = reminderRow(COL_NOTIFICATION_FONT)
+        reminderRowClone(COL_NOTIFICATION_BACKCOLOR) = reminderRow(COL_NOTIFICATION_BACKCOLOR)
+        reminderRowClone(COL_NOTIFICATION_FORECOLOR) = reminderRow(COL_NOTIFICATION_FORECOLOR)
+        reminderRowClone(COL_NOTIFICATION_WIDTH) = reminderRow(COL_NOTIFICATION_WIDTH)
+        reminderRowClone(COL_NOTIFICATION_HEIGHT) = reminderRow(COL_NOTIFICATION_HEIGHT)
+
+        Return reminderRowClone
+    End Function
+
 
     Public Function getReminderRow(reminderId As Integer) As DataRow
         gReminderTable.PrimaryKey = New DataColumn() {gReminderTable.Columns(COL_REMINDER_ID)}
@@ -172,6 +289,15 @@ Public NotInheritable Class ReminderManager
             Return Nothing
         End If
         Return gReminderTable.Rows.Find(reminderId)
+    End Function
+
+    Public Function getReminderHistoryRow(reminderId As Integer) As DataRow
+        Dim reminderHistoryTable As DataTable = getReminderHistoryTable()
+        reminderHistoryTable.PrimaryKey = New DataColumn() {reminderHistoryTable.Columns(COL_REMINDER_ID)}
+        If reminderHistoryTable.Rows.Count <= 0 Then
+            Return Nothing
+        End If
+        Return reminderHistoryTable.Rows.Find(reminderId)
     End Function
 
     Public Function getReminderStatus(reminderId As Integer) As String
@@ -211,7 +337,7 @@ Public NotInheritable Class ReminderManager
         'Dont change the order. This line shoule come after updating the reminder to 'running' status.
         updateStatusBar(reminderRow)
 
-        commitUpdatedReminderRow()
+        commitUpdatedReminderRow(reminderRow)
 
     End Sub
 
@@ -275,7 +401,7 @@ Public NotInheritable Class ReminderManager
         updateStatusBar(reminderRow)
         gReminderUpdateObserver.reminderStopped()
 
-        commitUpdatedReminderRow()
+        commitUpdatedReminderRow(reminderRow)
 
         Dim toastNotificationForm As ToastNotificationForm = runningReminder.toastNotificationForm
         toastNotificationForm.Close()
@@ -328,7 +454,7 @@ Public NotInheritable Class ReminderManager
                 updateNextNotifyTime(reminderRow)
                 'This line should come after updating next notify time
                 updateRepeatElapsed(reminderRow)
-                commitUpdatedReminderRow()
+                commitUpdatedReminderRow(reminderRow)
             End If
         Next
 
@@ -347,6 +473,7 @@ Public NotInheritable Class ReminderManager
         End If
 
         If reminderRow(COL_REMINDER_STATUS) = REMINDER_STATUS_RUNNING AndAlso reminderRow(COL_REMINDER_REPEAT_ELAPSED) >= reminderRow(COL_REMINDER_REPEAT_MAX) Then
+            gReminderUpdateObserver.remainingTimeChanged("Currently notification is being shown for this reminder")
             Return
         End If
 
@@ -354,11 +481,14 @@ Public NotInheritable Class ReminderManager
         Dim nextNotifyTime As DateTime = reminderRow(COL_REMINDER_NEXT_NOTIFY_TIME)
         Dim remainingTime As Double = nextNotifyTime.Subtract(currentTime).TotalSeconds
 
-        If remainingTime < 0 Then
-            Return
+        If remainingTime < 2 And remainingTime > 0 Then
+            gReminderUpdateObserver.remainingTimeChanged("Notification is about to be shown")
+        ElseIf remainingTime <= 0 Then
+            gReminderUpdateObserver.remainingTimeChanged("Currently notification is being shown for this reminder")
+        Else
+            gReminderUpdateObserver.remainingTimeChanged(getFormattedIntervalFromSeconds(remainingTime))
         End If
 
-        gReminderUpdateObserver.remainingTimeChanged(getFormattedIntervalFromSeconds(remainingTime))
     End Sub
 
 
