@@ -152,10 +152,10 @@
     <Compile Include="Settings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ToastNotificationForm.Designer.vb">
-      <DependentUpon>ToastNotificationForm.vb</DependentUpon>
+    <Compile Include="ReminderNotification.Designer.vb">
+      <DependentUpon>ReminderNotification.vb</DependentUpon>
     </Compile>
-    <Compile Include="ToastNotificationForm.vb">
+    <Compile Include="ReminderNotification.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
@@ -182,8 +182,8 @@
     <EmbeddedResource Include="Settings.resx">
       <DependentUpon>Settings.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ToastNotificationForm.resx">
-      <DependentUpon>ToastNotificationForm.vb</DependentUpon>
+    <EmbeddedResource Include="ReminderNotification.resx">
+      <DependentUpon>ReminderNotification.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

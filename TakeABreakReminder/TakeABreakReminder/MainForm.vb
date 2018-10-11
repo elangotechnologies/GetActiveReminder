@@ -36,8 +36,9 @@ Public Class FrmMain
     End Class
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        log.Debug("Environment.GetCommandLineArgs().Count: " + Environment.GetCommandLineArgs().Count.ToString)
         If Environment.GetCommandLineArgs().Count >= 2 Then
+            log.Debug("Minimizing")
             Me.WindowState = FormWindowState.Minimized
         End If
 
@@ -459,7 +460,7 @@ Public Class FrmMain
 
     End Sub
     Private Sub MainForm_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
-        If e.KeyCode = Keys.Escape Then Me.Close()
+        If e.KeyCode = Keys.Escape Then exitApp()
     End Sub
 
     Private Sub radReminderTypeInterval_CheckedChanged(sender As Object, e As EventArgs) Handles radReminderTypeInterval.CheckedChanged

@@ -74,7 +74,7 @@ Module CommonModule
 
     Public Const NOTIFICATION_GAP_OFFSET As Integer = 10
 
-    Public gVisibleNotifications As New List(Of ToastNotificationForm)
+    Public gVisibleNotifications As New List(Of ReminderNotification)
 
     Public gSumOfNotificationHeights As Integer = 0
 
@@ -210,7 +210,7 @@ Module CommonModule
     Public Sub updateVisibleNotificationPositions()
 
         Dim sumOfNotificationsHeight As Integer = 0
-        For Each notificationForm As ToastNotificationForm In gVisibleNotifications
+        For Each notificationForm As ReminderNotification In gVisibleNotifications
             sumOfNotificationsHeight += notificationForm.Height + NOTIFICATION_GAP_OFFSET
             Dim yPosition As Integer = Screen.PrimaryScreen.WorkingArea.Height - sumOfNotificationsHeight
             notificationForm.Location = New Point(notificationForm.Location.X, yPosition)
@@ -222,7 +222,7 @@ Module CommonModule
 
         Dim sumOfNotificationsHeight As Integer = 0
 
-        For Each notificationForm As ToastNotificationForm In gVisibleNotifications
+        For Each notificationForm As ReminderNotification In gVisibleNotifications
             sumOfNotificationsHeight += notificationForm.Height + NOTIFICATION_GAP_OFFSET
         Next
 

@@ -61,7 +61,7 @@ Partial Class Settings
         Me.GroupBox1.Font = New System.Drawing.Font("Cambria", 12.0!)
         Me.GroupBox1.Location = New System.Drawing.Point(21, 22)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(521, 157)
+        Me.GroupBox1.Size = New System.Drawing.Size(1068, 116)
         Me.GroupBox1.TabIndex = 2
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Windows Startup"
@@ -72,7 +72,7 @@ Partial Class Settings
         Me.Label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.Label1.Location = New System.Drawing.Point(69, 61)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(421, 72)
+        Me.Label1.Size = New System.Drawing.Size(976, 38)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = resources.GetString("Label1.Text")
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -84,9 +84,9 @@ Partial Class Settings
         Me.GroupBox3.Controls.Add(Me.radExitOnClose)
         Me.GroupBox3.Controls.Add(Me.radMinimizeOnClose)
         Me.GroupBox3.Font = New System.Drawing.Font("Cambria", 12.0!)
-        Me.GroupBox3.Location = New System.Drawing.Point(21, 224)
+        Me.GroupBox3.Location = New System.Drawing.Point(21, 162)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(521, 258)
+        Me.GroupBox3.Size = New System.Drawing.Size(1068, 198)
         Me.GroupBox3.TabIndex = 3
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Close Button Behavior"
@@ -95,9 +95,9 @@ Partial Class Settings
         '
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label4.Location = New System.Drawing.Point(69, 170)
+        Me.Label4.Location = New System.Drawing.Point(69, 142)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(421, 56)
+        Me.Label4.Size = New System.Drawing.Size(976, 38)
         Me.Label4.TabIndex = 8
         Me.Label4.Text = "Exits the application. Application will not be running in the background. This is" &
     " not recommended since none of the reminders will be shown as the application is" &
@@ -110,7 +110,7 @@ Partial Class Settings
         Me.Label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.Label5.Location = New System.Drawing.Point(69, 63)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(421, 56)
+        Me.Label5.Size = New System.Drawing.Size(976, 38)
         Me.Label5.TabIndex = 6
         Me.Label5.Text = "Minimizes the application to system tray. It doesn't close the application. The a" &
     "pplicatio still continuos to run in the backgroud. This is recommended to not to" &
@@ -120,7 +120,7 @@ Partial Class Settings
         'radExitOnClose
         '
         Me.radExitOnClose.AutoSize = True
-        Me.radExitOnClose.Location = New System.Drawing.Point(52, 144)
+        Me.radExitOnClose.Location = New System.Drawing.Point(52, 116)
         Me.radExitOnClose.Name = "radExitOnClose"
         Me.radExitOnClose.Size = New System.Drawing.Size(161, 23)
         Me.radExitOnClose.TabIndex = 7
@@ -144,9 +144,9 @@ Partial Class Settings
         Me.GroupBox2.Controls.Add(Me.Label2)
         Me.GroupBox2.Controls.Add(Me.chkNotifyOnMinimize)
         Me.GroupBox2.Font = New System.Drawing.Font("Cambria", 12.0!)
-        Me.GroupBox2.Location = New System.Drawing.Point(21, 530)
+        Me.GroupBox2.Location = New System.Drawing.Point(21, 386)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(521, 148)
+        Me.GroupBox2.Size = New System.Drawing.Size(1068, 101)
         Me.GroupBox2.TabIndex = 3
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "On Application Minimized to System Tray"
@@ -155,9 +155,9 @@ Partial Class Settings
         '
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label2.Location = New System.Drawing.Point(69, 64)
+        Me.Label2.Location = New System.Drawing.Point(69, 61)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(421, 57)
+        Me.Label2.Size = New System.Drawing.Size(976, 22)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Notifies you with a small popup whenever you  minimize the application.  If you d" &
     "isable this then the application will be silently minimized to system tray."
@@ -179,9 +179,9 @@ Partial Class Settings
         Me.GroupBox4.Controls.Add(Me.Label3)
         Me.GroupBox4.Controls.Add(Me.chkConfirmDeletion)
         Me.GroupBox4.Font = New System.Drawing.Font("Cambria", 12.0!)
-        Me.GroupBox4.Location = New System.Drawing.Point(21, 709)
+        Me.GroupBox4.Location = New System.Drawing.Point(21, 523)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(521, 133)
+        Me.GroupBox4.Size = New System.Drawing.Size(1068, 98)
         Me.GroupBox4.TabIndex = 4
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Deleting Reminder"
@@ -190,9 +190,9 @@ Partial Class Settings
         '
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label3.Location = New System.Drawing.Point(69, 64)
+        Me.Label3.Location = New System.Drawing.Point(69, 62)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(421, 45)
+        Me.Label3.Size = New System.Drawing.Size(976, 18)
         Me.Label3.TabIndex = 1
         Me.Label3.Text = "Asks you to confirm the deletion to avoid deletion by mistake. Recommended to kee" &
     "p it enabled." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
@@ -213,7 +213,7 @@ Partial Class Settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(566, 893)
+        Me.ClientSize = New System.Drawing.Size(1114, 893)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox3)

@@ -13,7 +13,7 @@ Public Class Settings
         My.Settings.start_at_windows_boot = chkStartOnBoot.Checked
         Dim registryKey As RegistryKey = My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True)
         If chkStartOnBoot.Checked = True Then
-            registryKey.SetValue(Application.ProductName, Application.ExecutablePath)
+            registryKey.SetValue(Application.ProductName, Application.ExecutablePath + " arg1")
         Else
             registryKey.DeleteValue(Application.ProductName, False)
         End If

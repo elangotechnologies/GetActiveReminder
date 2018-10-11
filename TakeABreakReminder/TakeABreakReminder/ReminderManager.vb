@@ -44,9 +44,9 @@ Public NotInheritable Class ReminderManager
 
     Private Class RunningReminder
         Public reminderRow As DataRow
-        Public toastNotificationForm As ToastNotificationForm
+        Public toastNotificationForm As ReminderNotification
 
-        Public Sub New(reminderRow As DataRow, toastNotificationForm As ToastNotificationForm)
+        Public Sub New(reminderRow As DataRow, toastNotificationForm As ReminderNotification)
             Me.reminderRow = reminderRow
             Me.toastNotificationForm = toastNotificationForm
         End Sub
@@ -148,9 +148,12 @@ Public NotInheritable Class ReminderManager
                 New DataColumn(COL_NOTIFICATION_FORECOLOR, GetType(String)),
                 New DataColumn(COL_NOTIFICATION_WIDTH, GetType(Integer)),
                 New DataColumn(COL_NOTIFICATION_HEIGHT, GetType(Integer))})
-        gReminderTable.Columns(COL_REMINDER_ID).AutoIncrement = True
-        gReminderTable.Columns(COL_REMINDER_ID).AutoIncrementSeed = 1
-        gReminderTable.Columns(COL_REMINDER_ID).AutoIncrementStep = 1
+        'gReminderTable.Columns(COL_REMINDER_ID).Unique = True
+        'gReminderTable.Columns(COL_REMINDER_ID).ReadOnly = True
+        'gReminderTable.Columns(COL_REMINDER_ID).AutoIncrement = True
+        'gReminderTable.Columns(COL_REMINDER_ID).AutoIncrementSeed = 1
+        'gReminderTable.Columns(COL_REMINDER_ID).AutoIncrementStep = 1
+
 
         Try
             gReminderTable = DirectCast(binaryFormatter.Deserialize(fileReader), DataTable)
@@ -195,22 +198,41 @@ Public NotInheritable Class ReminderManager
 
     End Sub
 
+    'Public Sub stopRemindersToExit()
+
+    '    gReminderTimer.Stop()
+    '    gRemainingTimeToNotificationTimer.Stop()
+
+    '    For Each runningReminderItem As KeyValuePair(Of Integer, RunningReminder) In gRunnningRemindersMap
+    '        Dim runningReminder As RunningReminder = runningReminderItem.Value
+    '        Dim toastNotificationForm As ReminderNotification = runningReminder.toastNotificationForm
+    '        toastNotificationForm.Close()
+    '    Next
+
+    'End Sub
+
     Public Function createNewReminderRow() As DataRow
         Return gReminderTable.NewRow()
     End Function
 
     Public Sub commitNewReminderRow(reminderRow As DataRow)
+        My.Settings.last_reminder_id += 1
+        reminderRow(COL_REMINDER_ID) = My.Settings.last_reminder_id
         gReminderTable.Rows.Add(reminderRow)
         saveDataInPermenantStorage(gReminderTable)
         commitNewReminderHistoryRow(reminderRow)
     End Sub
 
     Public Sub commitNewReminderHistoryRow(ByVal reminderRow As DataRow)
-        Dim remindersHistoryTable As DataTable = getReminderHistoryTable()
-        Dim reminderRowClone As DataRow = cloneReminderRow(reminderRow)
-        ''remindersHistoryTable.ImportRow(reminderRow)
-        remindersHistoryTable.Rows.InsertAt(reminderRowClone, 0)
-        saveDataInPermenantStorage(remindersHistoryTable, STORAGE_REMINDER_HISTORY_OPERATION)
+        Try
+            Dim remindersHistoryTable As DataTable = getReminderHistoryTable()
+            Dim reminderRowClone As DataRow = cloneReminderRow(reminderRow)
+            remindersHistoryTable.Rows.InsertAt(reminderRowClone, 0)
+            saveDataInPermenantStorage(remindersHistoryTable, STORAGE_REMINDER_HISTORY_OPERATION)
+        Catch ex As Exception
+            Console.WriteLine("commitNewReminderHistoryRow:  error = " + ex.Message)
+        End Try
+
     End Sub
 
     Public Sub commitUpdatedReminderRow(reminderRow As DataRow)
@@ -326,7 +348,7 @@ Public NotInheritable Class ReminderManager
             Return
         End If
 
-        gRunnningRemindersMap.Item(reminderId) = New RunningReminder(reminderRow, New ToastNotificationForm)
+        gRunnningRemindersMap.Item(reminderId) = New RunningReminder(reminderRow, New ReminderNotification)
 
         reminderRow.Item(COL_REMINDER_STATUS) = REMINDER_STATUS_RUNNING
         reminderRow.Item(COL_REMINDER_STARTED_TIME) = DateTime.Now
@@ -368,14 +390,11 @@ Public NotInheritable Class ReminderManager
 
                 Dim dayOftheWeek As Integer = If(notifiedTime.DayOfWeek = 0, 7, notifiedTime.DayOfWeek)
                 Dim mondayOfNotifiedTime As DateTime = notifiedTime.AddDays((dayOftheWeek - 1) * -1)
-                log.Debug("mondayOfNotifiedTime: " + mondayOfNotifiedTime.ToString)
                 dayOftheWeek = If(nextNotifyTime.DayOfWeek = 0, 7, nextNotifyTime.DayOfWeek)
                 Dim mondayOfNextNotifyTime As DateTime = nextNotifyTime.AddDays((dayOftheWeek - 1) * -1)
-                log.Debug("mondayOfNextNotifyTime: " + mondayOfNextNotifyTime.ToString)
                 If mondayOfNotifiedTime.Date <> mondayOfNextNotifyTime.Date Then
                     'Increase occurance as the next notification falls in next week
                     reminderRow(COL_REMINDER_REPEAT_ELAPSED) += 1
-                    log.Debug("Increasing the repeat count")
                 End If
 
             Case REMINDER_TYPE_SPECIFIC_TIME
@@ -403,7 +422,7 @@ Public NotInheritable Class ReminderManager
 
         commitUpdatedReminderRow(reminderRow)
 
-        Dim toastNotificationForm As ToastNotificationForm = runningReminder.toastNotificationForm
+        Dim toastNotificationForm As ReminderNotification = runningReminder.toastNotificationForm
         toastNotificationForm.Close()
     End Sub
 
@@ -437,7 +456,7 @@ Public NotInheritable Class ReminderManager
             Dim currentTime As DateTime = DateTime.Now
             Dim reminderId As Integer = runningReminderItem.Key
             Dim reminderStatus As String = reminderRow(COL_REMINDER_STATUS)
-            Dim toastNotificationForm As ToastNotificationForm = runningReminder.toastNotificationForm
+            Dim toastNotificationForm As ReminderNotification = runningReminder.toastNotificationForm
 
             If reminderStatus = REMINDER_STATUS_RUNNING AndAlso reminderRow(COL_REMINDER_REPEAT_ELAPSED) >= reminderRow(COL_REMINDER_REPEAT_MAX) Then
                 If toastNotificationForm.Visible = False Then
@@ -447,7 +466,7 @@ Public NotInheritable Class ReminderManager
             End If
 
             If nextNotifyTime <= currentTime Then
-                toastNotificationForm = New ToastNotificationForm
+                toastNotificationForm = New ReminderNotification
                 runningReminder.toastNotificationForm = toastNotificationForm
                 toastNotificationForm.showNotification(reminderRow)
                 reminderRow(COL_REMINDER_NOTIFIED_TIME) = DateTime.Now
