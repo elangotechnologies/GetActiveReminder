@@ -8,7 +8,8 @@ Public Class FrmMain
     Private gIsExitClicked As Boolean = False
     Private gReminderManager As ReminderManager = ReminderManager.getInstance()
     Private gSelectedReminderId As Integer = REMINDER_ID_NONE
-    Private gWindowState As FormWindowState = FormWindowState.Normal
+    Public Const DEFAULT_WINDOW_STATE As FormWindowState = FormWindowState.Maximized
+    Private gWindowState As FormWindowState = DEFAULT_WINDOW_STATE
 
     Dim gButtonsIconsList As List(Of PictureBox)
     Dim gIconsPlaceHolderList As List(Of Label)
@@ -31,19 +32,20 @@ Public Class FrmMain
         End Sub
 
         Private Sub remainingTimeChanged(remainingTimeStr As String) Implements ReminderManager.IReminderUpdateObserver.remainingTimeChanged
-            FrmMain.statusRemainingTimeLabel.Text = remainingTimeStr
+            FrmMain.lblReminderStatus.Text = remainingTimeStr
         End Sub
     End Class
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ''gWindowState = Me.WindowState
         log.Debug("Environment.GetCommandLineArgs().Count: " + Environment.GetCommandLineArgs().Count.ToString)
         If Environment.GetCommandLineArgs().Count >= 2 Then
             log.Debug("Minimizing")
             Me.WindowState = FormWindowState.Minimized
         End If
 
-        gButtonsIconsList = New List(Of PictureBox) From {btnAddReminder, btnEditReminder, btnStartStopReminder, btnDeleteReminder, btnClearScreen}
-        gIconsPlaceHolderList = New List(Of Label) From {lblIconPlace1, lblIconPlace2, lblIconPlace3, lblIconPlace4, lblIconPlace5}
+        gButtonsIconsList = New List(Of PictureBox) From {btnAddReminder, btnEditReminder, btnStartStopReminder, btnDeleteReminder, btnClearScreen, btnCloneReminder}
+        gIconsPlaceHolderList = New List(Of Label) From {lblIconPlace1, lblIconPlace2, lblIconPlace3, lblIconPlace4, lblIconPlace5, lblIconPlace6}
 
         addButtonAppearnceEventHandlers(gButtonsIconsList)
 
@@ -60,6 +62,7 @@ Public Class FrmMain
         numNotificationHeight.Maximum = Screen.PrimaryScreen.Bounds.Height
 
         setVisibilityByByOperation(OPERATION_SCREEN_LOADED)
+        selectFirstRowAtDataGrid(dgReminderDetails)
 
         'this should be in last
         gReminderManager.startAllRunningStatusReminders()
@@ -231,22 +234,23 @@ Public Class FrmMain
     End Sub
 
     Public Sub showMainForm()
-        Me.WindowState = FormWindowState.Normal
+        Me.WindowState = DEFAULT_WINDOW_STATE
     End Sub
 
     Private Sub FrmMain_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
         If gWindowState <> Me.WindowState Then
+            gWindowState = Me.WindowState
             If Me.WindowState = FormWindowState.Minimized Then
                 trayIcon.Visible = True
                 ShowInTaskbar = False
                 If My.Settings.notify_on_minimize_to_tray = True Then
                     trayIcon.ShowBalloonTip(1, "RemindMe Application", "I'm running in background. You can launch me from system tray.", ToolTipIcon.Info)
                 End If
-            ElseIf Me.WindowState = FormWindowState.Normal Then
-                    trayIcon.Visible = False
+            Else
+                trayIcon.Visible = False
                 ShowInTaskbar = True
             End If
-            gWindowState = Me.WindowState
+
         End If
     End Sub
 
@@ -350,7 +354,6 @@ Public Class FrmMain
         numNotificationWidth.Value = reminderRow(COL_NOTIFICATION_WIDTH)
         numNotificationHeight.Value = reminderRow(COL_NOTIFICATION_HEIGHT)
 
-        setVisibilityByByOperation(OPERATION_REMINDER_SELECTED)
     End Sub
 
     Private Function validateReminderData() As Boolean
@@ -394,13 +397,18 @@ Public Class FrmMain
     End Sub
 
     Private Sub dgReminderDetails_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgReminderDetails.CellClick
-        If e.RowIndex < 0 Then
+        onDataGridCellClick(e.RowIndex)
+    End Sub
+
+    Private Sub onDataGridCellClick(rowIndex As Integer)
+        If rowIndex < 0 Then
             Return
         End If
 
         If btnAddReminder.Tag = OPERATION_ADD_STARTED Then
             MessageBox.Show("Sorry, you cannot view any existing reminders because you are in the middle of creating a new reminder. Please compelete the creation or cancel it", "ERROR")
             dgReminderDetails.ClearSelection()
+            gSelectedReminderId = REMINDER_ID_NONE
             Return
         End If
 
@@ -410,13 +418,13 @@ Public Class FrmMain
             Return
         End If
 
-        gSelectedReminderId = dgReminderDetails.Item("colReminderId", e.RowIndex).Value
+        gSelectedReminderId = dgReminderDetails.Item("colReminderId", rowIndex).Value
 
         setVisibilityByByOperation(OPERATION_REMINDER_SELECTED)
 
         updateScreenFromReminderRow()
-
     End Sub
+
 
     Private Sub btnDeleteReminder_Click(sender As Object, e As EventArgs) Handles btnDeleteReminder.Click
         If gSelectedReminderId = REMINDER_ID_NONE Then
@@ -443,7 +451,7 @@ Public Class FrmMain
             gReminderManager.commitDeletedReminderRow(reminderRow)
             gSelectedReminderId = REMINDER_ID_NONE
             setVisibilityByByOperation(OPERATION_DELETE_COMPLETED)
-            statusRemainingTimeLabel.Text = "Reminder with id " + reminderId.ToString + " is deleted successfully"
+            lblReminderStatus.Text = "Reminder with id " + reminderId.ToString + " is deleted successfully"
         End If
 
     End Sub
@@ -453,6 +461,7 @@ Public Class FrmMain
         If btnAddReminder.Tag = OPERATION_ADD_STARTED Then
             setVisibilityByByOperation(OPERATION_ADD_CANCELED)
         ElseIf btnEditReminder.Tag = OPERATION_EDIT_STARTED Then
+            ''ToDO reset edited values
             setVisibilityByByOperation(OPERATION_EDIT_CANCELED)
         Else
             setVisibilityByByOperation(OPERATION_SCREEN_CLEARED)
@@ -556,10 +565,10 @@ Public Class FrmMain
 
             Dim newReminderRow As DataRow = gReminderManager.createNewReminderRow()
             gReminderManager.commitNewReminderRow(fillReminderRowFromScreen(newReminderRow))
-            gSelectedReminderId = newReminderRow.Item(COL_REMINDER_ID)
+            Dim reminderId As Integer = newReminderRow.Item(COL_REMINDER_ID)
 
-            setVisibilityByByOperation(OPERATION_ADD_COMPLETED)
-            statusRemainingTimeLabel.Text = "Reminder with id " + gSelectedReminderId.ToString + " is added successfully"
+            setVisibilityByByOperation(OPERATION_ADD_COMPLETED, reminderId)
+            lblReminderStatus.Text = "Reminder with id " + reminderId.ToString + " is added successfully"
         End If
 
     End Sub
@@ -594,7 +603,7 @@ Public Class FrmMain
             gReminderManager.commitUpdatedReminderRow(reminderRow)
 
             setVisibilityByByOperation(OPERATION_EDIT_COMPLETED)
-            statusRemainingTimeLabel.Text = "Reminder with id " + gSelectedReminderId.ToString + " is updated successfully"
+            lblReminderStatus.Text = "Reminder with id " + gSelectedReminderId.ToString + " is updated successfully"
         End If
 
     End Sub
@@ -619,6 +628,10 @@ Public Class FrmMain
         sender.BackgroundImage = If(sender.enabled, My.Resources.clear, My.Resources.clear_disabled)
     End Sub
 
+    Private Sub btnCloneReminder_EnabledChanged(sender As Object, e As EventArgs) Handles btnCloneReminder.EnabledChanged
+        sender.BackgroundImage = If(sender.enabled, My.Resources.clone, My.Resources.clone_disabled)
+    End Sub
+
     Private Sub resetScreen()
         cmbNotificationDuration.SelectedIndex = 0
         cmbNotificationSound.SelectedIndex = 0
@@ -637,7 +650,7 @@ Public Class FrmMain
 
     End Sub
 
-    Private Sub setVisibilityByByOperation(operation As Integer)
+    Private Sub setVisibilityByByOperation(operation As Integer, Optional reminderId As Integer = REMINDER_ID_NONE)
         Select Case operation
             Case OPERATION_NONE
                 ''Nothing
@@ -655,11 +668,14 @@ Public Class FrmMain
 
             Case OPERATION_SCREEN_CLEARED
                 dgReminderDetails.ClearSelection()
+                gSelectedReminderId = REMINDER_ID_NONE
+
                 panelReminderType.Visible = False
                 panelReminderTimeConfig.Visible = False
                 panelNotificationSettings.Visible = False
                 btnEditReminder.Enabled = False
                 btnDeleteReminder.Enabled = False
+                btnCloneReminder.Enabled = False
                 btnStartStopReminder.Enabled = False
 
             Case OPERATION_SCREEN_VALUES_RESET
@@ -682,6 +698,7 @@ Public Class FrmMain
             Case OPERATION_ADD_STARTED
                 btnEditReminder.Enabled = False
                 btnDeleteReminder.Enabled = False
+                btnCloneReminder.Enabled = False
                 btnStartStopReminder.Enabled = False
                 btnAddReminder.Tag = operation
                 btnAddReminder.BackgroundImage = My.Resources.confirm
@@ -711,8 +728,12 @@ Public Class FrmMain
                 btnClearScreen.BackgroundImage = My.Resources.clear
                 ttIconTooltip.SetToolTip(btnClearScreen, "Clear")
 
-                selectRowAtDataGridByKey(dgReminderDetails, COL_REMINDER_ID, gSelectedReminderId)
-                setVisibilityByByOperation(OPERATION_REMINDER_SELECTED)
+                selectRowAtDataGridByKey(dgReminderDetails, COL_REMINDER_ID, reminderId)
+                ''setVisibilityByByOperation(OPERATION_REMINDER_SELECTED)
+
+            Case OPERATION_CLONE_COMPLETED
+                selectRowAtDataGridByKey(dgReminderDetails, COL_REMINDER_ID, reminderId)
+                ''setVisibilityByByOperation(OPERATION_REMINDER_SELECTED)
 
             Case OPERATION_ADD_CANCELED
                 btnAddReminder.Tag = OPERATION_NONE
@@ -725,6 +746,7 @@ Public Class FrmMain
             Case OPERATION_EDIT_STARTED
                 btnAddReminder.Enabled = False
                 btnDeleteReminder.Enabled = False
+                btnCloneReminder.Enabled = False
                 btnStartStopReminder.Enabled = False
 
                 btnEditReminder.Tag = operation
@@ -742,8 +764,6 @@ Public Class FrmMain
 
             Case OPERATION_EDIT_COMPLETED
                 btnAddReminder.Enabled = True
-                btnDeleteReminder.Enabled = True
-                btnStartStopReminder.Enabled = True
 
                 btnEditReminder.Tag = OPERATION_NONE
                 btnEditReminder.BackgroundImage = My.Resources.edit
@@ -751,7 +771,8 @@ Public Class FrmMain
                 btnClearScreen.BackgroundImage = My.Resources.clear
                 ttIconTooltip.SetToolTip(btnClearScreen, "Clear")
 
-                setVisibilityByByOperation(OPERATION_REMINDER_SELECTED)
+                selectRowAtDataGridByKey(dgReminderDetails, COL_REMINDER_ID, gSelectedReminderId)
+                'setVisibilityByByOperation(OPERATION_REMINDER_SELECTED)
 
             Case OPERATION_EDIT_CANCELED
                 btnAddReminder.Enabled = True
@@ -762,20 +783,23 @@ Public Class FrmMain
                 ttIconTooltip.SetToolTip(btnClearScreen, "Clear")
 
                 selectRowAtDataGridByKey(dgReminderDetails, COL_REMINDER_ID, gSelectedReminderId)
-                setVisibilityByByOperation(OPERATION_REMINDER_SELECTED)
+                ''setVisibilityByByOperation(OPERATION_REMINDER_SELECTED)
 
             Case OPERATION_DELETE_COMPLETED
-                setVisibilityByByOperation(OPERATION_SCREEN_CLEARED)
+                selectFirstRowAtDataGrid(dgReminderDetails)
+                ''setVisibilityByByOperation(OPERATION_SCREEN_CLEARED)
 
             Case OPERATION_REMINDER_STARTED
                 btnEditReminder.Enabled = False
                 btnDeleteReminder.Enabled = False
+                btnCloneReminder.Enabled = False
                 btnStartStopReminder.BackgroundImage = My.Resources._stop
                 ttIconTooltip.SetToolTip(btnStartStopReminder, "Stop")
 
             Case OPERATION_REMINDER_STOPPED
                 btnEditReminder.Enabled = True
                 btnDeleteReminder.Enabled = True
+                btnCloneReminder.Enabled = True
                 btnStartStopReminder.BackgroundImage = My.Resources.start
                 ttIconTooltip.SetToolTip(btnStartStopReminder, "Start")
 
@@ -783,16 +807,16 @@ Public Class FrmMain
                 btnEditReminder.Enabled = True
                 btnStartStopReminder.Enabled = True
                 btnDeleteReminder.Enabled = True
+                btnCloneReminder.Enabled = True
 
                 Dim reminderRow As DataRow = gReminderManager.getReminderRow(gSelectedReminderId)
                 If reminderRow IsNot Nothing AndAlso reminderRow(COL_REMINDER_STATUS) = REMINDER_STATUS_RUNNING Then
                     btnEditReminder.Enabled = False
                     btnDeleteReminder.Enabled = False
+                    btnCloneReminder.Enabled = False
                     btnStartStopReminder.BackgroundImage = My.Resources._stop
                     ttIconTooltip.SetToolTip(btnStartStopReminder, "Stop")
                 Else
-                    btnEditReminder.Enabled = True
-                    btnDeleteReminder.Enabled = True
                     btnStartStopReminder.BackgroundImage = My.Resources.start
                     ttIconTooltip.SetToolTip(btnStartStopReminder, "Start")
                 End If
@@ -856,21 +880,41 @@ Public Class FrmMain
         arrangeIcons()
     End Sub
 
+    Private Sub selectRowAtDataGridByKey(lDataGridView As DataGridView, lDBkeyColumn As String, lKeyValue As Integer)
+        gSelectedReminderId = lKeyValue
+        Dim lDataBindingSource As BindingSource = lDataGridView.DataSource
+        Dim lDataTableFromBinding As DataTable = lDataBindingSource.DataSource
+        lDataGridView.DataSource.Position = lDataBindingSource.Find(lDataTableFromBinding.Columns(lDBkeyColumn).ToString, lKeyValue.ToString)
+        lDataBindingSource.ResetBindings(False)
+        onDataGridCellClick(lDataGridView.DataSource.Position)
+    End Sub
+
+
+    Private Sub selectFirstRowAtDataGrid(lDataGridView As DataGridView)
+        Dim lDataBindingSource As BindingSource = lDataGridView.DataSource
+        Dim lDataTableFromBinding As DataTable = lDataBindingSource.DataSource
+
+        If lDataTableFromBinding.Rows.Count > 0 Then
+            Dim reminderRow As DataRow = lDataTableFromBinding.Rows(0)
+            gSelectedReminderId = reminderRow(COL_REMINDER_ID)
+            lDataGridView.DataSource.Position = 0
+            lDataBindingSource.ResetBindings(False)
+            onDataGridCellClick(0)
+        End If
+
+    End Sub
+
     Private Sub panelReminderTypeContent_EnabledChanged(sender As Object, e As EventArgs) Handles panelReminderTypeContent.EnabledChanged
         lblReminderTypeInterval.Visible = Not sender.Enabled
         lblReminderTypeDaily.Visible = Not sender.Enabled
         lblReminderTypeSpecific.Visible = Not sender.Enabled
     End Sub
 
-    Private Sub scMainContainer_Panel1_Paint(sender As Object, e As PaintEventArgs) Handles scMainContainer.Panel1.Paint
-
-    End Sub
-
-    Private Sub ExitToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem1.Click
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         exitApp()
     End Sub
 
-    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+    Private Sub MinimizeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MinimizeToolStripMenuItem.Click
         Me.WindowState = FormWindowState.Minimized
     End Sub
 
@@ -888,6 +932,26 @@ Public Class FrmMain
 
     Private Sub ClearHistoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearHistoryToolStripMenuItem.Click
         gReminderManager.resetSavedReminderDB(STORAGE_REMINDER_HISTORY_OPERATION)
-        MsgBox("History is completely cleared")
+        lblReminderStatus.Text = "History is completely cleared."
+    End Sub
+
+    Private Sub btnCloneReminder_Click(sender As Object, e As EventArgs) Handles btnCloneReminder.Click
+
+        Dim reminderRow As DataRow = gReminderManager.getReminderRow(gSelectedReminderId)
+        Dim reminderId As Integer = gSelectedReminderId
+        Dim clonedReminderRow As DataRow = gReminderManager.cloneReminderRow(reminderRow, gReminderManager.getReminderTable().NewRow())
+        clonedReminderRow(COL_REMINDER_CREATED_TIME) = DateTime.Now
+        clonedReminderRow(COL_REMINDER_UPDATED_TIME) = DBNull.Value
+        clonedReminderRow(COL_REMINDER_STARTED_TIME) = DBNull.Value
+        clonedReminderRow(COL_REMINDER_NOTIFIED_TIME) = DBNull.Value
+        clonedReminderRow(COL_REMINDER_NEXT_NOTIFY_TIME) = DBNull.Value
+        clonedReminderRow(COL_REMINDER_REPEAT_ELAPSED) = 0
+
+        gReminderManager.commitNewReminderRow(clonedReminderRow)
+        Dim clonedReminderId As Integer = clonedReminderRow.Item(COL_REMINDER_ID)
+
+        setVisibilityByByOperation(OPERATION_CLONE_COMPLETED, clonedReminderId)
+        lblReminderStatus.Text = "Reminder with id " + reminderId.ToString + " is cloned to " + clonedReminderId.ToString + "successfully"
     End Sub
 End Class
+

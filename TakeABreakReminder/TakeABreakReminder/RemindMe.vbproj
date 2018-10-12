@@ -158,6 +158,12 @@
     <Compile Include="ReminderNotification.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Shortcuts.Designer.vb">
+      <DependentUpon>Shortcuts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Shortcuts.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
@@ -187,6 +193,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\clone.png" />
+    <None Include="Resources\clone_disabled.png" />
     <None Include="Resources\clear_disabled.png" />
     <None Include="Resources\cancel_disabled.png" />
     <None Include="Resources\confirm_disabled.png" />

@@ -13,20 +13,21 @@ Module CommonModule
     Public Const OPERATION_SCREEN_VALUES_RESET As Integer = 2
     Public Const OPERATION_ADD_STARTED As Integer = 3
     Public Const OPERATION_ADD_COMPLETED As Integer = 4
-    Public Const OPERATION_ADD_CANCELED As Integer = 5
-    Public Const OPERATION_EDIT_STARTED As Integer = 6
-    Public Const OPERATION_EDIT_COMPLETED As Integer = 7
-    Public Const OPERATION_EDIT_CANCELED As Integer = 8
-    Public Const OPERATION_DELETE_COMPLETED As Integer = 9
-    Public Const OPERATION_REMINDER_STARTED As Integer = 10
-    Public Const OPERATION_REMINDER_STOPPED As Integer = 11
-    Public Const OPERATION_REMINDER_SELECTED As Integer = 12
-    Public Const OPERATION_REMINDER_TYPE_INTERVAL_CHECKED As Integer = 13
-    Public Const OPERATION_REMINDER_TYPE_DAILY_CHECKED As Integer = 14
-    Public Const OPERATION_REMINDER_TYPE_SPECIFIC_CHECKED As Integer = 15
-    Public Const OPERATION_REMINDER_TYPE_INTERVAL_UNCHECKED As Integer = 16
-    Public Const OPERATION_REMINDER_TYPE_DAILY_UNCHECKED As Integer = 17
-    Public Const OPERATION_REMINDER_TYPE_SPECIFIC_UNCHECKED As Integer = 18
+    Public Const OPERATION_CLONE_COMPLETED As Integer = 5
+    Public Const OPERATION_ADD_CANCELED As Integer = 6
+    Public Const OPERATION_EDIT_STARTED As Integer = 7
+    Public Const OPERATION_EDIT_COMPLETED As Integer = 8
+    Public Const OPERATION_EDIT_CANCELED As Integer = 9
+    Public Const OPERATION_DELETE_COMPLETED As Integer = 10
+    Public Const OPERATION_REMINDER_STARTED As Integer = 11
+    Public Const OPERATION_REMINDER_STOPPED As Integer = 12
+    Public Const OPERATION_REMINDER_SELECTED As Integer = 13
+    Public Const OPERATION_REMINDER_TYPE_INTERVAL_CHECKED As Integer = 14
+    Public Const OPERATION_REMINDER_TYPE_DAILY_CHECKED As Integer = 15
+    Public Const OPERATION_REMINDER_TYPE_SPECIFIC_CHECKED As Integer = 16
+    Public Const OPERATION_REMINDER_TYPE_INTERVAL_UNCHECKED As Integer = 17
+    Public Const OPERATION_REMINDER_TYPE_DAILY_UNCHECKED As Integer = 18
+    Public Const OPERATION_REMINDER_TYPE_SPECIFIC_UNCHECKED As Integer = 19
 
     Public Const REMINDER_NOTIFICATION_VISIBLE_STATUS_NONE As Integer = 0
     Public Const REMINDER_NOTIFICATION_VISIBLE_STATUS_SHOWING As Integer = 1
@@ -156,12 +157,6 @@ Module CommonModule
         Return fontFamilyName + ", " + fontSize + "pt, style=" + fontStyle
     End Function
 
-    Sub selectRowAtDataGridByKey(lDataGridView As DataGridView, lDBkeyColumn As String, lKeyValue As Integer)
-        Dim lDataBindingSource As BindingSource = lDataGridView.DataSource
-        Dim lDataTableFromBinding As DataTable = lDataBindingSource.DataSource
-        lDataGridView.DataSource.Position = lDataBindingSource.Find(lDataTableFromBinding.Columns(lDBkeyColumn).ToString, lKeyValue.ToString)
-        lDataBindingSource.ResetBindings(False)
-    End Sub
 
     Public Sub setDataGrid(lDataGridView As DataGridView, lDataTable As DataTable)
         Console.WriteLine("lDataTable: " + lDataTable.Rows.Count.ToString)

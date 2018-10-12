@@ -17,25 +17,34 @@ Public Class Settings
         Else
             registryKey.DeleteValue(Application.ProductName, False)
         End If
+        My.Settings.Save()
     End Sub
 
     Private Sub chkNotifyOnMinimize_CheckedChanged(sender As Object, e As EventArgs) Handles chkNotifyOnMinimize.CheckedChanged
         My.Settings.notify_on_minimize_to_tray = chkNotifyOnMinimize.Checked
+        My.Settings.Save()
     End Sub
 
     Private Sub radMinimizeOnClose_CheckedChanged(sender As Object, e As EventArgs) Handles radMinimizeOnClose.CheckedChanged
         If radMinimizeOnClose.Checked = True Then
             My.Settings.minimize_on_close = True
+            My.Settings.Save()
         End If
     End Sub
 
     Private Sub radExitOnClose_CheckedChanged(sender As Object, e As EventArgs) Handles radExitOnClose.CheckedChanged
         If radExitOnClose.Checked = True Then
             My.Settings.minimize_on_close = False
+            My.Settings.Save()
         End If
     End Sub
 
     Private Sub chkConfirmDeletion_CheckedChanged(sender As Object, e As EventArgs) Handles chkConfirmDeletion.CheckedChanged
         My.Settings.confirm_before_delete = chkConfirmDeletion.Checked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub MainForm_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
+        If e.KeyCode = Keys.Escape Then Me.Close()
     End Sub
 End Class

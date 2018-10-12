@@ -217,6 +217,7 @@ Public NotInheritable Class ReminderManager
 
     Public Sub commitNewReminderRow(reminderRow As DataRow)
         My.Settings.last_reminder_id += 1
+        My.Settings.Save()
         reminderRow(COL_REMINDER_ID) = My.Settings.last_reminder_id
         gReminderTable.Rows.Add(reminderRow)
         saveDataInPermenantStorage(gReminderTable)
@@ -226,7 +227,7 @@ Public NotInheritable Class ReminderManager
     Public Sub commitNewReminderHistoryRow(ByVal reminderRow As DataRow)
         Try
             Dim remindersHistoryTable As DataTable = getReminderHistoryTable()
-            Dim reminderRowClone As DataRow = cloneReminderRow(reminderRow)
+            Dim reminderRowClone As DataRow = cloneReminderRow(reminderRow, remindersHistoryTable.NewRow())
             remindersHistoryTable.Rows.InsertAt(reminderRowClone, 0)
             saveDataInPermenantStorage(remindersHistoryTable, STORAGE_REMINDER_HISTORY_OPERATION)
         Catch ex As Exception
@@ -254,7 +255,7 @@ Public NotInheritable Class ReminderManager
     End Sub
 
     Public Sub commitDeletedReminderRow(ByVal reminderRow As DataRow)
-        Dim reminderRowClone As DataRow = cloneReminderRow(reminderRow)
+        Dim reminderRowClone As DataRow = cloneReminderRow(reminderRow, getReminderHistoryTable.NewRow())
 
         gReminderTable.Rows.Remove(reminderRow)
         saveDataInPermenantStorage(gReminderTable)
@@ -276,9 +277,7 @@ Public NotInheritable Class ReminderManager
         saveDataInPermenantStorage(remindersHistoryTable, STORAGE_REMINDER_HISTORY_OPERATION)
     End Sub
 
-    Private Function cloneReminderRow(ByVal reminderRow As DataRow) As DataRow
-        Dim reminderRowClone As DataRow = getReminderHistoryTable.NewRow()
-
+    Public Function cloneReminderRow(ByVal reminderRow As DataRow, reminderRowClone As DataRow) As DataRow
         reminderRowClone(COL_REMINDER_ID) = reminderRow(COL_REMINDER_ID)
         reminderRowClone(COL_REMINDER_TYPE) = reminderRow(COL_REMINDER_TYPE)
         reminderRowClone(COL_REMINDER_REPEAT_MAX) = reminderRow(COL_REMINDER_REPEAT_MAX)

@@ -322,6 +322,7 @@ Partial Class RemindersHistory
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1710, 833)
         Me.Controls.Add(Me.dgReminderHistoryDetails)
+        Me.KeyPreview = True
         Me.Name = "RemindersHistory"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Reminders History"
