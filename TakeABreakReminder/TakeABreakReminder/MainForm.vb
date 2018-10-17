@@ -42,7 +42,7 @@ Public Class FrmMain
 
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ''gWindowState = Me.WindowState
-        log.Debug("Environment.GetCommandLineArgs().Count: " + Environment.GetCommandLineArgs().Count.ToString)
+        ''log.Debug("Environment.GetCommandLineArgs().Count: " + Environment.GetCommandLineArgs().Count.ToString)
         If Environment.GetCommandLineArgs().Count >= 2 Then
             log.Debug("Minimizing")
             Me.WindowState = FormWindowState.Minimized
@@ -324,6 +324,7 @@ Public Class FrmMain
         reminderRow(COL_NOTIFICATION_FONT) = txtNotificaitonFont.Text
         reminderRow(COL_NOTIFICATION_BACKCOLOR) = colorPickerBackColor.Color.Name.ToString
         reminderRow(COL_NOTIFICATION_FORECOLOR) = colorPickerForeColor.Color.Name.ToString
+        reminderRow(COL_NOTIFICATION_META_FORECOLOR) = colorPickerMetaForeColor.Color.Name.ToString
         reminderRow(COL_NOTIFICATION_WIDTH) = numNotificationWidth.Value
         reminderRow(COL_NOTIFICATION_HEIGHT) = numNotificationHeight.Value
 
@@ -369,6 +370,7 @@ Public Class FrmMain
         txtNotificaitonFont.Text = reminderRow(COL_NOTIFICATION_FONT)
         colorPickerBackColor.Color = Color.FromName(reminderRow(COL_NOTIFICATION_BACKCOLOR))
         colorPickerForeColor.Color = Color.FromName(reminderRow(COL_NOTIFICATION_FORECOLOR))
+        colorPickerMetaForeColor.Color = Color.FromName(reminderRow(COL_NOTIFICATION_META_FORECOLOR))
         numNotificationWidth.Value = reminderRow(COL_NOTIFICATION_WIDTH)
         numNotificationHeight.Value = reminderRow(COL_NOTIFICATION_HEIGHT)
 
@@ -379,7 +381,7 @@ Public Class FrmMain
 
         Select Case reminderType
             Case REMINDER_TYPE_INTERVAL
-                If convertTimeToSeconds(numHours.Value, numMinutes.Value, numSeconds.Value) < convertMilliSecondsToSeconds(cmbNotificationDuration.SelectedValue) Then
+                If convertTimeToSeconds(numHours.Value, numMinutes.Value, numSeconds.Value) < cmbNotificationDuration.SelectedValue Then
                     MsgBox("The reminder interval cannot be lesser than notification duration. Current values,  Reminder Interval : " + getFormattedInterval(numHours.Value, numMinutes.Value, numSeconds.Value) + ", Notification Duration: " + cmbNotificationDuration.Text)
                     Return False
                 End If
@@ -426,7 +428,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub onReminderSelected(rowIndex As Integer)
-        If rowIndex <0 Then
+        If rowIndex < 0 Then
             Return
         End If
 
@@ -452,7 +454,6 @@ Public Class FrmMain
         gSelectedReminderId = dgReminderDetails.Item(COL_REMINDER_ID, rowIndex).Value
         setVisibilityByByOperation(OPERATION_REMINDER_SELECTED)
         updateScreenFromReminderRow()
-        log.Debug("--->>>>>>> onReminderSelected: gSelectedReminderId: " + gSelectedReminderId.ToString)
     End Sub
 
 
@@ -1006,13 +1007,11 @@ Public Class FrmMain
     End Sub
 
     Private Sub selectRowAtDataGridByKey(lDataGridView As DataGridView, lDBkeyColumn As String, lKeyValue As Integer)
-        log.Debug("selectRowAtDataGridByKey: remiderID to select: " + lKeyValue.ToString)
         Dim lDataBindingSource As BindingSource = lDataGridView.DataSource
         Dim lDataTableFromBinding As DataTable = lDataBindingSource.DataSource
 
         If lDataTableFromBinding.Rows.Count > 0 Then
             Dim rowPosition As Integer = lDataBindingSource.Find(lDataTableFromBinding.Columns(lDBkeyColumn).ToString, lKeyValue.ToString)
-            log.Debug("selectRowAtDataGridByKey rowPosition: " + rowPosition.ToString)
             lDataGridView.DataSource.Position = rowPosition
             ''lDataBindingSource.ResetBindings(False)
             onReminderSelected(rowPosition)
@@ -1028,7 +1027,6 @@ Public Class FrmMain
 
         If lDataTableFromBinding.Rows.Count > 0 Then
             Dim reminderRow As DataRow = lDataTableFromBinding.Rows(0)
-            log.Debug("selectFirstRowAtDataGrid Settings position to 0")
             lDataGridView.DataSource.Position = 0
             lDataBindingSource.ResetBindings(False)
             onReminderSelected(0)

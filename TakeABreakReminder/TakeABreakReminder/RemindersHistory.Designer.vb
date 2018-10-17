@@ -37,28 +37,29 @@ Partial Class RemindersHistory
         Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dgReminderHistoryDetails = New System.Windows.Forms.DataGridView()
-        Me.colReminderId = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderType = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderCreateTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderLastUpdatedTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderLastDeletedTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderRepeatMax = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderRepeatElapsed = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderStatus = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colIntervalDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colIntervalDaily = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderSpecificTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderStartTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderLastNotifiedTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderNextNotifyTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationSound = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationMessage = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationFont = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationBackColor = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationForeColor = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationWidth = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationHeight = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_type = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_created_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_updated_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_deleted_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_repeat_max = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_repeat_elapsed = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_status = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_interval = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_daily = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_specific_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_started_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_notified_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_next_notify_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_duration = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_sound = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_message = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_font = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_backcolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_forecolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_meta_forecolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_width = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_height = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.dgReminderHistoryDetails, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -82,7 +83,7 @@ Partial Class RemindersHistory
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgReminderHistoryDetails.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgReminderHistoryDetails.ColumnHeadersHeight = 65
-        Me.dgReminderHistoryDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colReminderId, Me.colReminderType, Me.colReminderCreateTime, Me.colReminderLastUpdatedTime, Me.colReminderLastDeletedTime, Me.colReminderRepeatMax, Me.colReminderRepeatElapsed, Me.colReminderStatus, Me.colIntervalDuration, Me.colIntervalDaily, Me.colReminderSpecificTime, Me.colReminderStartTime, Me.colReminderLastNotifiedTime, Me.colReminderNextNotifyTime, Me.colNotificationDuration, Me.colNotificationSound, Me.colNotificationMessage, Me.colNotificationFont, Me.colNotificationBackColor, Me.colNotificationForeColor, Me.colNotificationWidth, Me.colNotificationHeight})
+        Me.dgReminderHistoryDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.reminder_id, Me.reminder_type, Me.reminder_created_time, Me.reminder_updated_time, Me.reminder_deleted_time, Me.reminder_repeat_max, Me.reminder_repeat_elapsed, Me.reminder_status, Me.reminder_interval, Me.reminder_daily, Me.reminder_specific_time, Me.reminder_started_time, Me.reminder_notified_time, Me.reminder_next_notify_time, Me.notification_duration, Me.notification_sound, Me.notification_message, Me.notification_font, Me.notification_backcolor, Me.notification_forecolor, Me.notification_meta_forecolor, Me.notification_width, Me.notification_height})
         DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle12.BackColor = System.Drawing.Color.LightSteelBlue
         DataGridViewCellStyle12.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
@@ -117,204 +118,211 @@ Partial Class RemindersHistory
         Me.dgReminderHistoryDetails.Size = New System.Drawing.Size(1710, 833)
         Me.dgReminderHistoryDetails.TabIndex = 34
         '
-        'colReminderId
+        'reminder_id
         '
-        Me.colReminderId.DataPropertyName = "reminder_id"
-        Me.colReminderId.Frozen = True
-        Me.colReminderId.HeaderText = "Id"
-        Me.colReminderId.Name = "colReminderId"
-        Me.colReminderId.ReadOnly = True
-        Me.colReminderId.Width = 50
+        Me.reminder_id.DataPropertyName = "reminder_id"
+        Me.reminder_id.Frozen = True
+        Me.reminder_id.HeaderText = "Id"
+        Me.reminder_id.Name = "reminder_id"
+        Me.reminder_id.ReadOnly = True
+        Me.reminder_id.Width = 50
         '
-        'colReminderType
+        'reminder_type
         '
-        Me.colReminderType.DataPropertyName = "reminder_type"
-        Me.colReminderType.Frozen = True
-        Me.colReminderType.HeaderText = "Type"
-        Me.colReminderType.Name = "colReminderType"
-        Me.colReminderType.ReadOnly = True
+        Me.reminder_type.DataPropertyName = "reminder_type"
+        Me.reminder_type.Frozen = True
+        Me.reminder_type.HeaderText = "Type"
+        Me.reminder_type.Name = "reminder_type"
+        Me.reminder_type.ReadOnly = True
         '
-        'colReminderCreateTime
+        'reminder_created_time
         '
-        Me.colReminderCreateTime.DataPropertyName = "reminder_created_time"
+        Me.reminder_created_time.DataPropertyName = "reminder_created_time"
         DataGridViewCellStyle3.Format = "dd-MMM-yy hh:mm:ss tt"
         DataGridViewCellStyle3.NullValue = "none"
-        Me.colReminderCreateTime.DefaultCellStyle = DataGridViewCellStyle3
-        Me.colReminderCreateTime.HeaderText = "Created"
-        Me.colReminderCreateTime.Name = "colReminderCreateTime"
-        Me.colReminderCreateTime.ReadOnly = True
-        Me.colReminderCreateTime.Width = 165
+        Me.reminder_created_time.DefaultCellStyle = DataGridViewCellStyle3
+        Me.reminder_created_time.HeaderText = "Created"
+        Me.reminder_created_time.Name = "reminder_created_time"
+        Me.reminder_created_time.ReadOnly = True
+        Me.reminder_created_time.Width = 165
         '
-        'colReminderLastUpdatedTime
+        'reminder_updated_time
         '
-        Me.colReminderLastUpdatedTime.DataPropertyName = "reminder_updated_time"
+        Me.reminder_updated_time.DataPropertyName = "reminder_updated_time"
         DataGridViewCellStyle4.Format = "dd-MMM-yy hh:mm:ss tt"
         DataGridViewCellStyle4.NullValue = "none"
-        Me.colReminderLastUpdatedTime.DefaultCellStyle = DataGridViewCellStyle4
-        Me.colReminderLastUpdatedTime.HeaderText = "Updated"
-        Me.colReminderLastUpdatedTime.Name = "colReminderLastUpdatedTime"
-        Me.colReminderLastUpdatedTime.ReadOnly = True
-        Me.colReminderLastUpdatedTime.Width = 165
+        Me.reminder_updated_time.DefaultCellStyle = DataGridViewCellStyle4
+        Me.reminder_updated_time.HeaderText = "Updated"
+        Me.reminder_updated_time.Name = "reminder_updated_time"
+        Me.reminder_updated_time.ReadOnly = True
+        Me.reminder_updated_time.Width = 165
         '
-        'colReminderLastDeletedTime
+        'reminder_deleted_time
         '
-        Me.colReminderLastDeletedTime.DataPropertyName = "reminder_deleted_time"
+        Me.reminder_deleted_time.DataPropertyName = "reminder_deleted_time"
         DataGridViewCellStyle5.Format = "dd-MMM-yy hh:mm:ss tt"
         DataGridViewCellStyle5.NullValue = "none"
-        Me.colReminderLastDeletedTime.DefaultCellStyle = DataGridViewCellStyle5
-        Me.colReminderLastDeletedTime.HeaderText = "Deleted"
-        Me.colReminderLastDeletedTime.Name = "colReminderLastDeletedTime"
-        Me.colReminderLastDeletedTime.ReadOnly = True
-        Me.colReminderLastDeletedTime.Width = 165
+        Me.reminder_deleted_time.DefaultCellStyle = DataGridViewCellStyle5
+        Me.reminder_deleted_time.HeaderText = "Deleted"
+        Me.reminder_deleted_time.Name = "reminder_deleted_time"
+        Me.reminder_deleted_time.ReadOnly = True
+        Me.reminder_deleted_time.Width = 165
         '
-        'colReminderRepeatMax
+        'reminder_repeat_max
         '
-        Me.colReminderRepeatMax.DataPropertyName = "reminder_repeat_max"
-        Me.colReminderRepeatMax.HeaderText = "Repeat"
-        Me.colReminderRepeatMax.Name = "colReminderRepeatMax"
-        Me.colReminderRepeatMax.ReadOnly = True
+        Me.reminder_repeat_max.DataPropertyName = "reminder_repeat_max"
+        Me.reminder_repeat_max.HeaderText = "Repeat"
+        Me.reminder_repeat_max.Name = "reminder_repeat_max"
+        Me.reminder_repeat_max.ReadOnly = True
         '
-        'colReminderRepeatElapsed
+        'reminder_repeat_elapsed
         '
-        Me.colReminderRepeatElapsed.DataPropertyName = "reminder_repeat_elapsed"
-        Me.colReminderRepeatElapsed.HeaderText = "Repeated"
-        Me.colReminderRepeatElapsed.Name = "colReminderRepeatElapsed"
-        Me.colReminderRepeatElapsed.ReadOnly = True
+        Me.reminder_repeat_elapsed.DataPropertyName = "reminder_repeat_elapsed"
+        Me.reminder_repeat_elapsed.HeaderText = "Repeated"
+        Me.reminder_repeat_elapsed.Name = "reminder_repeat_elapsed"
+        Me.reminder_repeat_elapsed.ReadOnly = True
         '
-        'colReminderStatus
+        'reminder_status
         '
-        Me.colReminderStatus.DataPropertyName = "reminder_status"
-        Me.colReminderStatus.HeaderText = "Status"
-        Me.colReminderStatus.Name = "colReminderStatus"
-        Me.colReminderStatus.ReadOnly = True
-        Me.colReminderStatus.Width = 90
+        Me.reminder_status.DataPropertyName = "reminder_status"
+        Me.reminder_status.HeaderText = "Status"
+        Me.reminder_status.Name = "reminder_status"
+        Me.reminder_status.ReadOnly = True
+        Me.reminder_status.Width = 90
         '
-        'colIntervalDuration
+        'reminder_interval
         '
-        Me.colIntervalDuration.DataPropertyName = "reminder_interval"
+        Me.reminder_interval.DataPropertyName = "reminder_interval"
         DataGridViewCellStyle6.NullValue = "none"
-        Me.colIntervalDuration.DefaultCellStyle = DataGridViewCellStyle6
-        Me.colIntervalDuration.HeaderText = "Interval"
-        Me.colIntervalDuration.Name = "colIntervalDuration"
-        Me.colIntervalDuration.ReadOnly = True
-        Me.colIntervalDuration.Width = 170
+        Me.reminder_interval.DefaultCellStyle = DataGridViewCellStyle6
+        Me.reminder_interval.HeaderText = "Interval"
+        Me.reminder_interval.Name = "reminder_interval"
+        Me.reminder_interval.ReadOnly = True
+        Me.reminder_interval.Width = 170
         '
-        'colIntervalDaily
+        'reminder_daily
         '
-        Me.colIntervalDaily.DataPropertyName = "reminder_daily"
-        Me.colIntervalDaily.HeaderText = "Daily"
-        Me.colIntervalDaily.Name = "colIntervalDaily"
-        Me.colIntervalDaily.ReadOnly = True
-        Me.colIntervalDaily.Width = 280
+        Me.reminder_daily.DataPropertyName = "reminder_daily"
+        Me.reminder_daily.HeaderText = "Daily"
+        Me.reminder_daily.Name = "reminder_daily"
+        Me.reminder_daily.ReadOnly = True
+        Me.reminder_daily.Width = 280
         '
-        'colReminderSpecificTime
+        'reminder_specific_time
         '
-        Me.colReminderSpecificTime.DataPropertyName = "reminder_specific_time"
+        Me.reminder_specific_time.DataPropertyName = "reminder_specific_time"
         DataGridViewCellStyle7.Format = "dd-MMM-yy hh:mm:sstt"
         DataGridViewCellStyle7.NullValue = "none"
-        Me.colReminderSpecificTime.DefaultCellStyle = DataGridViewCellStyle7
-        Me.colReminderSpecificTime.HeaderText = "Specific"
-        Me.colReminderSpecificTime.Name = "colReminderSpecificTime"
-        Me.colReminderSpecificTime.ReadOnly = True
-        Me.colReminderSpecificTime.Width = 165
+        Me.reminder_specific_time.DefaultCellStyle = DataGridViewCellStyle7
+        Me.reminder_specific_time.HeaderText = "Specific"
+        Me.reminder_specific_time.Name = "reminder_specific_time"
+        Me.reminder_specific_time.ReadOnly = True
+        Me.reminder_specific_time.Width = 165
         '
-        'colReminderStartTime
+        'reminder_started_time
         '
-        Me.colReminderStartTime.DataPropertyName = "reminder_started_time"
+        Me.reminder_started_time.DataPropertyName = "reminder_started_time"
         DataGridViewCellStyle8.Format = "dd-MMM-yy hh:mm:sstt"
         DataGridViewCellStyle8.NullValue = "none"
-        Me.colReminderStartTime.DefaultCellStyle = DataGridViewCellStyle8
-        Me.colReminderStartTime.HeaderText = "Started"
-        Me.colReminderStartTime.Name = "colReminderStartTime"
-        Me.colReminderStartTime.ReadOnly = True
-        Me.colReminderStartTime.Width = 165
+        Me.reminder_started_time.DefaultCellStyle = DataGridViewCellStyle8
+        Me.reminder_started_time.HeaderText = "Started"
+        Me.reminder_started_time.Name = "reminder_started_time"
+        Me.reminder_started_time.ReadOnly = True
+        Me.reminder_started_time.Width = 165
         '
-        'colReminderLastNotifiedTime
+        'reminder_notified_time
         '
-        Me.colReminderLastNotifiedTime.DataPropertyName = "reminder_notified_time"
+        Me.reminder_notified_time.DataPropertyName = "reminder_notified_time"
         DataGridViewCellStyle9.Format = "dd-MMM-yy hh:mm:sstt"
         DataGridViewCellStyle9.NullValue = "none"
-        Me.colReminderLastNotifiedTime.DefaultCellStyle = DataGridViewCellStyle9
-        Me.colReminderLastNotifiedTime.HeaderText = "Notified"
-        Me.colReminderLastNotifiedTime.Name = "colReminderLastNotifiedTime"
-        Me.colReminderLastNotifiedTime.ReadOnly = True
-        Me.colReminderLastNotifiedTime.Width = 165
+        Me.reminder_notified_time.DefaultCellStyle = DataGridViewCellStyle9
+        Me.reminder_notified_time.HeaderText = "Notified"
+        Me.reminder_notified_time.Name = "reminder_notified_time"
+        Me.reminder_notified_time.ReadOnly = True
+        Me.reminder_notified_time.Width = 165
         '
-        'colReminderNextNotifyTime
+        'reminder_next_notify_time
         '
-        Me.colReminderNextNotifyTime.DataPropertyName = "reminder_next_notify_time"
+        Me.reminder_next_notify_time.DataPropertyName = "reminder_next_notify_time"
         DataGridViewCellStyle10.Format = "dd-MMM-yy hh:mm:sstt"
         DataGridViewCellStyle10.NullValue = "none"
-        Me.colReminderNextNotifyTime.DefaultCellStyle = DataGridViewCellStyle10
-        Me.colReminderNextNotifyTime.HeaderText = "Next Notify"
-        Me.colReminderNextNotifyTime.Name = "colReminderNextNotifyTime"
-        Me.colReminderNextNotifyTime.ReadOnly = True
-        Me.colReminderNextNotifyTime.Width = 165
+        Me.reminder_next_notify_time.DefaultCellStyle = DataGridViewCellStyle10
+        Me.reminder_next_notify_time.HeaderText = "Next Notify"
+        Me.reminder_next_notify_time.Name = "reminder_next_notify_time"
+        Me.reminder_next_notify_time.ReadOnly = True
+        Me.reminder_next_notify_time.Width = 165
         '
-        'colNotificationDuration
+        'notification_duration
         '
-        Me.colNotificationDuration.DataPropertyName = "notification_duration"
+        Me.notification_duration.DataPropertyName = "notification_duration"
         DataGridViewCellStyle11.Format = "0 secs"
         DataGridViewCellStyle11.NullValue = "0 secs"
-        Me.colNotificationDuration.DefaultCellStyle = DataGridViewCellStyle11
-        Me.colNotificationDuration.HeaderText = "Notification Duration"
-        Me.colNotificationDuration.Name = "colNotificationDuration"
-        Me.colNotificationDuration.ReadOnly = True
-        Me.colNotificationDuration.Width = 90
+        Me.notification_duration.DefaultCellStyle = DataGridViewCellStyle11
+        Me.notification_duration.HeaderText = "Notification Duration"
+        Me.notification_duration.Name = "notification_duration"
+        Me.notification_duration.ReadOnly = True
+        Me.notification_duration.Width = 90
         '
-        'colNotificationSound
+        'notification_sound
         '
-        Me.colNotificationSound.DataPropertyName = "notification_sound"
-        Me.colNotificationSound.HeaderText = "Notification Sound"
-        Me.colNotificationSound.Name = "colNotificationSound"
-        Me.colNotificationSound.ReadOnly = True
+        Me.notification_sound.DataPropertyName = "notification_sound"
+        Me.notification_sound.HeaderText = "Notification Sound"
+        Me.notification_sound.Name = "notification_sound"
+        Me.notification_sound.ReadOnly = True
         '
-        'colNotificationMessage
+        'notification_message
         '
-        Me.colNotificationMessage.DataPropertyName = "notification_message"
-        Me.colNotificationMessage.HeaderText = "Notification Message"
-        Me.colNotificationMessage.Name = "colNotificationMessage"
-        Me.colNotificationMessage.ReadOnly = True
-        Me.colNotificationMessage.Width = 200
+        Me.notification_message.DataPropertyName = "notification_message"
+        Me.notification_message.HeaderText = "Notification Message"
+        Me.notification_message.Name = "notification_message"
+        Me.notification_message.ReadOnly = True
+        Me.notification_message.Width = 200
         '
-        'colNotificationFont
+        'notification_font
         '
-        Me.colNotificationFont.DataPropertyName = "notification_font"
-        Me.colNotificationFont.HeaderText = "Notification Font"
-        Me.colNotificationFont.Name = "colNotificationFont"
-        Me.colNotificationFont.ReadOnly = True
+        Me.notification_font.DataPropertyName = "notification_font"
+        Me.notification_font.HeaderText = "Notification Font"
+        Me.notification_font.Name = "notification_font"
+        Me.notification_font.ReadOnly = True
         '
-        'colNotificationBackColor
+        'notification_backcolor
         '
-        Me.colNotificationBackColor.DataPropertyName = "notification_backcolor"
-        Me.colNotificationBackColor.HeaderText = "Notification BackColor"
-        Me.colNotificationBackColor.Name = "colNotificationBackColor"
-        Me.colNotificationBackColor.ReadOnly = True
-        Me.colNotificationBackColor.Width = 90
+        Me.notification_backcolor.DataPropertyName = "notification_backcolor"
+        Me.notification_backcolor.HeaderText = "Notification BackColor"
+        Me.notification_backcolor.Name = "notification_backcolor"
+        Me.notification_backcolor.ReadOnly = True
+        Me.notification_backcolor.Width = 90
         '
-        'colNotificationForeColor
+        'notification_forecolor
         '
-        Me.colNotificationForeColor.DataPropertyName = "notification_forecolor"
-        Me.colNotificationForeColor.HeaderText = "Notification ForeColor"
-        Me.colNotificationForeColor.Name = "colNotificationForeColor"
-        Me.colNotificationForeColor.ReadOnly = True
-        Me.colNotificationForeColor.Width = 90
+        Me.notification_forecolor.DataPropertyName = "notification_forecolor"
+        Me.notification_forecolor.HeaderText = "Notification ForeColor"
+        Me.notification_forecolor.Name = "notification_forecolor"
+        Me.notification_forecolor.ReadOnly = True
+        Me.notification_forecolor.Width = 90
         '
-        'colNotificationWidth
+        'notification_meta_forecolor
         '
-        Me.colNotificationWidth.DataPropertyName = "notification_width"
-        Me.colNotificationWidth.HeaderText = "Notification Width"
-        Me.colNotificationWidth.Name = "colNotificationWidth"
-        Me.colNotificationWidth.ReadOnly = True
-        Me.colNotificationWidth.Width = 90
+        Me.notification_meta_forecolor.DataPropertyName = "notification_meta_forecolor"
+        Me.notification_meta_forecolor.HeaderText = "Notification Meta Color"
+        Me.notification_meta_forecolor.Name = "notification_meta_forecolor"
+        Me.notification_meta_forecolor.ReadOnly = True
         '
-        'colNotificationHeight
+        'notification_width
         '
-        Me.colNotificationHeight.DataPropertyName = "notification_height"
-        Me.colNotificationHeight.HeaderText = "Notification Height"
-        Me.colNotificationHeight.Name = "colNotificationHeight"
-        Me.colNotificationHeight.ReadOnly = True
-        Me.colNotificationHeight.Width = 90
+        Me.notification_width.DataPropertyName = "notification_width"
+        Me.notification_width.HeaderText = "Notification Width"
+        Me.notification_width.Name = "notification_width"
+        Me.notification_width.ReadOnly = True
+        Me.notification_width.Width = 90
+        '
+        'notification_height
+        '
+        Me.notification_height.DataPropertyName = "notification_height"
+        Me.notification_height.HeaderText = "Notification Height"
+        Me.notification_height.Name = "notification_height"
+        Me.notification_height.ReadOnly = True
+        Me.notification_height.Width = 90
         '
         'RemindersHistory
         '
@@ -332,26 +340,27 @@ Partial Class RemindersHistory
     End Sub
 
     Friend WithEvents dgReminderHistoryDetails As DataGridView
-    Friend WithEvents colReminderId As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderType As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderCreateTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderLastUpdatedTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderLastDeletedTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderRepeatMax As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderRepeatElapsed As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderStatus As DataGridViewTextBoxColumn
-    Friend WithEvents colIntervalDuration As DataGridViewTextBoxColumn
-    Friend WithEvents colIntervalDaily As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderSpecificTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderStartTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderLastNotifiedTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderNextNotifyTime As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationDuration As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationSound As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationMessage As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationFont As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationBackColor As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationForeColor As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationWidth As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationHeight As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_id As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_type As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_created_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_updated_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_deleted_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_repeat_max As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_repeat_elapsed As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_status As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_interval As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_daily As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_specific_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_started_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_notified_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_next_notify_time As DataGridViewTextBoxColumn
+    Friend WithEvents notification_duration As DataGridViewTextBoxColumn
+    Friend WithEvents notification_sound As DataGridViewTextBoxColumn
+    Friend WithEvents notification_message As DataGridViewTextBoxColumn
+    Friend WithEvents notification_font As DataGridViewTextBoxColumn
+    Friend WithEvents notification_backcolor As DataGridViewTextBoxColumn
+    Friend WithEvents notification_forecolor As DataGridViewTextBoxColumn
+    Friend WithEvents notification_meta_forecolor As DataGridViewTextBoxColumn
+    Friend WithEvents notification_width As DataGridViewTextBoxColumn
+    Friend WithEvents notification_height As DataGridViewTextBoxColumn
 End Class

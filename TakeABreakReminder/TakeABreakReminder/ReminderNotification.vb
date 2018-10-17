@@ -41,14 +41,14 @@ Public Class ReminderNotification
         Dim yPosition As Integer = Screen.PrimaryScreen.WorkingArea.Height - (Me.Height + NOTIFICATION_GAP_OFFSET + getVisibleNotificationsTotalHeight())
         Me.Location = New Point(xPosition, yPosition)
         LblClose.Location = New Point(Me.Width - LblClose.Width, 0)
-        LblClose.ForeColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_FORECOLOR))
+        LblClose.ForeColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_META_FORECOLOR))
         lblReminderId.Text = gReminderRow.Item(COL_REMINDER_ID)
         lblReminderType.Text = gReminderRow.Item(COL_REMINDER_TYPE)
         lblMessage.Text = gReminderRow.Item(COL_NOTIFICATION_MESSAGE)
         lblMessage.ForeColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_FORECOLOR))
         Me.BackColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_BACKCOLOR))
         lblMessage.Font = getFontObjFromDisplayFormat(gReminderRow.Item(COL_NOTIFICATION_FONT))
-        panelNotificationHeader.ForeColor = Color.FromName(reminderRow(COL_NOTIFICATION_FORECOLOR))
+        panelNotificationHeader.ForeColor = Color.FromName(reminderRow(COL_NOTIFICATION_META_FORECOLOR))
 
         gNotificationSeconds = gReminderRow.Item(COL_NOTIFICATION_DURATION)
         lblcloseTimeCounter.Text = gNotificationSeconds
