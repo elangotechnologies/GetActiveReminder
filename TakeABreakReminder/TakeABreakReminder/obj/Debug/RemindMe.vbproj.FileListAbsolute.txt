@@ -21,3 +21,4 @@ D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\De
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.About.resources
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.RemindersHistory.resources
 D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.ReminderNotification.resources
+D:\GitRepository\TakeABreakReminder\TakeABreakReminder\TakeABreakReminder\obj\Debug\RemindMe.Shortcuts.resources

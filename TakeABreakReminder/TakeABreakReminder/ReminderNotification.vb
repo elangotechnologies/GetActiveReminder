@@ -10,6 +10,8 @@ Public Class ReminderNotification
     Public Const SLIDE_TIME_MAX As Integer = 100
     Public Const SLIDE_COUNT_MAX As Integer = 20
     Public Const moveXAxisByValueForReturn As Integer = 10
+    Private gCloseTime As DateTime
+    Private gNotificationSeconds As Integer = 0
 
     Private Sub ToastNotificationForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         gVisibleNotifications.Add(Me)
@@ -40,16 +42,24 @@ Public Class ReminderNotification
         Me.Location = New Point(xPosition, yPosition)
         LblClose.Location = New Point(Me.Width - LblClose.Width, 0)
         LblClose.ForeColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_FORECOLOR))
+        lblReminderId.Text = gReminderRow.Item(COL_REMINDER_ID)
+        lblReminderType.Text = gReminderRow.Item(COL_REMINDER_TYPE)
         lblMessage.Text = gReminderRow.Item(COL_NOTIFICATION_MESSAGE)
         lblMessage.ForeColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_FORECOLOR))
         Me.BackColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_BACKCOLOR))
         lblMessage.Font = getFontObjFromDisplayFormat(gReminderRow.Item(COL_NOTIFICATION_FONT))
+        panelNotificationHeader.ForeColor = Color.FromName(reminderRow(COL_NOTIFICATION_FORECOLOR))
 
-        Dim notificationDuration As Integer = gReminderRow.Item(COL_NOTIFICATION_DURATION) * 1000
-        Dim fadeTriggerTime As Integer = 2000
-        timerClose.Interval = notificationDuration - fadeTriggerTime
-        timerFade.Interval = fadeTriggerTime / 100
+        gNotificationSeconds = gReminderRow.Item(COL_NOTIFICATION_DURATION)
+        lblcloseTimeCounter.Text = gNotificationSeconds
+        Dim notificationDuration As Double = gNotificationSeconds * 1000
+        Dim fadeTriggerTime As Double = 2000
+        gCloseTime = DateTime.Now.AddMilliseconds(notificationDuration - fadeTriggerTime)
         timerClose.Start()
+
+        ''timerClose.Interval = notificationDuration - fadeTriggerTime
+        timerFade.Interval = fadeTriggerTime / 100
+
 
         ''calculation for sliding animation
         Dim slidingInterval As Double = SLIDE_TIME_MAX / SLIDE_COUNT_MAX
@@ -68,22 +78,14 @@ Public Class ReminderNotification
         ''animateSlideIn()
     End Sub
 
-    'Private Sub animateSlideIn()
-    '    Dim xPosition As Integer = Me.Location.X
-    '    gSlideIncrementCount = 0
-
-    '    While Me.Location.X >= (Screen.PrimaryScreen.Bounds.Width - Me.Width)
-    '        Me.Location = New Point(Me.Location.X - 100, Me.Location.Y)
-    '        gSlideIncrementCount += 1
-    '        Thread.Sleep(100)
-    '        log.Debug("Me.Location.X: " + Me.Location.X.ToString + ", gSlideIncrementCount:" + gSlideIncrementCount.ToString)
-    '    End While
-
-    'End Sub
-
     Private Sub timerClose_Tick(sender As Object, e As EventArgs) Handles timerClose.Tick
-        timerClose.Stop()
-        timerFade.Start()
+        lblcloseTimeCounter.Text = gNotificationSeconds
+        gNotificationSeconds -= 1
+        Dim currentTime As DateTime = DateTime.Now
+        If currentTime >= gCloseTime Then
+            timerClose.Stop()
+            timerFade.Start()
+        End If
     End Sub
 
     Private Sub timerFade_Tick(sender As Object, e As EventArgs) Handles timerFade.Tick
@@ -101,10 +103,8 @@ Public Class ReminderNotification
     End Sub
 
     Private Sub timerSlideIn_Tick(sender As Object, e As EventArgs) Handles timerSlideIn.Tick
-        log.Debug("Before Me.Location.X: " + Me.Location.X.ToString)
         gSlideIncrementCount += 1
         If gSlideIncrementCount > SLIDE_COUNT_MAX + 3 Then
-            log.Debug("timerSlideIn stopping")
             timerSlideIn.Stop()
             timerSlideInBack.Interval = 5
             timerSlideInBack.Start()
@@ -112,7 +112,6 @@ Public Class ReminderNotification
         End If
 
         Me.Location = New Point(Me.Location.X - moveXAxisByValue, Me.Location.Y)
-        log.Debug("After, gSlideIncrementCount: " + gSlideIncrementCount.ToString + " Me.Location.X: " + Me.Location.X.ToString)
 
     End Sub
 

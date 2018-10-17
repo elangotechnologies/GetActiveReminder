@@ -46,28 +46,28 @@ Partial Class FrmMain
         Me.ssReminderStatusBar = New System.Windows.Forms.StatusStrip()
         Me.fontdialogNotificationFont = New System.Windows.Forms.FontDialog()
         Me.dgReminderDetails = New System.Windows.Forms.DataGridView()
-        Me.colReminderId = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderType = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderRepeatMax = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderRepeatElapsed = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderStatus = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colIntervalDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colIntervalDaily = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderSpecificTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderCreateTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderLastUpdatedTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderLastDeletedTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderStartTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderLastNotifiedTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colReminderNextNotifyTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationDuration = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationSound = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationMessage = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationFont = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationBackColor = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationForeColor = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationWidth = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNotificationHeight = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_type = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_repeat_max = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_repeat_elapsed = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_status = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_interval = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_daily = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_specific_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_created_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_updated_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_deleted_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_started_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_notified_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_next_notify_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_duration = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_sound = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_message = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_font = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_backcolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_forecolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_width = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_height = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.radReminderTypeSpecific = New System.Windows.Forms.RadioButton()
         Me.radReminderTypeDaily = New System.Windows.Forms.RadioButton()
         Me.radReminderTypeInterval = New System.Windows.Forms.RadioButton()
@@ -277,7 +277,7 @@ Partial Class FrmMain
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgReminderDetails.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgReminderDetails.ColumnHeadersHeight = 65
-        Me.dgReminderDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colReminderId, Me.colReminderType, Me.colReminderRepeatMax, Me.colReminderRepeatElapsed, Me.colReminderStatus, Me.colIntervalDuration, Me.colIntervalDaily, Me.colReminderSpecificTime, Me.colReminderCreateTime, Me.colReminderLastUpdatedTime, Me.colReminderLastDeletedTime, Me.colReminderStartTime, Me.colReminderLastNotifiedTime, Me.colReminderNextNotifyTime, Me.colNotificationDuration, Me.colNotificationSound, Me.colNotificationMessage, Me.colNotificationFont, Me.colNotificationBackColor, Me.colNotificationForeColor, Me.colNotificationWidth, Me.colNotificationHeight})
+        Me.dgReminderDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.reminder_id, Me.reminder_type, Me.reminder_repeat_max, Me.reminder_repeat_elapsed, Me.reminder_status, Me.reminder_interval, Me.reminder_daily, Me.reminder_specific_time, Me.reminder_created_time, Me.reminder_updated_time, Me.reminder_deleted_time, Me.reminder_started_time, Me.reminder_notified_time, Me.reminder_next_notify_time, Me.notification_duration, Me.notification_sound, Me.notification_message, Me.notification_font, Me.notification_backcolor, Me.notification_forecolor, Me.notification_width, Me.notification_height})
         DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle11.BackColor = System.Drawing.Color.LightSteelBlue
         DataGridViewCellStyle11.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
@@ -310,205 +310,205 @@ Partial Class FrmMain
         Me.dgReminderDetails.RowsDefaultCellStyle = DataGridViewCellStyle13
         Me.dgReminderDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgReminderDetails.Size = New System.Drawing.Size(1438, 254)
-        Me.dgReminderDetails.TabIndex = 33
+        Me.dgReminderDetails.TabIndex = 0
         '
-        'colReminderId
+        'reminder_id
         '
-        Me.colReminderId.DataPropertyName = "reminder_id"
-        Me.colReminderId.Frozen = True
-        Me.colReminderId.HeaderText = "Id"
-        Me.colReminderId.Name = "colReminderId"
-        Me.colReminderId.ReadOnly = True
-        Me.colReminderId.Width = 50
+        Me.reminder_id.DataPropertyName = "reminder_id"
+        Me.reminder_id.Frozen = True
+        Me.reminder_id.HeaderText = "Id"
+        Me.reminder_id.Name = "reminder_id"
+        Me.reminder_id.ReadOnly = True
+        Me.reminder_id.Width = 50
         '
-        'colReminderType
+        'reminder_type
         '
-        Me.colReminderType.DataPropertyName = "reminder_type"
-        Me.colReminderType.Frozen = True
-        Me.colReminderType.HeaderText = "Type"
-        Me.colReminderType.Name = "colReminderType"
-        Me.colReminderType.ReadOnly = True
+        Me.reminder_type.DataPropertyName = "reminder_type"
+        Me.reminder_type.Frozen = True
+        Me.reminder_type.HeaderText = "Type"
+        Me.reminder_type.Name = "reminder_type"
+        Me.reminder_type.ReadOnly = True
         '
-        'colReminderRepeatMax
+        'reminder_repeat_max
         '
-        Me.colReminderRepeatMax.DataPropertyName = "reminder_repeat_max"
-        Me.colReminderRepeatMax.HeaderText = "Repeat"
-        Me.colReminderRepeatMax.Name = "colReminderRepeatMax"
-        Me.colReminderRepeatMax.ReadOnly = True
+        Me.reminder_repeat_max.DataPropertyName = "reminder_repeat_max"
+        Me.reminder_repeat_max.HeaderText = "Repeat"
+        Me.reminder_repeat_max.Name = "reminder_repeat_max"
+        Me.reminder_repeat_max.ReadOnly = True
         '
-        'colReminderRepeatElapsed
+        'reminder_repeat_elapsed
         '
-        Me.colReminderRepeatElapsed.DataPropertyName = "reminder_repeat_elapsed"
-        Me.colReminderRepeatElapsed.HeaderText = "Repeated"
-        Me.colReminderRepeatElapsed.Name = "colReminderRepeatElapsed"
-        Me.colReminderRepeatElapsed.ReadOnly = True
+        Me.reminder_repeat_elapsed.DataPropertyName = "reminder_repeat_elapsed"
+        Me.reminder_repeat_elapsed.HeaderText = "Repeated"
+        Me.reminder_repeat_elapsed.Name = "reminder_repeat_elapsed"
+        Me.reminder_repeat_elapsed.ReadOnly = True
         '
-        'colReminderStatus
+        'reminder_status
         '
-        Me.colReminderStatus.DataPropertyName = "reminder_status"
-        Me.colReminderStatus.HeaderText = "Status"
-        Me.colReminderStatus.Name = "colReminderStatus"
-        Me.colReminderStatus.ReadOnly = True
-        Me.colReminderStatus.Width = 90
+        Me.reminder_status.DataPropertyName = "reminder_status"
+        Me.reminder_status.HeaderText = "Status"
+        Me.reminder_status.Name = "reminder_status"
+        Me.reminder_status.ReadOnly = True
+        Me.reminder_status.Width = 90
         '
-        'colIntervalDuration
+        'reminder_interval
         '
-        Me.colIntervalDuration.DataPropertyName = "reminder_interval"
+        Me.reminder_interval.DataPropertyName = "reminder_interval"
         DataGridViewCellStyle3.NullValue = "none"
-        Me.colIntervalDuration.DefaultCellStyle = DataGridViewCellStyle3
-        Me.colIntervalDuration.HeaderText = "Interval"
-        Me.colIntervalDuration.Name = "colIntervalDuration"
-        Me.colIntervalDuration.ReadOnly = True
-        Me.colIntervalDuration.Width = 170
+        Me.reminder_interval.DefaultCellStyle = DataGridViewCellStyle3
+        Me.reminder_interval.HeaderText = "Interval"
+        Me.reminder_interval.Name = "reminder_interval"
+        Me.reminder_interval.ReadOnly = True
+        Me.reminder_interval.Width = 170
         '
-        'colIntervalDaily
+        'reminder_daily
         '
-        Me.colIntervalDaily.DataPropertyName = "reminder_daily"
-        Me.colIntervalDaily.HeaderText = "Daily"
-        Me.colIntervalDaily.Name = "colIntervalDaily"
-        Me.colIntervalDaily.ReadOnly = True
-        Me.colIntervalDaily.Width = 280
+        Me.reminder_daily.DataPropertyName = "reminder_daily"
+        Me.reminder_daily.HeaderText = "Daily"
+        Me.reminder_daily.Name = "reminder_daily"
+        Me.reminder_daily.ReadOnly = True
+        Me.reminder_daily.Width = 280
         '
-        'colReminderSpecificTime
+        'reminder_specific_time
         '
-        Me.colReminderSpecificTime.DataPropertyName = "reminder_specific_time"
+        Me.reminder_specific_time.DataPropertyName = "reminder_specific_time"
         DataGridViewCellStyle4.Format = "dd-MMM-yy hh:mm:sstt"
         DataGridViewCellStyle4.NullValue = "none"
-        Me.colReminderSpecificTime.DefaultCellStyle = DataGridViewCellStyle4
-        Me.colReminderSpecificTime.HeaderText = "Specific"
-        Me.colReminderSpecificTime.Name = "colReminderSpecificTime"
-        Me.colReminderSpecificTime.ReadOnly = True
-        Me.colReminderSpecificTime.Width = 165
+        Me.reminder_specific_time.DefaultCellStyle = DataGridViewCellStyle4
+        Me.reminder_specific_time.HeaderText = "Specific"
+        Me.reminder_specific_time.Name = "reminder_specific_time"
+        Me.reminder_specific_time.ReadOnly = True
+        Me.reminder_specific_time.Width = 165
         '
-        'colReminderCreateTime
+        'reminder_created_time
         '
-        Me.colReminderCreateTime.DataPropertyName = "reminder_created_time"
+        Me.reminder_created_time.DataPropertyName = "reminder_created_time"
         DataGridViewCellStyle5.Format = "dd-MMM-yy hh:mm:sstt"
         DataGridViewCellStyle5.NullValue = "none"
-        Me.colReminderCreateTime.DefaultCellStyle = DataGridViewCellStyle5
-        Me.colReminderCreateTime.HeaderText = "Created"
-        Me.colReminderCreateTime.Name = "colReminderCreateTime"
-        Me.colReminderCreateTime.ReadOnly = True
-        Me.colReminderCreateTime.Visible = False
-        Me.colReminderCreateTime.Width = 165
+        Me.reminder_created_time.DefaultCellStyle = DataGridViewCellStyle5
+        Me.reminder_created_time.HeaderText = "Created"
+        Me.reminder_created_time.Name = "reminder_created_time"
+        Me.reminder_created_time.ReadOnly = True
+        Me.reminder_created_time.Visible = False
+        Me.reminder_created_time.Width = 165
         '
-        'colReminderLastUpdatedTime
+        'reminder_updated_time
         '
-        Me.colReminderLastUpdatedTime.DataPropertyName = "reminder_updated_time"
+        Me.reminder_updated_time.DataPropertyName = "reminder_updated_time"
         DataGridViewCellStyle6.Format = "dd-MMM-yy hh:mm:sstt"
         DataGridViewCellStyle6.NullValue = "none"
-        Me.colReminderLastUpdatedTime.DefaultCellStyle = DataGridViewCellStyle6
-        Me.colReminderLastUpdatedTime.HeaderText = "Updated"
-        Me.colReminderLastUpdatedTime.Name = "colReminderLastUpdatedTime"
-        Me.colReminderLastUpdatedTime.ReadOnly = True
-        Me.colReminderLastUpdatedTime.Visible = False
-        Me.colReminderLastUpdatedTime.Width = 165
+        Me.reminder_updated_time.DefaultCellStyle = DataGridViewCellStyle6
+        Me.reminder_updated_time.HeaderText = "Updated"
+        Me.reminder_updated_time.Name = "reminder_updated_time"
+        Me.reminder_updated_time.ReadOnly = True
+        Me.reminder_updated_time.Visible = False
+        Me.reminder_updated_time.Width = 165
         '
-        'colReminderLastDeletedTime
+        'reminder_deleted_time
         '
-        Me.colReminderLastDeletedTime.DataPropertyName = "reminder_deleted_time"
-        Me.colReminderLastDeletedTime.HeaderText = "Deleted"
-        Me.colReminderLastDeletedTime.Name = "colReminderLastDeletedTime"
-        Me.colReminderLastDeletedTime.ReadOnly = True
-        Me.colReminderLastDeletedTime.Visible = False
+        Me.reminder_deleted_time.DataPropertyName = "reminder_deleted_time"
+        Me.reminder_deleted_time.HeaderText = "Deleted"
+        Me.reminder_deleted_time.Name = "reminder_deleted_time"
+        Me.reminder_deleted_time.ReadOnly = True
+        Me.reminder_deleted_time.Visible = False
         '
-        'colReminderStartTime
+        'reminder_started_time
         '
-        Me.colReminderStartTime.DataPropertyName = "reminder_started_time"
+        Me.reminder_started_time.DataPropertyName = "reminder_started_time"
         DataGridViewCellStyle7.Format = "dd-MMM-yy hh:mm:sstt"
         DataGridViewCellStyle7.NullValue = "none"
-        Me.colReminderStartTime.DefaultCellStyle = DataGridViewCellStyle7
-        Me.colReminderStartTime.HeaderText = "Started"
-        Me.colReminderStartTime.Name = "colReminderStartTime"
-        Me.colReminderStartTime.ReadOnly = True
-        Me.colReminderStartTime.Width = 165
+        Me.reminder_started_time.DefaultCellStyle = DataGridViewCellStyle7
+        Me.reminder_started_time.HeaderText = "Started"
+        Me.reminder_started_time.Name = "reminder_started_time"
+        Me.reminder_started_time.ReadOnly = True
+        Me.reminder_started_time.Width = 165
         '
-        'colReminderLastNotifiedTime
+        'reminder_notified_time
         '
-        Me.colReminderLastNotifiedTime.DataPropertyName = "reminder_notified_time"
+        Me.reminder_notified_time.DataPropertyName = "reminder_notified_time"
         DataGridViewCellStyle8.Format = "dd-MMM-yy hh:mm:sstt"
         DataGridViewCellStyle8.NullValue = "none"
-        Me.colReminderLastNotifiedTime.DefaultCellStyle = DataGridViewCellStyle8
-        Me.colReminderLastNotifiedTime.HeaderText = "Notified"
-        Me.colReminderLastNotifiedTime.Name = "colReminderLastNotifiedTime"
-        Me.colReminderLastNotifiedTime.ReadOnly = True
-        Me.colReminderLastNotifiedTime.Width = 165
+        Me.reminder_notified_time.DefaultCellStyle = DataGridViewCellStyle8
+        Me.reminder_notified_time.HeaderText = "Notified"
+        Me.reminder_notified_time.Name = "reminder_notified_time"
+        Me.reminder_notified_time.ReadOnly = True
+        Me.reminder_notified_time.Width = 165
         '
-        'colReminderNextNotifyTime
+        'reminder_next_notify_time
         '
-        Me.colReminderNextNotifyTime.DataPropertyName = "reminder_next_notify_time"
+        Me.reminder_next_notify_time.DataPropertyName = "reminder_next_notify_time"
         DataGridViewCellStyle9.Format = "dd-MMM-yy hh:mm:sstt"
         DataGridViewCellStyle9.NullValue = "none"
-        Me.colReminderNextNotifyTime.DefaultCellStyle = DataGridViewCellStyle9
-        Me.colReminderNextNotifyTime.HeaderText = "Next Notify"
-        Me.colReminderNextNotifyTime.Name = "colReminderNextNotifyTime"
-        Me.colReminderNextNotifyTime.ReadOnly = True
-        Me.colReminderNextNotifyTime.Width = 165
+        Me.reminder_next_notify_time.DefaultCellStyle = DataGridViewCellStyle9
+        Me.reminder_next_notify_time.HeaderText = "Next Notify"
+        Me.reminder_next_notify_time.Name = "reminder_next_notify_time"
+        Me.reminder_next_notify_time.ReadOnly = True
+        Me.reminder_next_notify_time.Width = 165
         '
-        'colNotificationDuration
+        'notification_duration
         '
-        Me.colNotificationDuration.DataPropertyName = "notification_duration"
+        Me.notification_duration.DataPropertyName = "notification_duration"
         DataGridViewCellStyle10.Format = "0 secs"
         DataGridViewCellStyle10.NullValue = "0 secs"
-        Me.colNotificationDuration.DefaultCellStyle = DataGridViewCellStyle10
-        Me.colNotificationDuration.HeaderText = "Notification Duration"
-        Me.colNotificationDuration.Name = "colNotificationDuration"
-        Me.colNotificationDuration.ReadOnly = True
-        Me.colNotificationDuration.Width = 90
+        Me.notification_duration.DefaultCellStyle = DataGridViewCellStyle10
+        Me.notification_duration.HeaderText = "Notification Duration"
+        Me.notification_duration.Name = "notification_duration"
+        Me.notification_duration.ReadOnly = True
+        Me.notification_duration.Width = 90
         '
-        'colNotificationSound
+        'notification_sound
         '
-        Me.colNotificationSound.DataPropertyName = "notification_sound"
-        Me.colNotificationSound.HeaderText = "Notification Sound"
-        Me.colNotificationSound.Name = "colNotificationSound"
-        Me.colNotificationSound.ReadOnly = True
+        Me.notification_sound.DataPropertyName = "notification_sound"
+        Me.notification_sound.HeaderText = "Notification Sound"
+        Me.notification_sound.Name = "notification_sound"
+        Me.notification_sound.ReadOnly = True
         '
-        'colNotificationMessage
+        'notification_message
         '
-        Me.colNotificationMessage.DataPropertyName = "notification_message"
-        Me.colNotificationMessage.HeaderText = "Notification Message"
-        Me.colNotificationMessage.Name = "colNotificationMessage"
-        Me.colNotificationMessage.ReadOnly = True
-        Me.colNotificationMessage.Width = 200
+        Me.notification_message.DataPropertyName = "notification_message"
+        Me.notification_message.HeaderText = "Notification Message"
+        Me.notification_message.Name = "notification_message"
+        Me.notification_message.ReadOnly = True
+        Me.notification_message.Width = 200
         '
-        'colNotificationFont
+        'notification_font
         '
-        Me.colNotificationFont.DataPropertyName = "notification_font"
-        Me.colNotificationFont.HeaderText = "Notification Font"
-        Me.colNotificationFont.Name = "colNotificationFont"
-        Me.colNotificationFont.ReadOnly = True
+        Me.notification_font.DataPropertyName = "notification_font"
+        Me.notification_font.HeaderText = "Notification Font"
+        Me.notification_font.Name = "notification_font"
+        Me.notification_font.ReadOnly = True
         '
-        'colNotificationBackColor
+        'notification_backcolor
         '
-        Me.colNotificationBackColor.DataPropertyName = "notification_backcolor"
-        Me.colNotificationBackColor.HeaderText = "Notification BackColor"
-        Me.colNotificationBackColor.Name = "colNotificationBackColor"
-        Me.colNotificationBackColor.ReadOnly = True
-        Me.colNotificationBackColor.Width = 90
+        Me.notification_backcolor.DataPropertyName = "notification_backcolor"
+        Me.notification_backcolor.HeaderText = "Notification BackColor"
+        Me.notification_backcolor.Name = "notification_backcolor"
+        Me.notification_backcolor.ReadOnly = True
+        Me.notification_backcolor.Width = 90
         '
-        'colNotificationForeColor
+        'notification_forecolor
         '
-        Me.colNotificationForeColor.DataPropertyName = "notification_forecolor"
-        Me.colNotificationForeColor.HeaderText = "Notification ForeColor"
-        Me.colNotificationForeColor.Name = "colNotificationForeColor"
-        Me.colNotificationForeColor.ReadOnly = True
-        Me.colNotificationForeColor.Width = 90
+        Me.notification_forecolor.DataPropertyName = "notification_forecolor"
+        Me.notification_forecolor.HeaderText = "Notification ForeColor"
+        Me.notification_forecolor.Name = "notification_forecolor"
+        Me.notification_forecolor.ReadOnly = True
+        Me.notification_forecolor.Width = 90
         '
-        'colNotificationWidth
+        'notification_width
         '
-        Me.colNotificationWidth.DataPropertyName = "notification_width"
-        Me.colNotificationWidth.HeaderText = "Notification Width"
-        Me.colNotificationWidth.Name = "colNotificationWidth"
-        Me.colNotificationWidth.ReadOnly = True
-        Me.colNotificationWidth.Width = 90
+        Me.notification_width.DataPropertyName = "notification_width"
+        Me.notification_width.HeaderText = "Notification Width"
+        Me.notification_width.Name = "notification_width"
+        Me.notification_width.ReadOnly = True
+        Me.notification_width.Width = 90
         '
-        'colNotificationHeight
+        'notification_height
         '
-        Me.colNotificationHeight.DataPropertyName = "notification_height"
-        Me.colNotificationHeight.HeaderText = "Notification Height"
-        Me.colNotificationHeight.Name = "colNotificationHeight"
-        Me.colNotificationHeight.ReadOnly = True
-        Me.colNotificationHeight.Width = 90
+        Me.notification_height.DataPropertyName = "notification_height"
+        Me.notification_height.HeaderText = "Notification Height"
+        Me.notification_height.Name = "notification_height"
+        Me.notification_height.ReadOnly = True
+        Me.notification_height.Width = 90
         '
         'radReminderTypeSpecific
         '
@@ -577,7 +577,7 @@ Partial Class FrmMain
         Me.scMainContainer.Size = New System.Drawing.Size(1533, 903)
         Me.scMainContainer.SplitterDistance = 90
         Me.scMainContainer.SplitterWidth = 1
-        Me.scMainContainer.TabIndex = 48
+        Me.scMainContainer.TabIndex = 1
         '
         'lblIconPlace6
         '
@@ -683,6 +683,7 @@ Partial Class FrmMain
         Me.btnAddReminder.Location = New System.Drawing.Point(19, 104)
         Me.btnAddReminder.Name = "btnAddReminder"
         Me.btnAddReminder.Size = New System.Drawing.Size(48, 48)
+        Me.btnAddReminder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.btnAddReminder.TabIndex = 41
         Me.btnAddReminder.TabStop = False
         Me.ttIconTooltip.SetToolTip(Me.btnAddReminder, "New")
@@ -797,7 +798,7 @@ Partial Class FrmMain
         Me.grpReminderType.Location = New System.Drawing.Point(25, 10)
         Me.grpReminderType.Name = "grpReminderType"
         Me.grpReminderType.Size = New System.Drawing.Size(691, 70)
-        Me.grpReminderType.TabIndex = 42
+        Me.grpReminderType.TabIndex = 0
         Me.grpReminderType.TabStop = False
         Me.grpReminderType.Text = "Reminder Type"
         '
@@ -810,7 +811,7 @@ Partial Class FrmMain
         Me.panelReminderTypeContent.Location = New System.Drawing.Point(3, 26)
         Me.panelReminderTypeContent.Name = "panelReminderTypeContent"
         Me.panelReminderTypeContent.Size = New System.Drawing.Size(685, 41)
-        Me.panelReminderTypeContent.TabIndex = 4
+        Me.panelReminderTypeContent.TabIndex = 0
         '
         'lblReminderTypeTip
         '
@@ -884,7 +885,7 @@ Partial Class FrmMain
         Me.panelReminderTimeConfig.Location = New System.Drawing.Point(0, 0)
         Me.panelReminderTimeConfig.Name = "panelReminderTimeConfig"
         Me.panelReminderTimeConfig.Size = New System.Drawing.Size(751, 542)
-        Me.panelReminderTimeConfig.TabIndex = 41
+        Me.panelReminderTimeConfig.TabIndex = 0
         '
         'grpReminderTimeConfig
         '
@@ -898,7 +899,7 @@ Partial Class FrmMain
         Me.grpReminderTimeConfig.Location = New System.Drawing.Point(23, 27)
         Me.grpReminderTimeConfig.Name = "grpReminderTimeConfig"
         Me.grpReminderTimeConfig.Size = New System.Drawing.Size(691, 482)
-        Me.grpReminderTimeConfig.TabIndex = 41
+        Me.grpReminderTimeConfig.TabIndex = 0
         Me.grpReminderTimeConfig.TabStop = False
         Me.grpReminderTimeConfig.Text = "Reminder Time Configuration"
         '
@@ -914,7 +915,7 @@ Partial Class FrmMain
         Me.grpReminderTypeInterval.Location = New System.Drawing.Point(98, 23)
         Me.grpReminderTypeInterval.Name = "grpReminderTypeInterval"
         Me.grpReminderTypeInterval.Size = New System.Drawing.Size(358, 125)
-        Me.grpReminderTypeInterval.TabIndex = 30
+        Me.grpReminderTypeInterval.TabIndex = 0
         Me.grpReminderTypeInterval.TabStop = False
         Me.grpReminderTypeInterval.Text = "Interval Duration"
         Me.grpReminderTypeInterval.Visible = False
@@ -937,7 +938,7 @@ Partial Class FrmMain
         Me.panelReminderTypeIntervalContent.Location = New System.Drawing.Point(3, 57)
         Me.panelReminderTypeIntervalContent.Name = "panelReminderTypeIntervalContent"
         Me.panelReminderTypeIntervalContent.Size = New System.Drawing.Size(352, 59)
-        Me.panelReminderTypeIntervalContent.TabIndex = 38
+        Me.panelReminderTypeIntervalContent.TabIndex = 0
         '
         'numHours
         '
@@ -947,7 +948,7 @@ Partial Class FrmMain
         Me.numHours.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.numHours.Name = "numHours"
         Me.numHours.Size = New System.Drawing.Size(76, 26)
-        Me.numHours.TabIndex = 33
+        Me.numHours.TabIndex = 0
         Me.numHours.Tag = "0"
         '
         'numSeconds
@@ -958,7 +959,7 @@ Partial Class FrmMain
         Me.numSeconds.Maximum = New Decimal(New Integer() {59, 0, 0, 0})
         Me.numSeconds.Name = "numSeconds"
         Me.numSeconds.Size = New System.Drawing.Size(76, 26)
-        Me.numSeconds.TabIndex = 37
+        Me.numSeconds.TabIndex = 2
         Me.numSeconds.Tag = "0"
         '
         'numMinutes
@@ -969,7 +970,7 @@ Partial Class FrmMain
         Me.numMinutes.Maximum = New Decimal(New Integer() {59, 0, 0, 0})
         Me.numMinutes.Name = "numMinutes"
         Me.numMinutes.Size = New System.Drawing.Size(76, 26)
-        Me.numMinutes.TabIndex = 35
+        Me.numMinutes.TabIndex = 1
         Me.numMinutes.Tag = "0"
         '
         'Label17
@@ -1001,7 +1002,7 @@ Partial Class FrmMain
         Me.grpRepeat.Location = New System.Drawing.Point(462, 69)
         Me.grpRepeat.Name = "grpRepeat"
         Me.grpRepeat.Size = New System.Drawing.Size(180, 125)
-        Me.grpRepeat.TabIndex = 38
+        Me.grpRepeat.TabIndex = 3
         Me.grpRepeat.TabStop = False
         Me.grpRepeat.Text = "Repeat"
         '
@@ -1012,7 +1013,7 @@ Partial Class FrmMain
         Me.panelRepeatContent.Location = New System.Drawing.Point(3, 22)
         Me.panelRepeatContent.Name = "panelRepeatContent"
         Me.panelRepeatContent.Size = New System.Drawing.Size(174, 100)
-        Me.panelRepeatContent.TabIndex = 41
+        Me.panelRepeatContent.TabIndex = 0
         '
         'numRepeat
         '
@@ -1023,7 +1024,7 @@ Partial Class FrmMain
         Me.numRepeat.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.numRepeat.Name = "numRepeat"
         Me.numRepeat.Size = New System.Drawing.Size(110, 26)
-        Me.numRepeat.TabIndex = 38
+        Me.numRepeat.TabIndex = 0
         Me.numRepeat.Tag = "1"
         Me.numRepeat.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
@@ -1045,7 +1046,7 @@ Partial Class FrmMain
         Me.grpReminderTypeDaily.Location = New System.Drawing.Point(28, 260)
         Me.grpReminderTypeDaily.Name = "grpReminderTypeDaily"
         Me.grpReminderTypeDaily.Size = New System.Drawing.Size(358, 242)
-        Me.grpReminderTypeDaily.TabIndex = 39
+        Me.grpReminderTypeDaily.TabIndex = 2
         Me.grpReminderTypeDaily.TabStop = False
         Me.grpReminderTypeDaily.Text = "Daily"
         Me.grpReminderTypeDaily.Visible = False
@@ -1058,7 +1059,7 @@ Partial Class FrmMain
         Me.panelReminderTypeDailyContent.Location = New System.Drawing.Point(3, 22)
         Me.panelReminderTypeDailyContent.Name = "panelReminderTypeDailyContent"
         Me.panelReminderTypeDailyContent.Size = New System.Drawing.Size(352, 217)
-        Me.panelReminderTypeDailyContent.TabIndex = 41
+        Me.panelReminderTypeDailyContent.TabIndex = 0
         '
         'lvDaily
         '
@@ -1069,7 +1070,7 @@ Partial Class FrmMain
         Me.lvDaily.Location = New System.Drawing.Point(20, 28)
         Me.lvDaily.Name = "lvDaily"
         Me.lvDaily.Size = New System.Drawing.Size(144, 172)
-        Me.lvDaily.TabIndex = 6
+        Me.lvDaily.TabIndex = 0
         Me.lvDaily.ThreeDCheckBoxes = True
         '
         'dtDailyTime
@@ -1082,7 +1083,7 @@ Partial Class FrmMain
         Me.dtDailyTime.Name = "dtDailyTime"
         Me.dtDailyTime.ShowUpDown = True
         Me.dtDailyTime.Size = New System.Drawing.Size(137, 26)
-        Me.dtDailyTime.TabIndex = 0
+        Me.dtDailyTime.TabIndex = 1
         '
         'grpReminderTypeSpecific
         '
@@ -1093,7 +1094,7 @@ Partial Class FrmMain
         Me.grpReminderTypeSpecific.Location = New System.Drawing.Point(28, 142)
         Me.grpReminderTypeSpecific.Name = "grpReminderTypeSpecific"
         Me.grpReminderTypeSpecific.Size = New System.Drawing.Size(358, 125)
-        Me.grpReminderTypeSpecific.TabIndex = 38
+        Me.grpReminderTypeSpecific.TabIndex = 1
         Me.grpReminderTypeSpecific.TabStop = False
         Me.grpReminderTypeSpecific.Text = "Specific Date and Time"
         Me.grpReminderTypeSpecific.Visible = False
@@ -1106,7 +1107,7 @@ Partial Class FrmMain
         Me.panelReminderTypeSpecificContent.Location = New System.Drawing.Point(3, 22)
         Me.panelReminderTypeSpecificContent.Name = "panelReminderTypeSpecificContent"
         Me.panelReminderTypeSpecificContent.Size = New System.Drawing.Size(352, 100)
-        Me.panelReminderTypeSpecificContent.TabIndex = 1
+        Me.panelReminderTypeSpecificContent.TabIndex = 0
         '
         'dtSpecific
         '
@@ -1136,7 +1137,7 @@ Partial Class FrmMain
         Me.panelNotificationSettings.Location = New System.Drawing.Point(0, 0)
         Me.panelNotificationSettings.Name = "panelNotificationSettings"
         Me.panelNotificationSettings.Size = New System.Drawing.Size(674, 542)
-        Me.panelNotificationSettings.TabIndex = 41
+        Me.panelNotificationSettings.TabIndex = 0
         '
         'grpNotificationSettings
         '
@@ -1155,7 +1156,7 @@ Partial Class FrmMain
         Me.grpNotificationSettings.Location = New System.Drawing.Point(38, 25)
         Me.grpNotificationSettings.Name = "grpNotificationSettings"
         Me.grpNotificationSettings.Size = New System.Drawing.Size(602, 484)
-        Me.grpNotificationSettings.TabIndex = 30
+        Me.grpNotificationSettings.TabIndex = 0
         Me.grpNotificationSettings.TabStop = False
         Me.grpNotificationSettings.Text = "Notification Popup Settings"
         '
@@ -1184,7 +1185,7 @@ Partial Class FrmMain
         Me.panelNotificationSettingsContent.Location = New System.Drawing.Point(137, 29)
         Me.panelNotificationSettingsContent.Name = "panelNotificationSettingsContent"
         Me.panelNotificationSettingsContent.Size = New System.Drawing.Size(459, 434)
-        Me.panelNotificationSettingsContent.TabIndex = 31
+        Me.panelNotificationSettingsContent.TabIndex = 0
         '
         'btnShowNotificationFontDialog
         '
@@ -1195,7 +1196,7 @@ Partial Class FrmMain
         Me.btnShowNotificationFontDialog.Margin = New System.Windows.Forms.Padding(0)
         Me.btnShowNotificationFontDialog.Name = "btnShowNotificationFontDialog"
         Me.btnShowNotificationFontDialog.Size = New System.Drawing.Size(31, 30)
-        Me.btnShowNotificationFontDialog.TabIndex = 59
+        Me.btnShowNotificationFontDialog.TabIndex = 5
         Me.btnShowNotificationFontDialog.Text = "..."
         Me.btnShowNotificationFontDialog.UseVisualStyleBackColor = True
         '
@@ -1207,7 +1208,7 @@ Partial Class FrmMain
         Me.numNotificationHeight.Minimum = New Decimal(New Integer() {50, 0, 0, 0})
         Me.numNotificationHeight.Name = "numNotificationHeight"
         Me.numNotificationHeight.Size = New System.Drawing.Size(406, 26)
-        Me.numNotificationHeight.TabIndex = 64
+        Me.numNotificationHeight.TabIndex = 9
         Me.numNotificationHeight.Tag = "100"
         Me.numNotificationHeight.Value = New Decimal(New Integer() {100, 0, 0, 0})
         '
@@ -1219,7 +1220,7 @@ Partial Class FrmMain
         Me.numNotificationWidth.Minimum = New Decimal(New Integer() {100, 0, 0, 0})
         Me.numNotificationWidth.Name = "numNotificationWidth"
         Me.numNotificationWidth.Size = New System.Drawing.Size(406, 26)
-        Me.numNotificationWidth.TabIndex = 38
+        Me.numNotificationWidth.TabIndex = 8
         Me.numNotificationWidth.Tag = "500"
         Me.numNotificationWidth.Value = New Decimal(New Integer() {500, 0, 0, 0})
         '
@@ -1231,7 +1232,7 @@ Partial Class FrmMain
         Me.cmbNotificationSound.Location = New System.Drawing.Point(23, 60)
         Me.cmbNotificationSound.Name = "cmbNotificationSound"
         Me.cmbNotificationSound.Size = New System.Drawing.Size(367, 28)
-        Me.cmbNotificationSound.TabIndex = 55
+        Me.cmbNotificationSound.TabIndex = 1
         Me.cmbNotificationSound.ValueMember = "Key"
         '
         'btnPlaySound
@@ -1246,7 +1247,7 @@ Partial Class FrmMain
         Me.btnPlaySound.Location = New System.Drawing.Point(391, 55)
         Me.btnPlaySound.Name = "btnPlaySound"
         Me.btnPlaySound.Size = New System.Drawing.Size(41, 38)
-        Me.btnPlaySound.TabIndex = 31
+        Me.btnPlaySound.TabIndex = 2
         Me.btnPlaySound.UseVisualStyleBackColor = False
         '
         'colorPickerForeColor
@@ -1257,7 +1258,7 @@ Partial Class FrmMain
         Me.colorPickerForeColor.Location = New System.Drawing.Point(23, 300)
         Me.colorPickerForeColor.Name = "colorPickerForeColor"
         Me.colorPickerForeColor.Size = New System.Drawing.Size(406, 28)
-        Me.colorPickerForeColor.TabIndex = 62
+        Me.colorPickerForeColor.TabIndex = 7
         Me.colorPickerForeColor.Tag = "Brown"
         '
         'txtNotificationMessage
@@ -1266,7 +1267,7 @@ Partial Class FrmMain
         Me.txtNotificationMessage.Location = New System.Drawing.Point(23, 104)
         Me.txtNotificationMessage.Name = "txtNotificationMessage"
         Me.txtNotificationMessage.Size = New System.Drawing.Size(406, 86)
-        Me.txtNotificationMessage.TabIndex = 53
+        Me.txtNotificationMessage.TabIndex = 3
         Me.txtNotificationMessage.Tag = "Reminder message goes here"
         Me.txtNotificationMessage.Text = "Reminder message goes here"
         '
@@ -1278,7 +1279,7 @@ Partial Class FrmMain
         Me.colorPickerBackColor.Location = New System.Drawing.Point(23, 255)
         Me.colorPickerBackColor.Name = "colorPickerBackColor"
         Me.colorPickerBackColor.Size = New System.Drawing.Size(406, 28)
-        Me.colorPickerBackColor.TabIndex = 61
+        Me.colorPickerBackColor.TabIndex = 6
         Me.colorPickerBackColor.Tag = "DeepPink"
         '
         'cmbNotificationDuration
@@ -1293,7 +1294,7 @@ Partial Class FrmMain
         Me.cmbNotificationDuration.MaxDropDownItems = 20
         Me.cmbNotificationDuration.Name = "cmbNotificationDuration"
         Me.cmbNotificationDuration.Size = New System.Drawing.Size(406, 28)
-        Me.cmbNotificationDuration.TabIndex = 50
+        Me.cmbNotificationDuration.TabIndex = 0
         Me.cmbNotificationDuration.ValueMember = "Key"
         '
         'txtNotificaitonFont
@@ -1304,7 +1305,7 @@ Partial Class FrmMain
         Me.txtNotificaitonFont.Name = "txtNotificaitonFont"
         Me.txtNotificaitonFont.ReadOnly = True
         Me.txtNotificaitonFont.Size = New System.Drawing.Size(406, 30)
-        Me.txtNotificaitonFont.TabIndex = 60
+        Me.txtNotificaitonFont.TabIndex = 4
         Me.txtNotificaitonFont.Tag = "Segoe Script, 12pt, style=Bold"
         Me.txtNotificaitonFont.Text = "Segoe Script, 12pt, style=Bold"
         '
@@ -1397,7 +1398,7 @@ Partial Class FrmMain
         Me.MainMenu.Location = New System.Drawing.Point(0, 0)
         Me.MainMenu.Name = "MainMenu"
         Me.MainMenu.Size = New System.Drawing.Size(1533, 29)
-        Me.MainMenu.TabIndex = 49
+        Me.MainMenu.TabIndex = 0
         Me.MainMenu.Text = "MenuStrip1"
         '
         'FileToolStripMenuItem
@@ -1653,28 +1654,28 @@ Partial Class FrmMain
     Friend WithEvents ttIconTooltip As ToolTip
     Friend WithEvents ShortcutsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearHistoryToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents colReminderId As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderType As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderRepeatMax As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderRepeatElapsed As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderStatus As DataGridViewTextBoxColumn
-    Friend WithEvents colIntervalDuration As DataGridViewTextBoxColumn
-    Friend WithEvents colIntervalDaily As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderSpecificTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderCreateTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderLastUpdatedTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderLastDeletedTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderStartTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderLastNotifiedTime As DataGridViewTextBoxColumn
-    Friend WithEvents colReminderNextNotifyTime As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationDuration As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationSound As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationMessage As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationFont As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationBackColor As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationForeColor As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationWidth As DataGridViewTextBoxColumn
-    Friend WithEvents colNotificationHeight As DataGridViewTextBoxColumn
     Friend WithEvents lblIconPlace6 As Label
     Friend WithEvents btnCloneReminder As PictureBox
+    Friend WithEvents reminder_id As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_type As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_repeat_max As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_repeat_elapsed As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_status As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_interval As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_daily As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_specific_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_created_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_updated_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_deleted_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_started_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_notified_time As DataGridViewTextBoxColumn
+    Friend WithEvents reminder_next_notify_time As DataGridViewTextBoxColumn
+    Friend WithEvents notification_duration As DataGridViewTextBoxColumn
+    Friend WithEvents notification_sound As DataGridViewTextBoxColumn
+    Friend WithEvents notification_message As DataGridViewTextBoxColumn
+    Friend WithEvents notification_font As DataGridViewTextBoxColumn
+    Friend WithEvents notification_backcolor As DataGridViewTextBoxColumn
+    Friend WithEvents notification_forecolor As DataGridViewTextBoxColumn
+    Friend WithEvents notification_width As DataGridViewTextBoxColumn
+    Friend WithEvents notification_height As DataGridViewTextBoxColumn
 End Class

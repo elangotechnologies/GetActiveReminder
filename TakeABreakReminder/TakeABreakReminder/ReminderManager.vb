@@ -198,18 +198,18 @@ Public NotInheritable Class ReminderManager
 
     End Sub
 
-    'Public Sub stopRemindersToExit()
+    Public Sub stopRemindersToExit()
 
-    '    gReminderTimer.Stop()
-    '    gRemainingTimeToNotificationTimer.Stop()
+        gReminderTimer.Stop()
+        gRemainingTimeToNotificationTimer.Stop()
 
-    '    For Each runningReminderItem As KeyValuePair(Of Integer, RunningReminder) In gRunnningRemindersMap
-    '        Dim runningReminder As RunningReminder = runningReminderItem.Value
-    '        Dim toastNotificationForm As ReminderNotification = runningReminder.toastNotificationForm
-    '        toastNotificationForm.Close()
-    '    Next
+        For Each runningReminderItem As KeyValuePair(Of Integer, RunningReminder) In gRunnningRemindersMap
+            Dim runningReminder As RunningReminder = runningReminderItem.Value
+            Dim toastNotificationForm As ReminderNotification = runningReminder.toastNotificationForm
+            toastNotificationForm.Close()
+        Next
 
-    'End Sub
+    End Sub
 
     Public Function createNewReminderRow() As DataRow
         Return gReminderTable.NewRow()

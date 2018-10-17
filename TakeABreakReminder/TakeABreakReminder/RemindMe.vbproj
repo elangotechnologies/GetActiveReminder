@@ -191,6 +191,9 @@
     <EmbeddedResource Include="ReminderNotification.resx">
       <DependentUpon>ReminderNotification.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Shortcuts.resx">
+      <DependentUpon>Shortcuts.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\clone.png" />

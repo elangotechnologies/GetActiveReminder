@@ -1,7 +1,10 @@
 ﻿Imports System.ComponentModel
 Imports System.Globalization
+Imports NLog
 
 Module CommonModule
+    Public log As Logger = LogManager.GetCurrentClassLogger()
+
     Public Const REMINDER_TYPE_NONE As String = "none"
     Public Const REMINDER_TYPE_INTERVAL As String = "Interval"
     Public Const REMINDER_TYPE_DAILY As String = "Daily"
@@ -79,10 +82,21 @@ Module CommonModule
 
     Public gSumOfNotificationHeights As Integer = 0
 
-    Private BUTTON_MOUSE_HOVER_OFFSET As Integer = 20
+    Private BUTTON_FOCUSED_OFFSET As Integer = 20
 
     Public ReadOnly indexToDaysMap As Dictionary(Of Integer, String) = New Dictionary(Of Integer, String) From {{1, "Mon"}, {2, "Tue"}, {3, "Wed"}, {4, "Thu"}, {5, "Fri"}, {6, "Sat"}, {7, "Sun"}}
     Public ReadOnly daysToIndexMap As Dictionary(Of String, Integer) = New Dictionary(Of String, Integer) From {{"Mon", 1}, {"Tue", 2}, {"Wed", 3}, {"Thu", 4}, {"Fri", 5}, {"Sat", 6}, {"Sun", 7}}
+
+    Public gButtonsMap As New Dictionary(Of PictureBox, ButtonAppearanceDetails)
+
+    Class ButtonAppearanceDetails
+        Public defaultSize As Size
+        Public focusedSize As Size
+        Sub New(size As Size)
+            defaultSize = size
+            focusedSize = New Size(size.Width + BUTTON_FOCUSED_OFFSET, size.Height + BUTTON_FOCUSED_OFFSET)
+        End Sub
+    End Class
 
     Public Function getFontObjFromDisplayFormat(fontDisplayString As String) As Font
         Dim typeConverter As TypeConverter = TypeDescriptor.GetConverter(GetType(Font))
@@ -159,13 +173,13 @@ Module CommonModule
 
 
     Public Sub setDataGrid(lDataGridView As DataGridView, lDataTable As DataTable)
-        Console.WriteLine("lDataTable: " + lDataTable.Rows.Count.ToString)
         Dim lBindingSource As New BindingSource()
         lBindingSource.DataSource = lDataTable
         lDataGridView.DataSource = lBindingSource
         lDataGridView.ClearSelection()
         If lDataTable.Rows.Count > 0 Then
-            lDataGridView.FirstDisplayedScrollingRowIndex = lDataTable.Rows.Count - 1
+            ''lDataGridView.FirstDisplayedScrollingRowIndex = lDataTable.Rows.Count - 1
+            lDataGridView.FirstDisplayedScrollingRowIndex = 0
         End If
     End Sub
 
@@ -227,23 +241,56 @@ Module CommonModule
 
     Public Sub addButtonAppearnceEventHandlers(buttonsList As List(Of PictureBox))
         For Each button As PictureBox In buttonsList
-            AddHandler button.MouseEnter, AddressOf showFocusedButtonAppearance
-            AddHandler button.MouseUp, AddressOf showFocusedButtonAppearance
-            AddHandler button.MouseLeave, AddressOf showNormalButtonAppearance
-            AddHandler button.MouseDown, AddressOf showNormalButtonAppearance
+            AddHandler button.MouseEnter, AddressOf onButtonMouseEnter
+            AddHandler button.MouseUp, AddressOf onButtonMouseUp
+            AddHandler button.MouseLeave, AddressOf onButtonMouseLeave
+            AddHandler button.MouseDown, AddressOf onButtonMouseDown
+            gButtonsMap(button) = New ButtonAppearanceDetails(button.Size)
         Next
     End Sub
 
+    Private Sub onButtonMouseEnter(sender As Object, e As EventArgs)
+        Dim buttonAppreanceDetails As ButtonAppearanceDetails = gButtonsMap(sender)
+        If sender.Size <> buttonAppreanceDetails.focusedSize Then
+            sender.Size = buttonAppreanceDetails.focusedSize
+            setButtonLocation(sender, BUTTON_FOCUSED_OFFSET)
+        End If
+    End Sub
+
+    Private Sub onButtonMouseUp(sender As Object, e As MouseEventArgs)
+        Dim buttonAppreanceDetails As ButtonAppearanceDetails = gButtonsMap(sender)
+        If sender.Size <> buttonAppreanceDetails.focusedSize AndAlso sender.ClientRectangle.Contains(sender.PointToClient(Control.MousePosition)) Then
+            sender.Size = buttonAppreanceDetails.focusedSize
+            setButtonLocation(sender, BUTTON_FOCUSED_OFFSET)
+        End If
+    End Sub
+
+    Private Sub onButtonMouseLeave(sender As Object, e As EventArgs)
+        showNormalButtonAppearance(sender, e)
+    End Sub
+
+    Private Sub onButtonMouseDown(sender As Object, e As MouseEventArgs)
+        showNormalButtonAppearance(sender, e)
+    End Sub
+
+
     Private Sub showNormalButtonAppearance(sender As Object, e As EventArgs)
-        setButtonApperance(sender, BUTTON_MOUSE_HOVER_OFFSET * -1)
+        Dim buttonAppreanceDetails As ButtonAppearanceDetails = gButtonsMap(sender)
+        If sender.Size <> buttonAppreanceDetails.defaultSize Then
+            sender.Size = buttonAppreanceDetails.defaultSize
+            setButtonLocation(sender, BUTTON_FOCUSED_OFFSET * -1)
+        End If
     End Sub
 
-    Private Sub showFocusedButtonAppearance(sender As Object, e As EventArgs)
-        setButtonApperance(sender, BUTTON_MOUSE_HOVER_OFFSET)
-    End Sub
+    'Private Sub showFocusedButtonAppearance(sender As Object, e As EventArgs)
+    '    Dim buttonAppreanceDetails As ButtonAppearanceDetails = gButtonsMap(sender)
+    '    If sender.Size <> buttonAppreanceDetails.focusedSize Then
+    '        sender.Size = buttonAppreanceDetails.focusedSize
+    '        setButtonLocation(sender, BUTTON_FOCUSED_OFFSET)
+    '    End If
+    'End Sub
 
-    Public Sub setButtonApperance(button As Object, offset As Integer)
-        button.Size = New Size(button.Width + offset, button.Height + offset)
+    Public Sub setButtonLocation(button As Object, offset As Integer)
         button.Location = New Point(button.Location.X + ((offset / 2) * -1), button.Location.Y + ((offset / 2) * -1))
     End Sub
 
