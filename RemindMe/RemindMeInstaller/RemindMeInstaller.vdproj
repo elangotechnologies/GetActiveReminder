@@ -1011,7 +1011,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_DBF87BD4FDC54F87B8A251F6BE9F24BF"
             {
-            "SourcePath" = "8:..\\TakeABreakReminder\\obj\\Debug\\RemindMe.exe"
+            "SourcePath" = "8:..\\RemindMe\\obj\\Debug\\RemindMe.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_184217FB3CA948DCAA69C58D9BA9A119"

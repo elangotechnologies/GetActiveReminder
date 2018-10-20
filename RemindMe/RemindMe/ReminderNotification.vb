@@ -38,7 +38,7 @@ Public Class ReminderNotification
         lblReminderId.Location = New Point(10, 0)
         lblReminderId.Text = "Id: " + gReminderRow.Item(COL_REMINDER_ID).ToString
         lblReminderType.Text = "Type: " + gReminderRow.Item(COL_REMINDER_TYPE)
-        log.Debug("lblReminderType Width: " + lblReminderType.Width.ToString)
+        ''log.Debug("lblReminderType Width: " + lblReminderType.Width.ToString)
         lblReminderType.Location = New Point((Me.Width / 2) - lblReminderType.Width, 0)
         lblMessage.Text = gReminderRow.Item(COL_NOTIFICATION_MESSAGE)
         lblMessage.ForeColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_FORECOLOR))
