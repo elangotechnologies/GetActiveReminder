@@ -30,20 +30,17 @@ Partial Class ReminderNotification
         Me.timerSlideIn = New System.Windows.Forms.Timer(Me.components)
         Me.timerSlideInBack = New System.Windows.Forms.Timer(Me.components)
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.panelNotificationHeader = New System.Windows.Forms.Panel()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.lblReminderId = New System.Windows.Forms.Label()
-        Me.lblcloseTimeCounter = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.lblReminderType = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lblcloseTimeCounter = New System.Windows.Forms.Label()
+        Me.lblReminderId = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
-        Me.Panel1.SuspendLayout()
         Me.panelNotificationHeader.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'timerClose
@@ -104,6 +101,44 @@ Partial Class ReminderNotification
         Me.SplitContainer1.SplitterWidth = 1
         Me.SplitContainer1.TabIndex = 2
         '
+        'panelNotificationHeader
+        '
+        Me.panelNotificationHeader.Controls.Add(Me.lblReminderType)
+        Me.panelNotificationHeader.Controls.Add(Me.lblcloseTimeCounter)
+        Me.panelNotificationHeader.Controls.Add(Me.lblReminderId)
+        Me.panelNotificationHeader.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.panelNotificationHeader.Location = New System.Drawing.Point(0, 0)
+        Me.panelNotificationHeader.Name = "panelNotificationHeader"
+        Me.panelNotificationHeader.Size = New System.Drawing.Size(686, 25)
+        Me.panelNotificationHeader.TabIndex = 2
+        '
+        'lblReminderType
+        '
+        Me.lblReminderType.AutoSize = True
+        Me.lblReminderType.Location = New System.Drawing.Point(54, 6)
+        Me.lblReminderType.Name = "lblReminderType"
+        Me.lblReminderType.Size = New System.Drawing.Size(45, 13)
+        Me.lblReminderType.TabIndex = 5
+        Me.lblReminderType.Text = " Interval"
+        '
+        'lblcloseTimeCounter
+        '
+        Me.lblcloseTimeCounter.AutoSize = True
+        Me.lblcloseTimeCounter.Location = New System.Drawing.Point(135, 6)
+        Me.lblcloseTimeCounter.Name = "lblcloseTimeCounter"
+        Me.lblcloseTimeCounter.Size = New System.Drawing.Size(13, 13)
+        Me.lblcloseTimeCounter.TabIndex = 3
+        Me.lblcloseTimeCounter.Text = "0"
+        '
+        'lblReminderId
+        '
+        Me.lblReminderId.AutoSize = True
+        Me.lblReminderId.Location = New System.Drawing.Point(3, 6)
+        Me.lblReminderId.Name = "lblReminderId"
+        Me.lblReminderId.Size = New System.Drawing.Size(19, 13)
+        Me.lblReminderId.TabIndex = 1
+        Me.lblReminderId.Text = "00"
+        '
         'Panel1
         '
         Me.Panel1.Controls.Add(Me.lblMessage)
@@ -112,74 +147,6 @@ Partial Class ReminderNotification
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(686, 186)
         Me.Panel1.TabIndex = 0
-        '
-        'panelNotificationHeader
-        '
-        Me.panelNotificationHeader.Controls.Add(Me.lblReminderType)
-        Me.panelNotificationHeader.Controls.Add(Me.Label5)
-        Me.panelNotificationHeader.Controls.Add(Me.lblcloseTimeCounter)
-        Me.panelNotificationHeader.Controls.Add(Me.Label3)
-        Me.panelNotificationHeader.Controls.Add(Me.lblReminderId)
-        Me.panelNotificationHeader.Controls.Add(Me.Label1)
-        Me.panelNotificationHeader.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.panelNotificationHeader.Location = New System.Drawing.Point(0, 0)
-        Me.panelNotificationHeader.Name = "panelNotificationHeader"
-        Me.panelNotificationHeader.Size = New System.Drawing.Size(686, 25)
-        Me.panelNotificationHeader.TabIndex = 2
-        '
-        'Label1
-        '
-        Me.Label1.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(10, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(38, 23)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Id :"
-        '
-        'lblReminderId
-        '
-        Me.lblReminderId.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblReminderId.Location = New System.Drawing.Point(39, 0)
-        Me.lblReminderId.Name = "lblReminderId"
-        Me.lblReminderId.Size = New System.Drawing.Size(55, 23)
-        Me.lblReminderId.TabIndex = 1
-        Me.lblReminderId.Text = "00"
-        '
-        'lblcloseTimeCounter
-        '
-        Me.lblcloseTimeCounter.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblcloseTimeCounter.Location = New System.Drawing.Point(362, 0)
-        Me.lblcloseTimeCounter.Name = "lblcloseTimeCounter"
-        Me.lblcloseTimeCounter.Size = New System.Drawing.Size(96, 23)
-        Me.lblcloseTimeCounter.TabIndex = 3
-        Me.lblcloseTimeCounter.Text = "0"
-        '
-        'Label3
-        '
-        Me.Label3.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(292, 0)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(76, 23)
-        Me.Label3.TabIndex = 2
-        Me.Label3.Text = "Closes In :"
-        '
-        'lblReminderType
-        '
-        Me.lblReminderType.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblReminderType.Location = New System.Drawing.Point(162, 0)
-        Me.lblReminderType.Name = "lblReminderType"
-        Me.lblReminderType.Size = New System.Drawing.Size(83, 23)
-        Me.lblReminderType.TabIndex = 5
-        Me.lblReminderType.Text = " Interval"
-        '
-        'Label5
-        '
-        Me.Label5.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(118, 0)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(56, 23)
-        Me.Label5.TabIndex = 4
-        Me.Label5.Text = "Type :"
         '
         'ReminderNotification
         '
@@ -203,8 +170,9 @@ Partial Class ReminderNotification
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
-        Me.Panel1.ResumeLayout(False)
         Me.panelNotificationHeader.ResumeLayout(False)
+        Me.panelNotificationHeader.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -218,9 +186,6 @@ Partial Class ReminderNotification
     Friend WithEvents Panel1 As Panel
     Friend WithEvents panelNotificationHeader As Panel
     Friend WithEvents lblReminderId As Label
-    Friend WithEvents Label1 As Label
     Friend WithEvents lblReminderType As Label
-    Friend WithEvents Label5 As Label
     Friend WithEvents lblcloseTimeCounter As Label
-    Friend WithEvents Label3 As Label
 End Class

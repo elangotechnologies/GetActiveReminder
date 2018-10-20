@@ -32,13 +32,16 @@
         gShortcutKeysList.Add(New ShortcutKey("Ctrl+N", "New", "Create a new reminder."))
         gShortcutKeysList.Add(New ShortcutKey("Ctrl+E", "Edit", "Edit the selected reminder."))
         gShortcutKeysList.Add(New ShortcutKey("Enter", "Confirm", "Confrim the changes of 'Add' or 'Edit' operations if the changes are in progress."))
-        gShortcutKeysList.Add(New ShortcutKey("Esc", "Cancel", "Cancel the changes of 'Add' or 'Edit' operations if the changes are in progress. Same key is used close opened dialogs also."))
+        gShortcutKeysList.Add(New ShortcutKey("Esc", "Cancel", "Cancel the changes of 'Add' or 'Edit' operations if the changes are in progress."))
+        gShortcutKeysList.Add(New ShortcutKey("Esc", "Clear", "Clear the screen."))
+        gShortcutKeysList.Add(New ShortcutKey("Esc", "Close", "Close the dialog if any dialog show on top of main screen"))
         gShortcutKeysList.Add(New ShortcutKey("Ctrl+L", "Clone", "Clone (make exact copy of) the selected reminder."))
         gShortcutKeysList.Add(New ShortcutKey("Ctrl+D", "Delete", "Delete the selected reminder."))
-        gShortcutKeysList.Add(New ShortcutKey("Ctrl+C", "Clear", "Reset the screen completely."))
         gShortcutKeysList.Add(New ShortcutKey("Ctrl+R", "Start", "Start running the selected reminder."))
         gShortcutKeysList.Add(New ShortcutKey("Ctrl+Z", "Stop", "Stop the selected running reminder."))
         gShortcutKeysList.Add(New ShortcutKey("Ctrl+T", "Focus Reminders", "Set the focus to reminder table. To select reminders using UP and DOWN arrow keys."))
+        gShortcutKeysList.Add(New ShortcutKey("Up Arrow", "Previous Reminder", "Navigate to previous reminder if the reminder table is focused."))
+        gShortcutKeysList.Add(New ShortcutKey("Down Arrow", "Next Reminder", "Navigate to next reminder if the reminder table is focused."))
     End Sub
 
     Private Sub populateTable()

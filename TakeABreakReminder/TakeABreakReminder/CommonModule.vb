@@ -59,6 +59,7 @@ Module CommonModule
     Public Const COL_NOTIFICATION_FONT As String = "notification_font"
     Public Const COL_NOTIFICATION_BACKCOLOR As String = "notification_backcolor"
     Public Const COL_NOTIFICATION_FORECOLOR As String = "notification_forecolor"
+    Public Const COL_NOTIFICATION_META_FONT As String = "notification_meta_font"
     Public Const COL_NOTIFICATION_META_FORECOLOR As String = "notification_meta_forecolor"
     Public Const COL_NOTIFICATION_WIDTH As String = "notification_width"
     Public Const COL_NOTIFICATION_HEIGHT As String = "notification_height"

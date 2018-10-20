@@ -113,6 +113,18 @@ Namespace My
                 Me("last_reminder_id") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property notify_with_animation() As Boolean
+            Get
+                Return CType(Me("notify_with_animation"),Boolean)
+            End Get
+            Set
+                Me("notify_with_animation") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

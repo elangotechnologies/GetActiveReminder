@@ -32,7 +32,7 @@ Public Class FrmMain
         Public Sub reminderStopped() Implements ReminderManager.IReminderUpdateObserver.reminderStopped
             FrmMain.btnStartStopReminder.BackgroundImage = My.Resources.start
             FrmMain.btnStartStopReminder.Tag = REMINDER_STATUS_NOT_RUNNING
-            FrmMain.ttIconTooltip.SetToolTip(FrmMain.btnStartStopReminder, "Start")
+            FrmMain.ttIconTooltip.SetToolTip(FrmMain.btnStartStopReminder, "Start (Ctrl+R)")
         End Sub
 
         Private Sub remainingTimeChanged(remainingTimeStr As String) Implements ReminderManager.IReminderUpdateObserver.remainingTimeChanged
@@ -179,6 +179,7 @@ Public Class FrmMain
 
         If gSelectedReminderId = REMINDER_ID_NONE Then
             MsgBox("Please select a reminder to do this operation")
+            dgReminderDetails.Focus()
             Return
         End If
 
@@ -188,6 +189,7 @@ Public Class FrmMain
         Dim currentTime As DateTime = DateTime.Now
         If reminderType = REMINDER_TYPE_SPECIFIC_TIME AndAlso reminderRow(COL_REMINDER_SPECIFIC_TIME) <= currentTime Then
             MsgBox("Sorry, the time for this reminder has already passed. Please set a new time to start the reminder")
+            dgReminderDetails.Focus()
             Return
         End If
 
@@ -322,6 +324,7 @@ Public Class FrmMain
         reminderRow(COL_NOTIFICATION_SOUND) = cmbNotificationSound.Text
         reminderRow(COL_NOTIFICATION_MESSAGE) = txtNotificationMessage.Text
         reminderRow(COL_NOTIFICATION_FONT) = txtNotificaitonFont.Text
+        reminderRow(COL_NOTIFICATION_META_FONT) = txtNotificaitonMetaFont.Text
         reminderRow(COL_NOTIFICATION_BACKCOLOR) = colorPickerBackColor.Color.Name.ToString
         reminderRow(COL_NOTIFICATION_FORECOLOR) = colorPickerForeColor.Color.Name.ToString
         reminderRow(COL_NOTIFICATION_META_FORECOLOR) = colorPickerMetaForeColor.Color.Name.ToString
@@ -368,6 +371,7 @@ Public Class FrmMain
         cmbNotificationDuration.SelectedValue = reminderRow(COL_NOTIFICATION_DURATION)
         txtNotificationMessage.Text = reminderRow(COL_NOTIFICATION_MESSAGE)
         txtNotificaitonFont.Text = reminderRow(COL_NOTIFICATION_FONT)
+        txtNotificaitonMetaFont.Text = reminderRow(COL_NOTIFICATION_META_FONT)
         colorPickerBackColor.Color = Color.FromName(reminderRow(COL_NOTIFICATION_BACKCOLOR))
         colorPickerForeColor.Color = Color.FromName(reminderRow(COL_NOTIFICATION_FORECOLOR))
         colorPickerMetaForeColor.Color = Color.FromName(reminderRow(COL_NOTIFICATION_META_FORECOLOR))
@@ -383,16 +387,19 @@ Public Class FrmMain
             Case REMINDER_TYPE_INTERVAL
                 If convertTimeToSeconds(numHours.Value, numMinutes.Value, numSeconds.Value) < cmbNotificationDuration.SelectedValue Then
                     MsgBox("The reminder interval cannot be lesser than notification duration. Current values,  Reminder Interval : " + getFormattedInterval(numHours.Value, numMinutes.Value, numSeconds.Value) + ", Notification Duration: " + cmbNotificationDuration.Text)
+                    numHours.Focus()
                     Return False
                 End If
             Case REMINDER_TYPE_SPECIFIC_TIME
                 If dtSpecific.Value <= DateTime.Now Then
                     MsgBox("The selected time is already crossed. Please select a new time")
+                    dtSpecific.Focus()
                     Return False
                 End If
             Case REMINDER_TYPE_DAILY
                 If lvDaily.CheckedItems.Count <= 0 Then
                     MsgBox("Atleast one day must be selected")
+                    lvDaily.Focus()
                     Return False
                 End If
         End Select
@@ -440,6 +447,7 @@ Public Class FrmMain
         If btnAddReminder.Tag = OPERATION_ADD_STARTED Then
             MessageBox.Show("Sorry, you cannot view any existing reminders because you are in the middle of creating a new reminder. Please compelete the creation or cancel it", "ERROR")
             dgReminderDetails.ClearSelection()
+            numRepeat.Focus()
             gSelectedReminderId = REMINDER_ID_NONE
             Return
         End If
@@ -447,7 +455,7 @@ Public Class FrmMain
         If btnEditReminder.Tag = OPERATION_EDIT_STARTED Then
             MessageBox.Show("Sorry, you cannot view any existing reminders because you are in the middle of editing an exisiting reminder. Please compelete the edit operation or cancel it", "ERROR")
             selectRowAtDataGridByKey(dgReminderDetails, COL_REMINDER_ID, gSelectedReminderId)
-
+            numRepeat.Focus()
             Return
         End If
 
@@ -465,6 +473,7 @@ Public Class FrmMain
 
         If gSelectedReminderId = REMINDER_ID_NONE Then
             MsgBox("Please select a reminder to do this operation")
+            dgReminderDetails.Focus()
             Return
         End If
 
@@ -529,8 +538,8 @@ Public Class FrmMain
                     If btnStartStopReminder.Tag = REMINDER_STATUS_RUNNING Then
                         btnStartStopReminder_Click(btnStartStopReminder, New EventArgs)
                     End If
-                Case Keys.C
-                    btnClearScreen_Click(btnClearScreen, New EventArgs)
+                    ''Case Keys.C
+                    ''btnClearScreen_Click(btnClearScreen, New EventArgs)
                 Case Keys.L
                     btnCloneReminder_Click(btnCloneReminder, New EventArgs)
                 Case Keys.T
@@ -547,14 +556,10 @@ Public Class FrmMain
         End If
 
         If e.KeyCode = Keys.Escape Then
-            If btnAddReminder.Tag = OPERATION_ADD_STARTED OrElse btnEditReminder.Tag = OPERATION_EDIT_STARTED Then
-                btnClearScreen_Click(btnClearScreen, New EventArgs)
-            End If
+            ''If btnAddReminder.Tag = OPERATION_ADD_STARTED OrElse btnEditReminder.Tag = OPERATION_EDIT_STARTED Then
+            btnClearScreen_Click(btnClearScreen, New EventArgs)
+            ''End If
         End If
-
-        'If e.KeyCode = Keys.Escape Then
-        '    exitApp()
-        'End If
 
     End Sub
 
@@ -675,6 +680,7 @@ Public Class FrmMain
 
         If gSelectedReminderId = REMINDER_ID_NONE Then
             MsgBox("Please select a reminder to do this operation")
+            dgReminderDetails.Focus()
             Return
         End If
 
@@ -737,6 +743,7 @@ Public Class FrmMain
         cmbNotificationSound.SelectedIndex = 0
         txtNotificationMessage.Text = txtNotificationMessage.Tag.ToString
         txtNotificaitonFont.Text = txtNotificaitonFont.Tag.ToString
+        txtNotificaitonMetaFont.Text = txtNotificaitonMetaFont.Tag.ToString
         colorPickerBackColor.Color = Color.FromName(colorPickerBackColor.Tag)
         colorPickerForeColor.Color = Color.FromName(colorPickerForeColor.Tag)
         numNotificationWidth.Value = numNotificationWidth.Tag
@@ -762,7 +769,7 @@ Public Class FrmMain
                 grpReminderTypeSpecific.Location = reminderTimePlaceHolder.Location
                 btnAddReminder.Tag = OPERATION_NONE
                 btnAddReminder.BackgroundImage = My.Resources._new
-                ttIconTooltip.SetToolTip(btnAddReminder, "New")
+                ttIconTooltip.SetToolTip(btnAddReminder, "New (Ctrl+N)")
                 btnEditReminder.Tag = OPERATION_NONE
                 btnClearScreen.BackgroundImage = My.Resources.clear
 
@@ -792,6 +799,7 @@ Public Class FrmMain
                 cmbNotificationSound.SelectedIndex = 0
                 txtNotificationMessage.Text = txtNotificationMessage.Tag.ToString
                 txtNotificaitonFont.Text = txtNotificaitonFont.Tag.ToString
+                txtNotificaitonMetaFont.Text = txtNotificaitonMetaFont.Tag.ToString
                 colorPickerBackColor.Color = Color.FromName(colorPickerBackColor.Tag)
                 colorPickerForeColor.Color = Color.FromName(colorPickerForeColor.Tag)
                 numNotificationWidth.Value = numNotificationWidth.Tag
@@ -804,9 +812,9 @@ Public Class FrmMain
                 btnStartStopReminder.Enabled = False
                 btnAddReminder.Tag = operation
                 btnAddReminder.BackgroundImage = My.Resources.confirm
-                ttIconTooltip.SetToolTip(btnAddReminder, "Confirm")
+                ttIconTooltip.SetToolTip(btnAddReminder, "Confirm (Enter)")
                 btnClearScreen.BackgroundImage = My.Resources.cancel
-                ttIconTooltip.SetToolTip(btnClearScreen, "Cancel")
+                ttIconTooltip.SetToolTip(btnClearScreen, "Cancel (Esc)")
 
                 setVisibilityByByOperation(OPERATION_SCREEN_VALUES_RESET)
 
@@ -826,9 +834,9 @@ Public Class FrmMain
             Case OPERATION_ADD_COMPLETED
                 btnAddReminder.Tag = OPERATION_NONE
                 btnAddReminder.BackgroundImage = My.Resources._new
-                ttIconTooltip.SetToolTip(btnAddReminder, "New")
+                ttIconTooltip.SetToolTip(btnAddReminder, "New (Ctrl+N)")
                 btnClearScreen.BackgroundImage = My.Resources.clear
-                ttIconTooltip.SetToolTip(btnClearScreen, "Clear")
+                ttIconTooltip.SetToolTip(btnClearScreen, "Clear (Esc)")
 
                 dgReminderDetails.Sort(dgReminderDetails.Columns(COL_REMINDER_ID), ListSortDirection.Descending)
                 dgReminderDetails.FirstDisplayedScrollingRowIndex = 0
@@ -841,9 +849,9 @@ Public Class FrmMain
             Case OPERATION_ADD_CANCELED
                 btnAddReminder.Tag = OPERATION_NONE
                 btnAddReminder.BackgroundImage = My.Resources._new
-                ttIconTooltip.SetToolTip(btnAddReminder, "New")
+                ttIconTooltip.SetToolTip(btnAddReminder, "New (Ctrl+N)")
                 btnClearScreen.BackgroundImage = My.Resources.clear
-                ttIconTooltip.SetToolTip(btnClearScreen, "Clear")
+                ttIconTooltip.SetToolTip(btnClearScreen, "Clear (Esc)")
 
                 selectFirstRowAtDataGrid(dgReminderDetails)
 
@@ -856,9 +864,9 @@ Public Class FrmMain
 
                 btnEditReminder.Tag = operation
                 btnEditReminder.BackgroundImage = My.Resources.confirm
-                ttIconTooltip.SetToolTip(btnEditReminder, "Confirm")
+                ttIconTooltip.SetToolTip(btnEditReminder, "Confirm (Enter)")
                 btnClearScreen.BackgroundImage = My.Resources.cancel ''make sure that you dont clear screen here. We just need to reload the reminder row.
-                ttIconTooltip.SetToolTip(btnClearScreen, "Cancel")
+                ttIconTooltip.SetToolTip(btnClearScreen, "Cancel (Esc)")
 
                 panelReminderTypeContent.Enabled = True
                 panelReminderTypeIntervalContent.Enabled = True
@@ -880,9 +888,9 @@ Public Class FrmMain
 
                 btnEditReminder.Tag = OPERATION_NONE
                 btnEditReminder.BackgroundImage = My.Resources.edit
-                ttIconTooltip.SetToolTip(btnEditReminder, "Edit")
+                ttIconTooltip.SetToolTip(btnEditReminder, "Edit (Ctrl+E)")
                 btnClearScreen.BackgroundImage = My.Resources.clear
-                ttIconTooltip.SetToolTip(btnClearScreen, "Clear")
+                ttIconTooltip.SetToolTip(btnClearScreen, "Clear (Esc)")
 
                 dgReminderDetails.Sort(dgReminderDetails.Columns(COL_REMINDER_UPDATED_TIME), ListSortDirection.Descending)
                 dgReminderDetails.FirstDisplayedScrollingRowIndex = 0
@@ -892,9 +900,9 @@ Public Class FrmMain
                 btnAddReminder.Enabled = True
                 btnEditReminder.Tag = OPERATION_NONE
                 btnEditReminder.BackgroundImage = My.Resources.edit
-                ttIconTooltip.SetToolTip(btnEditReminder, "Edit")
+                ttIconTooltip.SetToolTip(btnEditReminder, "Edit (Ctrl+E)")
                 btnClearScreen.BackgroundImage = My.Resources.clear
-                ttIconTooltip.SetToolTip(btnClearScreen, "Clear")
+                ttIconTooltip.SetToolTip(btnClearScreen, "Clear (Esc)")
 
                 selectRowAtDataGridByKey(dgReminderDetails, COL_REMINDER_ID, reminderId)
 
@@ -913,7 +921,7 @@ Public Class FrmMain
                 btnDeleteReminder.Enabled = False
                 btnCloneReminder.Enabled = False
                 btnStartStopReminder.BackgroundImage = My.Resources._stop
-                ttIconTooltip.SetToolTip(btnStartStopReminder, "Stop")
+                ttIconTooltip.SetToolTip(btnStartStopReminder, "Stop (Ctrl+Z)")
                 btnStartStopReminder.Tag = REMINDER_STATUS_RUNNING
 
             Case OPERATION_REMINDER_STOPPED
@@ -921,7 +929,7 @@ Public Class FrmMain
                 btnDeleteReminder.Enabled = True
                 btnCloneReminder.Enabled = True
                 btnStartStopReminder.BackgroundImage = My.Resources.start
-                ttIconTooltip.SetToolTip(btnStartStopReminder, "Start")
+                ttIconTooltip.SetToolTip(btnStartStopReminder, "Start (Ctrl+R)")
                 btnStartStopReminder.Tag = REMINDER_STATUS_NOT_RUNNING
 
             Case OPERATION_REMINDER_SELECTED
@@ -937,10 +945,10 @@ Public Class FrmMain
                     btnDeleteReminder.Enabled = False
                     btnCloneReminder.Enabled = False
                     btnStartStopReminder.BackgroundImage = My.Resources._stop
-                    ttIconTooltip.SetToolTip(btnStartStopReminder, "Stop")
+                    ttIconTooltip.SetToolTip(btnStartStopReminder, "Stop (Ctrl+Z)")
                 Else
                     btnStartStopReminder.BackgroundImage = My.Resources.start
-                    ttIconTooltip.SetToolTip(btnStartStopReminder, "Start")
+                    ttIconTooltip.SetToolTip(btnStartStopReminder, "Start (Ctrl+R)")
                 End If
                 btnStartStopReminder.Tag = reminderStatus
 
@@ -1116,6 +1124,16 @@ Public Class FrmMain
     Private ReadOnly REMINDER_STATUSBAR_COLOR_2 As Color = Color.SteelBlue
     Private Sub lblReminderStatus_TextChanged(sender As Object, e As EventArgs) Handles lblReminderStatus.TextChanged
         ssReminderStatusBar.BackColor = If(ssReminderStatusBar.BackColor = REMINDER_STATUSBAR_COLOR_1, REMINDER_STATUSBAR_COLOR_2, REMINDER_STATUSBAR_COLOR_1)
+    End Sub
+
+    Private Sub btnShowNotificationMetaFontDialog_Click(sender As Object, e As EventArgs) Handles btnShowNotificationMetaFontDialog.Click
+        If Not String.IsNullOrEmpty(txtNotificaitonMetaFont.Text) Then
+            fontdialogNotificationFont.Font = getFontObjFromDisplayFormat(txtNotificaitonMetaFont.Text)
+        End If
+
+        If fontdialogNotificationFont.ShowDialog <> Windows.Forms.DialogResult.Cancel Then
+            txtNotificaitonMetaFont.Text = getFontInDisplayFormat(fontdialogNotificationFont.Font)
+        End If
     End Sub
 End Class
 

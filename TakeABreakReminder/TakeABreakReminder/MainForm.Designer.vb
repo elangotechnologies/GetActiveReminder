@@ -24,19 +24,19 @@ Partial Class FrmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmMain))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle37 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle38 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle39 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.statusLblTimerStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.trayIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.contextMenuForTrayIcon = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -46,6 +46,30 @@ Partial Class FrmMain
         Me.ssReminderStatusBar = New System.Windows.Forms.StatusStrip()
         Me.fontdialogNotificationFont = New System.Windows.Forms.FontDialog()
         Me.dgReminderDetails = New System.Windows.Forms.DataGridView()
+        Me.reminder_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_type = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_repeat_max = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_repeat_elapsed = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_status = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_interval = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_daily = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_specific_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_created_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_updated_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_deleted_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_started_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_notified_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reminder_next_notify_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_duration = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_sound = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_message = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_font = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_backcolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_forecolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_meta_font = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_meta_forecolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_width = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_height = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.radReminderTypeSpecific = New System.Windows.Forms.RadioButton()
         Me.radReminderTypeDaily = New System.Windows.Forms.RadioButton()
         Me.radReminderTypeInterval = New System.Windows.Forms.RadioButton()
@@ -97,8 +121,13 @@ Partial Class FrmMain
         Me.lblReminderContentTipLeft = New System.Windows.Forms.Label()
         Me.panelNotificationSettings = New System.Windows.Forms.Panel()
         Me.grpNotificationSettings = New System.Windows.Forms.GroupBox()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.panelNotificationSettingsContent = New System.Windows.Forms.Panel()
+        Me.btnShowNotificationMetaFontDialog = New System.Windows.Forms.Button()
+        Me.txtNotificaitonMetaFont = New System.Windows.Forms.RichTextBox()
+        Me.colorPickerMetaForeColor = New ElaColorChooser.ElaColorPicker()
         Me.btnShowNotificationFontDialog = New System.Windows.Forms.Button()
         Me.numNotificationHeight = New System.Windows.Forms.NumericUpDown()
         Me.numNotificationWidth = New System.Windows.Forms.NumericUpDown()
@@ -130,31 +159,7 @@ Partial Class FrmMain
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShortcutsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ttIconTooltip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.colorPickerMetaForeColor = New ElaColorChooser.ElaColorPicker()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.reminder_id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_type = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_repeat_max = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_repeat_elapsed = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_status = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_interval = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_daily = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_specific_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_created_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_updated_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_deleted_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_started_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_notified_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reminder_next_notify_time = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.notification_duration = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.notification_sound = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.notification_message = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.notification_font = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.notification_backcolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.notification_forecolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.notification_meta_forecolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.notification_width = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.notification_height = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ttFieldInfoTooltip = New System.Windows.Forms.ToolTip(Me.components)
         Me.contextMenuForTrayIcon.SuspendLayout()
         Me.ssReminderStatusBar.SuspendLayout()
         CType(Me.dgReminderDetails, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -265,30 +270,30 @@ Partial Class FrmMain
         Me.dgReminderDetails.AllowUserToAddRows = False
         Me.dgReminderDetails.AllowUserToDeleteRows = False
         Me.dgReminderDetails.AllowUserToOrderColumns = True
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.dgReminderDetails.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle27.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.dgReminderDetails.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle27
         Me.dgReminderDetails.BackgroundColor = System.Drawing.Color.White
         Me.dgReminderDetails.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.dgReminderDetails.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical
         Me.dgReminderDetails.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgReminderDetails.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle28.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle28.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle28.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgReminderDetails.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle28
         Me.dgReminderDetails.ColumnHeadersHeight = 65
-        Me.dgReminderDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.reminder_id, Me.reminder_type, Me.reminder_repeat_max, Me.reminder_repeat_elapsed, Me.reminder_status, Me.reminder_interval, Me.reminder_daily, Me.reminder_specific_time, Me.reminder_created_time, Me.reminder_updated_time, Me.reminder_deleted_time, Me.reminder_started_time, Me.reminder_notified_time, Me.reminder_next_notify_time, Me.notification_duration, Me.notification_sound, Me.notification_message, Me.notification_font, Me.notification_backcolor, Me.notification_forecolor, Me.notification_meta_forecolor, Me.notification_width, Me.notification_height})
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.LightSteelBlue
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.SteelBlue
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgReminderDetails.DefaultCellStyle = DataGridViewCellStyle11
+        Me.dgReminderDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.reminder_id, Me.reminder_type, Me.reminder_repeat_max, Me.reminder_repeat_elapsed, Me.reminder_status, Me.reminder_interval, Me.reminder_daily, Me.reminder_specific_time, Me.reminder_created_time, Me.reminder_updated_time, Me.reminder_deleted_time, Me.reminder_started_time, Me.reminder_notified_time, Me.reminder_next_notify_time, Me.notification_duration, Me.notification_sound, Me.notification_message, Me.notification_font, Me.notification_backcolor, Me.notification_forecolor, Me.notification_meta_font, Me.notification_meta_forecolor, Me.notification_width, Me.notification_height})
+        DataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle37.BackColor = System.Drawing.Color.LightSteelBlue
+        DataGridViewCellStyle37.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle37.ForeColor = System.Drawing.Color.SteelBlue
+        DataGridViewCellStyle37.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle37.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgReminderDetails.DefaultCellStyle = DataGridViewCellStyle37
         Me.dgReminderDetails.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgReminderDetails.EnableHeadersVisualStyles = False
         Me.dgReminderDetails.GridColor = System.Drawing.Color.DarkGray
@@ -297,23 +302,235 @@ Partial Class FrmMain
         Me.dgReminderDetails.Name = "dgReminderDetails"
         Me.dgReminderDetails.ReadOnly = True
         Me.dgReminderDetails.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgReminderDetails.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle38.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgReminderDetails.RowHeadersDefaultCellStyle = DataGridViewCellStyle38
         Me.dgReminderDetails.RowHeadersVisible = False
-        DataGridViewCellStyle13.BackColor = System.Drawing.Color.Lavender
-        DataGridViewCellStyle13.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!)
-        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.Teal
-        Me.dgReminderDetails.RowsDefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle39.BackColor = System.Drawing.Color.Lavender
+        DataGridViewCellStyle39.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!)
+        DataGridViewCellStyle39.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle39.SelectionBackColor = System.Drawing.Color.Teal
+        Me.dgReminderDetails.RowsDefaultCellStyle = DataGridViewCellStyle39
         Me.dgReminderDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgReminderDetails.Size = New System.Drawing.Size(1438, 247)
         Me.dgReminderDetails.TabIndex = 0
+        '
+        'reminder_id
+        '
+        Me.reminder_id.DataPropertyName = "reminder_id"
+        Me.reminder_id.Frozen = True
+        Me.reminder_id.HeaderText = "Id"
+        Me.reminder_id.Name = "reminder_id"
+        Me.reminder_id.ReadOnly = True
+        Me.reminder_id.Width = 50
+        '
+        'reminder_type
+        '
+        Me.reminder_type.DataPropertyName = "reminder_type"
+        Me.reminder_type.Frozen = True
+        Me.reminder_type.HeaderText = "Type"
+        Me.reminder_type.Name = "reminder_type"
+        Me.reminder_type.ReadOnly = True
+        '
+        'reminder_repeat_max
+        '
+        Me.reminder_repeat_max.DataPropertyName = "reminder_repeat_max"
+        Me.reminder_repeat_max.HeaderText = "Repeat"
+        Me.reminder_repeat_max.Name = "reminder_repeat_max"
+        Me.reminder_repeat_max.ReadOnly = True
+        '
+        'reminder_repeat_elapsed
+        '
+        Me.reminder_repeat_elapsed.DataPropertyName = "reminder_repeat_elapsed"
+        Me.reminder_repeat_elapsed.HeaderText = "Repeated"
+        Me.reminder_repeat_elapsed.Name = "reminder_repeat_elapsed"
+        Me.reminder_repeat_elapsed.ReadOnly = True
+        '
+        'reminder_status
+        '
+        Me.reminder_status.DataPropertyName = "reminder_status"
+        Me.reminder_status.HeaderText = "Status"
+        Me.reminder_status.Name = "reminder_status"
+        Me.reminder_status.ReadOnly = True
+        Me.reminder_status.Width = 90
+        '
+        'reminder_interval
+        '
+        Me.reminder_interval.DataPropertyName = "reminder_interval"
+        DataGridViewCellStyle29.NullValue = "none"
+        Me.reminder_interval.DefaultCellStyle = DataGridViewCellStyle29
+        Me.reminder_interval.HeaderText = "Interval"
+        Me.reminder_interval.Name = "reminder_interval"
+        Me.reminder_interval.ReadOnly = True
+        Me.reminder_interval.Width = 170
+        '
+        'reminder_daily
+        '
+        Me.reminder_daily.DataPropertyName = "reminder_daily"
+        Me.reminder_daily.HeaderText = "Daily"
+        Me.reminder_daily.Name = "reminder_daily"
+        Me.reminder_daily.ReadOnly = True
+        Me.reminder_daily.Width = 280
+        '
+        'reminder_specific_time
+        '
+        Me.reminder_specific_time.DataPropertyName = "reminder_specific_time"
+        DataGridViewCellStyle30.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle30.NullValue = "none"
+        Me.reminder_specific_time.DefaultCellStyle = DataGridViewCellStyle30
+        Me.reminder_specific_time.HeaderText = "Specific"
+        Me.reminder_specific_time.Name = "reminder_specific_time"
+        Me.reminder_specific_time.ReadOnly = True
+        Me.reminder_specific_time.Width = 165
+        '
+        'reminder_created_time
+        '
+        Me.reminder_created_time.DataPropertyName = "reminder_created_time"
+        DataGridViewCellStyle31.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle31.NullValue = "none"
+        Me.reminder_created_time.DefaultCellStyle = DataGridViewCellStyle31
+        Me.reminder_created_time.HeaderText = "Created"
+        Me.reminder_created_time.Name = "reminder_created_time"
+        Me.reminder_created_time.ReadOnly = True
+        Me.reminder_created_time.Visible = False
+        Me.reminder_created_time.Width = 165
+        '
+        'reminder_updated_time
+        '
+        Me.reminder_updated_time.DataPropertyName = "reminder_updated_time"
+        DataGridViewCellStyle32.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle32.NullValue = "none"
+        Me.reminder_updated_time.DefaultCellStyle = DataGridViewCellStyle32
+        Me.reminder_updated_time.HeaderText = "Updated"
+        Me.reminder_updated_time.Name = "reminder_updated_time"
+        Me.reminder_updated_time.ReadOnly = True
+        Me.reminder_updated_time.Visible = False
+        Me.reminder_updated_time.Width = 165
+        '
+        'reminder_deleted_time
+        '
+        Me.reminder_deleted_time.DataPropertyName = "reminder_deleted_time"
+        Me.reminder_deleted_time.HeaderText = "Deleted"
+        Me.reminder_deleted_time.Name = "reminder_deleted_time"
+        Me.reminder_deleted_time.ReadOnly = True
+        Me.reminder_deleted_time.Visible = False
+        '
+        'reminder_started_time
+        '
+        Me.reminder_started_time.DataPropertyName = "reminder_started_time"
+        DataGridViewCellStyle33.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle33.NullValue = "none"
+        Me.reminder_started_time.DefaultCellStyle = DataGridViewCellStyle33
+        Me.reminder_started_time.HeaderText = "Started"
+        Me.reminder_started_time.Name = "reminder_started_time"
+        Me.reminder_started_time.ReadOnly = True
+        Me.reminder_started_time.Width = 165
+        '
+        'reminder_notified_time
+        '
+        Me.reminder_notified_time.DataPropertyName = "reminder_notified_time"
+        DataGridViewCellStyle34.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle34.NullValue = "none"
+        Me.reminder_notified_time.DefaultCellStyle = DataGridViewCellStyle34
+        Me.reminder_notified_time.HeaderText = "Notified"
+        Me.reminder_notified_time.Name = "reminder_notified_time"
+        Me.reminder_notified_time.ReadOnly = True
+        Me.reminder_notified_time.Width = 165
+        '
+        'reminder_next_notify_time
+        '
+        Me.reminder_next_notify_time.DataPropertyName = "reminder_next_notify_time"
+        DataGridViewCellStyle35.Format = "dd-MMM-yy hh:mm:sstt"
+        DataGridViewCellStyle35.NullValue = "none"
+        Me.reminder_next_notify_time.DefaultCellStyle = DataGridViewCellStyle35
+        Me.reminder_next_notify_time.HeaderText = "Next Notify"
+        Me.reminder_next_notify_time.Name = "reminder_next_notify_time"
+        Me.reminder_next_notify_time.ReadOnly = True
+        Me.reminder_next_notify_time.Width = 165
+        '
+        'notification_duration
+        '
+        Me.notification_duration.DataPropertyName = "notification_duration"
+        DataGridViewCellStyle36.Format = "0 secs"
+        DataGridViewCellStyle36.NullValue = "0 secs"
+        Me.notification_duration.DefaultCellStyle = DataGridViewCellStyle36
+        Me.notification_duration.HeaderText = "Notification Duration"
+        Me.notification_duration.Name = "notification_duration"
+        Me.notification_duration.ReadOnly = True
+        Me.notification_duration.Width = 90
+        '
+        'notification_sound
+        '
+        Me.notification_sound.DataPropertyName = "notification_sound"
+        Me.notification_sound.HeaderText = "Notification Sound"
+        Me.notification_sound.Name = "notification_sound"
+        Me.notification_sound.ReadOnly = True
+        '
+        'notification_message
+        '
+        Me.notification_message.DataPropertyName = "notification_message"
+        Me.notification_message.HeaderText = "Notification Message"
+        Me.notification_message.Name = "notification_message"
+        Me.notification_message.ReadOnly = True
+        Me.notification_message.Width = 200
+        '
+        'notification_font
+        '
+        Me.notification_font.DataPropertyName = "notification_font"
+        Me.notification_font.HeaderText = "Notification Font"
+        Me.notification_font.Name = "notification_font"
+        Me.notification_font.ReadOnly = True
+        '
+        'notification_backcolor
+        '
+        Me.notification_backcolor.DataPropertyName = "notification_backcolor"
+        Me.notification_backcolor.HeaderText = "Notification BackColor"
+        Me.notification_backcolor.Name = "notification_backcolor"
+        Me.notification_backcolor.ReadOnly = True
+        Me.notification_backcolor.Width = 90
+        '
+        'notification_forecolor
+        '
+        Me.notification_forecolor.DataPropertyName = "notification_forecolor"
+        Me.notification_forecolor.HeaderText = "Notification ForeColor"
+        Me.notification_forecolor.Name = "notification_forecolor"
+        Me.notification_forecolor.ReadOnly = True
+        Me.notification_forecolor.Width = 90
+        '
+        'notification_meta_font
+        '
+        Me.notification_meta_font.DataPropertyName = "notification_meta_font"
+        Me.notification_meta_font.HeaderText = "Notification Info Font"
+        Me.notification_meta_font.Name = "notification_meta_font"
+        Me.notification_meta_font.ReadOnly = True
+        '
+        'notification_meta_forecolor
+        '
+        Me.notification_meta_forecolor.DataPropertyName = "notification_meta_forecolor"
+        Me.notification_meta_forecolor.HeaderText = "Notification Info Color"
+        Me.notification_meta_forecolor.Name = "notification_meta_forecolor"
+        Me.notification_meta_forecolor.ReadOnly = True
+        '
+        'notification_width
+        '
+        Me.notification_width.DataPropertyName = "notification_width"
+        Me.notification_width.HeaderText = "Notification Width"
+        Me.notification_width.Name = "notification_width"
+        Me.notification_width.ReadOnly = True
+        Me.notification_width.Width = 90
+        '
+        'notification_height
+        '
+        Me.notification_height.DataPropertyName = "notification_height"
+        Me.notification_height.HeaderText = "Notification Height"
+        Me.notification_height.Name = "notification_height"
+        Me.notification_height.ReadOnly = True
+        Me.notification_height.Width = 90
         '
         'radReminderTypeSpecific
         '
@@ -406,7 +623,7 @@ Partial Class FrmMain
         Me.btnCloneReminder.Size = New System.Drawing.Size(48, 48)
         Me.btnCloneReminder.TabIndex = 51
         Me.btnCloneReminder.TabStop = False
-        Me.ttIconTooltip.SetToolTip(Me.btnCloneReminder, "Clone")
+        Me.ttIconTooltip.SetToolTip(Me.btnCloneReminder, "Clone (Ctrl+L)")
         '
         'lblIconPlace5
         '
@@ -478,7 +695,7 @@ Partial Class FrmMain
         Me.btnEditReminder.Size = New System.Drawing.Size(48, 48)
         Me.btnEditReminder.TabIndex = 45
         Me.btnEditReminder.TabStop = False
-        Me.ttIconTooltip.SetToolTip(Me.btnEditReminder, "Edit")
+        Me.ttIconTooltip.SetToolTip(Me.btnEditReminder, "Edit (Ctrl+E)")
         '
         'btnAddReminder
         '
@@ -491,7 +708,7 @@ Partial Class FrmMain
         Me.btnAddReminder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.btnAddReminder.TabIndex = 41
         Me.btnAddReminder.TabStop = False
-        Me.ttIconTooltip.SetToolTip(Me.btnAddReminder, "New")
+        Me.ttIconTooltip.SetToolTip(Me.btnAddReminder, "New (Ctrl + N)")
         '
         'btnClearScreen
         '
@@ -503,7 +720,7 @@ Partial Class FrmMain
         Me.btnClearScreen.Size = New System.Drawing.Size(48, 48)
         Me.btnClearScreen.TabIndex = 42
         Me.btnClearScreen.TabStop = False
-        Me.ttIconTooltip.SetToolTip(Me.btnClearScreen, "Clear")
+        Me.ttIconTooltip.SetToolTip(Me.btnClearScreen, "Clear (Esc)")
         '
         'btnStartStopReminder
         '
@@ -515,7 +732,7 @@ Partial Class FrmMain
         Me.btnStartStopReminder.Size = New System.Drawing.Size(48, 48)
         Me.btnStartStopReminder.TabIndex = 43
         Me.btnStartStopReminder.TabStop = False
-        Me.ttIconTooltip.SetToolTip(Me.btnStartStopReminder, "Start")
+        Me.ttIconTooltip.SetToolTip(Me.btnStartStopReminder, "Start (Ctrl+R)")
         '
         'btnDeleteReminder
         '
@@ -527,7 +744,7 @@ Partial Class FrmMain
         Me.btnDeleteReminder.Size = New System.Drawing.Size(48, 48)
         Me.btnDeleteReminder.TabIndex = 44
         Me.btnDeleteReminder.TabStop = False
-        Me.ttIconTooltip.SetToolTip(Me.btnDeleteReminder, "Delete")
+        Me.ttIconTooltip.SetToolTip(Me.btnDeleteReminder, "Delete (Ctrl+D)")
         '
         'scMainContentContainer
         '
@@ -723,6 +940,7 @@ Partial Class FrmMain
         Me.grpReminderTypeInterval.TabIndex = 0
         Me.grpReminderTypeInterval.TabStop = False
         Me.grpReminderTypeInterval.Text = "Interval Duration"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.grpReminderTypeInterval, "Remind on each interval expiry for given repeat count")
         Me.grpReminderTypeInterval.Visible = False
         '
         'Label19
@@ -755,6 +973,7 @@ Partial Class FrmMain
         Me.numHours.Size = New System.Drawing.Size(76, 26)
         Me.numHours.TabIndex = 0
         Me.numHours.Tag = "0"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.numHours, "Number of Hours. Min:0, Max: 59")
         '
         'numSeconds
         '
@@ -766,6 +985,7 @@ Partial Class FrmMain
         Me.numSeconds.Size = New System.Drawing.Size(76, 26)
         Me.numSeconds.TabIndex = 2
         Me.numSeconds.Tag = "0"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.numSeconds, "Number of Seconds. Min:0, Max: 59")
         '
         'numMinutes
         '
@@ -777,6 +997,7 @@ Partial Class FrmMain
         Me.numMinutes.Size = New System.Drawing.Size(76, 26)
         Me.numMinutes.TabIndex = 1
         Me.numMinutes.Tag = "0"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.numMinutes, "Number of Minutes. Min:0, Max: 59")
         '
         'Label17
         '
@@ -819,6 +1040,7 @@ Partial Class FrmMain
         Me.panelRepeatContent.Name = "panelRepeatContent"
         Me.panelRepeatContent.Size = New System.Drawing.Size(174, 100)
         Me.panelRepeatContent.TabIndex = 0
+        Me.ttFieldInfoTooltip.SetToolTip(Me.panelRepeatContent, "How many times repeat the reminder")
         '
         'numRepeat
         '
@@ -865,6 +1087,7 @@ Partial Class FrmMain
         Me.panelReminderTypeDailyContent.Name = "panelReminderTypeDailyContent"
         Me.panelReminderTypeDailyContent.Size = New System.Drawing.Size(352, 217)
         Me.panelReminderTypeDailyContent.TabIndex = 0
+        Me.ttFieldInfoTooltip.SetToolTip(Me.panelReminderTypeDailyContent, "Remind on specified days on each week for given num of repeats")
         '
         'lvDaily
         '
@@ -913,6 +1136,7 @@ Partial Class FrmMain
         Me.panelReminderTypeSpecificContent.Name = "panelReminderTypeSpecificContent"
         Me.panelReminderTypeSpecificContent.Size = New System.Drawing.Size(352, 100)
         Me.panelReminderTypeSpecificContent.TabIndex = 0
+        Me.ttFieldInfoTooltip.SetToolTip(Me.panelReminderTypeSpecificContent, "Remind only once on given specific time")
         '
         'dtSpecific
         '
@@ -947,6 +1171,7 @@ Partial Class FrmMain
         'grpNotificationSettings
         '
         Me.grpNotificationSettings.BackColor = System.Drawing.Color.Transparent
+        Me.grpNotificationSettings.Controls.Add(Me.Label6)
         Me.grpNotificationSettings.Controls.Add(Me.Label14)
         Me.grpNotificationSettings.Controls.Add(Me.Label5)
         Me.grpNotificationSettings.Controls.Add(Me.panelNotificationSettingsContent)
@@ -966,18 +1191,43 @@ Partial Class FrmMain
         Me.grpNotificationSettings.TabStop = False
         Me.grpNotificationSettings.Text = "Notification Popup Settings"
         '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
+        Me.Label6.Location = New System.Drawing.Point(32, 342)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(74, 20)
+        Me.Label6.TabIndex = 68
+        Me.Label6.Text = "Info Font"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.Label6, "The topbar meta data text font in the notification popup")
+        '
         'Label14
         '
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.Label14.Location = New System.Drawing.Point(42, 45)
+        Me.Label14.Location = New System.Drawing.Point(30, 45)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(70, 20)
         Me.Label14.TabIndex = 51
         Me.Label14.Text = "Duration"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.Label14, "How long the notification popup should be visible")
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
+        Me.Label5.Location = New System.Drawing.Point(30, 385)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(78, 20)
+        Me.Label5.TabIndex = 67
+        Me.Label5.Text = "Info Color"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.Label5, "The topbar meta data text color in the notification popup")
         '
         'panelNotificationSettingsContent
         '
+        Me.panelNotificationSettingsContent.Controls.Add(Me.btnShowNotificationMetaFontDialog)
+        Me.panelNotificationSettingsContent.Controls.Add(Me.txtNotificaitonMetaFont)
         Me.panelNotificationSettingsContent.Controls.Add(Me.colorPickerMetaForeColor)
         Me.panelNotificationSettingsContent.Controls.Add(Me.btnShowNotificationFontDialog)
         Me.panelNotificationSettingsContent.Controls.Add(Me.numNotificationHeight)
@@ -994,12 +1244,48 @@ Partial Class FrmMain
         Me.panelNotificationSettingsContent.Size = New System.Drawing.Size(459, 475)
         Me.panelNotificationSettingsContent.TabIndex = 0
         '
+        'btnShowNotificationMetaFontDialog
+        '
+        Me.btnShowNotificationMetaFontDialog.FlatAppearance.BorderSize = 0
+        Me.btnShowNotificationMetaFontDialog.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.btnShowNotificationMetaFontDialog.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.0!)
+        Me.btnShowNotificationMetaFontDialog.Location = New System.Drawing.Point(398, 309)
+        Me.btnShowNotificationMetaFontDialog.Margin = New System.Windows.Forms.Padding(0)
+        Me.btnShowNotificationMetaFontDialog.Name = "btnShowNotificationMetaFontDialog"
+        Me.btnShowNotificationMetaFontDialog.Size = New System.Drawing.Size(31, 30)
+        Me.btnShowNotificationMetaFontDialog.TabIndex = 68
+        Me.btnShowNotificationMetaFontDialog.Text = "..."
+        Me.btnShowNotificationMetaFontDialog.UseVisualStyleBackColor = True
+        '
+        'txtNotificaitonMetaFont
+        '
+        Me.txtNotificaitonMetaFont.BackColor = System.Drawing.Color.White
+        Me.txtNotificaitonMetaFont.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
+        Me.txtNotificaitonMetaFont.Location = New System.Drawing.Point(23, 309)
+        Me.txtNotificaitonMetaFont.Name = "txtNotificaitonMetaFont"
+        Me.txtNotificaitonMetaFont.ReadOnly = True
+        Me.txtNotificaitonMetaFont.Size = New System.Drawing.Size(406, 30)
+        Me.txtNotificaitonMetaFont.TabIndex = 67
+        Me.txtNotificaitonMetaFont.Tag = "Comic Sans MS, 12pt, style=Regular"
+        Me.txtNotificaitonMetaFont.Text = "Comic Sans MS, 12pt, style=Regular"
+        '
+        'colorPickerMetaForeColor
+        '
+        Me.colorPickerMetaForeColor.Appearance = ElaColorChooser.ElaColorPicker.ColorPickerAppearance.EditableComboBox
+        Me.colorPickerMetaForeColor.Color = System.Drawing.Color.White
+        Me.colorPickerMetaForeColor.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
+        Me.colorPickerMetaForeColor.Location = New System.Drawing.Point(23, 353)
+        Me.colorPickerMetaForeColor.Name = "colorPickerMetaForeColor"
+        Me.colorPickerMetaForeColor.Size = New System.Drawing.Size(406, 28)
+        Me.colorPickerMetaForeColor.TabIndex = 66
+        Me.colorPickerMetaForeColor.Tag = "Brown"
+        '
         'btnShowNotificationFontDialog
         '
         Me.btnShowNotificationFontDialog.FlatAppearance.BorderSize = 0
         Me.btnShowNotificationFontDialog.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.btnShowNotificationFontDialog.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.0!)
-        Me.btnShowNotificationFontDialog.Location = New System.Drawing.Point(398, 207)
+        Me.btnShowNotificationFontDialog.Location = New System.Drawing.Point(398, 186)
         Me.btnShowNotificationFontDialog.Margin = New System.Windows.Forms.Padding(0)
         Me.btnShowNotificationFontDialog.Name = "btnShowNotificationFontDialog"
         Me.btnShowNotificationFontDialog.Size = New System.Drawing.Size(31, 30)
@@ -1022,7 +1308,7 @@ Partial Class FrmMain
         'numNotificationWidth
         '
         Me.numNotificationWidth.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.numNotificationWidth.Location = New System.Drawing.Point(23, 391)
+        Me.numNotificationWidth.Location = New System.Drawing.Point(23, 394)
         Me.numNotificationWidth.Maximum = New Decimal(New Integer() {2000, 0, 0, 0})
         Me.numNotificationWidth.Minimum = New Decimal(New Integer() {100, 0, 0, 0})
         Me.numNotificationWidth.Name = "numNotificationWidth"
@@ -1036,7 +1322,7 @@ Partial Class FrmMain
         Me.cmbNotificationSound.DisplayMember = "Value"
         Me.cmbNotificationSound.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
         Me.cmbNotificationSound.FormattingEnabled = True
-        Me.cmbNotificationSound.Location = New System.Drawing.Point(23, 60)
+        Me.cmbNotificationSound.Location = New System.Drawing.Point(23, 52)
         Me.cmbNotificationSound.Name = "cmbNotificationSound"
         Me.cmbNotificationSound.Size = New System.Drawing.Size(367, 28)
         Me.cmbNotificationSound.TabIndex = 1
@@ -1051,9 +1337,9 @@ Partial Class FrmMain
         Me.btnPlaySound.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnPlaySound.Font = New System.Drawing.Font("Consolas", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPlaySound.ForeColor = System.Drawing.Color.White
-        Me.btnPlaySound.Location = New System.Drawing.Point(391, 55)
+        Me.btnPlaySound.Location = New System.Drawing.Point(391, 47)
         Me.btnPlaySound.Name = "btnPlaySound"
-        Me.btnPlaySound.Size = New System.Drawing.Size(41, 38)
+        Me.btnPlaySound.Size = New System.Drawing.Size(41, 37)
         Me.btnPlaySound.TabIndex = 2
         Me.btnPlaySound.UseVisualStyleBackColor = False
         '
@@ -1062,7 +1348,7 @@ Partial Class FrmMain
         Me.colorPickerForeColor.Appearance = ElaColorChooser.ElaColorPicker.ColorPickerAppearance.EditableComboBox
         Me.colorPickerForeColor.Color = System.Drawing.Color.White
         Me.colorPickerForeColor.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.colorPickerForeColor.Location = New System.Drawing.Point(23, 300)
+        Me.colorPickerForeColor.Location = New System.Drawing.Point(23, 269)
         Me.colorPickerForeColor.Name = "colorPickerForeColor"
         Me.colorPickerForeColor.Size = New System.Drawing.Size(406, 28)
         Me.colorPickerForeColor.TabIndex = 7
@@ -1071,7 +1357,7 @@ Partial Class FrmMain
         'txtNotificationMessage
         '
         Me.txtNotificationMessage.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.txtNotificationMessage.Location = New System.Drawing.Point(23, 104)
+        Me.txtNotificationMessage.Location = New System.Drawing.Point(23, 91)
         Me.txtNotificationMessage.Name = "txtNotificationMessage"
         Me.txtNotificationMessage.Size = New System.Drawing.Size(406, 86)
         Me.txtNotificationMessage.TabIndex = 3
@@ -1083,7 +1369,7 @@ Partial Class FrmMain
         Me.colorPickerBackColor.Appearance = ElaColorChooser.ElaColorPicker.ColorPickerAppearance.EditableComboBox
         Me.colorPickerBackColor.Color = System.Drawing.Color.DeepPink
         Me.colorPickerBackColor.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.colorPickerBackColor.Location = New System.Drawing.Point(23, 255)
+        Me.colorPickerBackColor.Location = New System.Drawing.Point(23, 227)
         Me.colorPickerBackColor.Name = "colorPickerBackColor"
         Me.colorPickerBackColor.Size = New System.Drawing.Size(406, 28)
         Me.colorPickerBackColor.TabIndex = 6
@@ -1097,7 +1383,7 @@ Partial Class FrmMain
         Me.cmbNotificationDuration.DisplayMember = "Value"
         Me.cmbNotificationDuration.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
         Me.cmbNotificationDuration.FormattingEnabled = True
-        Me.cmbNotificationDuration.Location = New System.Drawing.Point(23, 16)
+        Me.cmbNotificationDuration.Location = New System.Drawing.Point(23, 12)
         Me.cmbNotificationDuration.MaxDropDownItems = 20
         Me.cmbNotificationDuration.Name = "cmbNotificationDuration"
         Me.cmbNotificationDuration.Size = New System.Drawing.Size(406, 28)
@@ -1108,7 +1394,7 @@ Partial Class FrmMain
         '
         Me.txtNotificaitonFont.BackColor = System.Drawing.Color.White
         Me.txtNotificaitonFont.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.txtNotificaitonFont.Location = New System.Drawing.Point(23, 207)
+        Me.txtNotificaitonFont.Location = New System.Drawing.Point(23, 186)
         Me.txtNotificaitonFont.Name = "txtNotificaitonFont"
         Me.txtNotificaitonFont.ReadOnly = True
         Me.txtNotificaitonFont.Size = New System.Drawing.Size(406, 30)
@@ -1120,71 +1406,78 @@ Partial Class FrmMain
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.Label9.Location = New System.Drawing.Point(42, 239)
+        Me.Label9.Location = New System.Drawing.Point(30, 218)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(42, 20)
+        Me.Label9.Size = New System.Drawing.Size(111, 20)
         Me.Label9.TabIndex = 54
-        Me.Label9.Text = "Font"
+        Me.Label9.Text = "Message Font"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.Label9, "Font for the notification message text and notification topbar text")
         '
         'Label13
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.Label13.Location = New System.Drawing.Point(42, 160)
+        Me.Label13.Location = New System.Drawing.Point(30, 144)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(74, 20)
         Me.Label13.TabIndex = 52
         Me.Label13.Text = "Message"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.Label13, "Text to be displayed in notification popup.")
         '
         'Label7
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.Label7.Location = New System.Drawing.Point(42, 88)
+        Me.Label7.Location = New System.Drawing.Point(30, 87)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(56, 20)
         Me.Label7.TabIndex = 56
         Me.Label7.Text = "Sound"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.Label7, "Sound to play when the notification pops up.")
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.Label1.Location = New System.Drawing.Point(42, 337)
+        Me.Label1.Location = New System.Drawing.Point(30, 302)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(80, 20)
         Me.Label1.TabIndex = 58
         Me.Label1.Text = "Text Color"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.Label1, "The message text color of the notification popup")
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.Label4.Location = New System.Drawing.Point(42, 464)
+        Me.Label4.Location = New System.Drawing.Point(30, 464)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(56, 20)
         Me.Label4.TabIndex = 65
         Me.Label4.Text = "Height"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.Label4, "The height (in pixel) of the notification popup")
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.Label3.Location = New System.Drawing.Point(42, 426)
+        Me.Label3.Location = New System.Drawing.Point(30, 425)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(50, 20)
         Me.Label3.TabIndex = 63
         Me.Label3.Text = "Width"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.Label3, "The width (in pixel) of the notification popup")
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.Label2.Location = New System.Drawing.Point(42, 291)
+        Me.Label2.Location = New System.Drawing.Point(30, 261)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(86, 20)
         Me.Label2.TabIndex = 57
         Me.Label2.Text = "Back Color"
+        Me.ttFieldInfoTooltip.SetToolTip(Me.Label2, "The background color of the notification popup")
         '
         'lblReminderContentTipRight
         '
@@ -1296,231 +1589,15 @@ Partial Class FrmMain
         Me.ttIconTooltip.ReshowDelay = 20
         Me.ttIconTooltip.ShowAlways = True
         '
-        'colorPickerMetaForeColor
+        'ttFieldInfoTooltip
         '
-        Me.colorPickerMetaForeColor.Appearance = ElaColorChooser.ElaColorPicker.ColorPickerAppearance.EditableComboBox
-        Me.colorPickerMetaForeColor.Color = System.Drawing.Color.White
-        Me.colorPickerMetaForeColor.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.colorPickerMetaForeColor.Location = New System.Drawing.Point(23, 346)
-        Me.colorPickerMetaForeColor.Name = "colorPickerMetaForeColor"
-        Me.colorPickerMetaForeColor.Size = New System.Drawing.Size(406, 28)
-        Me.colorPickerMetaForeColor.TabIndex = 66
-        Me.colorPickerMetaForeColor.Tag = "Brown"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.Label5.Location = New System.Drawing.Point(42, 381)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(86, 20)
-        Me.Label5.TabIndex = 67
-        Me.Label5.Text = "Meta Color"
-        '
-        'reminder_id
-        '
-        Me.reminder_id.DataPropertyName = "reminder_id"
-        Me.reminder_id.Frozen = True
-        Me.reminder_id.HeaderText = "Id"
-        Me.reminder_id.Name = "reminder_id"
-        Me.reminder_id.ReadOnly = True
-        Me.reminder_id.Width = 50
-        '
-        'reminder_type
-        '
-        Me.reminder_type.DataPropertyName = "reminder_type"
-        Me.reminder_type.Frozen = True
-        Me.reminder_type.HeaderText = "Type"
-        Me.reminder_type.Name = "reminder_type"
-        Me.reminder_type.ReadOnly = True
-        '
-        'reminder_repeat_max
-        '
-        Me.reminder_repeat_max.DataPropertyName = "reminder_repeat_max"
-        Me.reminder_repeat_max.HeaderText = "Repeat"
-        Me.reminder_repeat_max.Name = "reminder_repeat_max"
-        Me.reminder_repeat_max.ReadOnly = True
-        '
-        'reminder_repeat_elapsed
-        '
-        Me.reminder_repeat_elapsed.DataPropertyName = "reminder_repeat_elapsed"
-        Me.reminder_repeat_elapsed.HeaderText = "Repeated"
-        Me.reminder_repeat_elapsed.Name = "reminder_repeat_elapsed"
-        Me.reminder_repeat_elapsed.ReadOnly = True
-        '
-        'reminder_status
-        '
-        Me.reminder_status.DataPropertyName = "reminder_status"
-        Me.reminder_status.HeaderText = "Status"
-        Me.reminder_status.Name = "reminder_status"
-        Me.reminder_status.ReadOnly = True
-        Me.reminder_status.Width = 90
-        '
-        'reminder_interval
-        '
-        Me.reminder_interval.DataPropertyName = "reminder_interval"
-        DataGridViewCellStyle3.NullValue = "none"
-        Me.reminder_interval.DefaultCellStyle = DataGridViewCellStyle3
-        Me.reminder_interval.HeaderText = "Interval"
-        Me.reminder_interval.Name = "reminder_interval"
-        Me.reminder_interval.ReadOnly = True
-        Me.reminder_interval.Width = 170
-        '
-        'reminder_daily
-        '
-        Me.reminder_daily.DataPropertyName = "reminder_daily"
-        Me.reminder_daily.HeaderText = "Daily"
-        Me.reminder_daily.Name = "reminder_daily"
-        Me.reminder_daily.ReadOnly = True
-        Me.reminder_daily.Width = 280
-        '
-        'reminder_specific_time
-        '
-        Me.reminder_specific_time.DataPropertyName = "reminder_specific_time"
-        DataGridViewCellStyle4.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle4.NullValue = "none"
-        Me.reminder_specific_time.DefaultCellStyle = DataGridViewCellStyle4
-        Me.reminder_specific_time.HeaderText = "Specific"
-        Me.reminder_specific_time.Name = "reminder_specific_time"
-        Me.reminder_specific_time.ReadOnly = True
-        Me.reminder_specific_time.Width = 165
-        '
-        'reminder_created_time
-        '
-        Me.reminder_created_time.DataPropertyName = "reminder_created_time"
-        DataGridViewCellStyle5.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle5.NullValue = "none"
-        Me.reminder_created_time.DefaultCellStyle = DataGridViewCellStyle5
-        Me.reminder_created_time.HeaderText = "Created"
-        Me.reminder_created_time.Name = "reminder_created_time"
-        Me.reminder_created_time.ReadOnly = True
-        Me.reminder_created_time.Visible = False
-        Me.reminder_created_time.Width = 165
-        '
-        'reminder_updated_time
-        '
-        Me.reminder_updated_time.DataPropertyName = "reminder_updated_time"
-        DataGridViewCellStyle6.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle6.NullValue = "none"
-        Me.reminder_updated_time.DefaultCellStyle = DataGridViewCellStyle6
-        Me.reminder_updated_time.HeaderText = "Updated"
-        Me.reminder_updated_time.Name = "reminder_updated_time"
-        Me.reminder_updated_time.ReadOnly = True
-        Me.reminder_updated_time.Visible = False
-        Me.reminder_updated_time.Width = 165
-        '
-        'reminder_deleted_time
-        '
-        Me.reminder_deleted_time.DataPropertyName = "reminder_deleted_time"
-        Me.reminder_deleted_time.HeaderText = "Deleted"
-        Me.reminder_deleted_time.Name = "reminder_deleted_time"
-        Me.reminder_deleted_time.ReadOnly = True
-        Me.reminder_deleted_time.Visible = False
-        '
-        'reminder_started_time
-        '
-        Me.reminder_started_time.DataPropertyName = "reminder_started_time"
-        DataGridViewCellStyle7.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle7.NullValue = "none"
-        Me.reminder_started_time.DefaultCellStyle = DataGridViewCellStyle7
-        Me.reminder_started_time.HeaderText = "Started"
-        Me.reminder_started_time.Name = "reminder_started_time"
-        Me.reminder_started_time.ReadOnly = True
-        Me.reminder_started_time.Width = 165
-        '
-        'reminder_notified_time
-        '
-        Me.reminder_notified_time.DataPropertyName = "reminder_notified_time"
-        DataGridViewCellStyle8.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle8.NullValue = "none"
-        Me.reminder_notified_time.DefaultCellStyle = DataGridViewCellStyle8
-        Me.reminder_notified_time.HeaderText = "Notified"
-        Me.reminder_notified_time.Name = "reminder_notified_time"
-        Me.reminder_notified_time.ReadOnly = True
-        Me.reminder_notified_time.Width = 165
-        '
-        'reminder_next_notify_time
-        '
-        Me.reminder_next_notify_time.DataPropertyName = "reminder_next_notify_time"
-        DataGridViewCellStyle9.Format = "dd-MMM-yy hh:mm:sstt"
-        DataGridViewCellStyle9.NullValue = "none"
-        Me.reminder_next_notify_time.DefaultCellStyle = DataGridViewCellStyle9
-        Me.reminder_next_notify_time.HeaderText = "Next Notify"
-        Me.reminder_next_notify_time.Name = "reminder_next_notify_time"
-        Me.reminder_next_notify_time.ReadOnly = True
-        Me.reminder_next_notify_time.Width = 165
-        '
-        'notification_duration
-        '
-        Me.notification_duration.DataPropertyName = "notification_duration"
-        DataGridViewCellStyle10.Format = "0 secs"
-        DataGridViewCellStyle10.NullValue = "0 secs"
-        Me.notification_duration.DefaultCellStyle = DataGridViewCellStyle10
-        Me.notification_duration.HeaderText = "Notification Duration"
-        Me.notification_duration.Name = "notification_duration"
-        Me.notification_duration.ReadOnly = True
-        Me.notification_duration.Width = 90
-        '
-        'notification_sound
-        '
-        Me.notification_sound.DataPropertyName = "notification_sound"
-        Me.notification_sound.HeaderText = "Notification Sound"
-        Me.notification_sound.Name = "notification_sound"
-        Me.notification_sound.ReadOnly = True
-        '
-        'notification_message
-        '
-        Me.notification_message.DataPropertyName = "notification_message"
-        Me.notification_message.HeaderText = "Notification Message"
-        Me.notification_message.Name = "notification_message"
-        Me.notification_message.ReadOnly = True
-        Me.notification_message.Width = 200
-        '
-        'notification_font
-        '
-        Me.notification_font.DataPropertyName = "notification_font"
-        Me.notification_font.HeaderText = "Notification Font"
-        Me.notification_font.Name = "notification_font"
-        Me.notification_font.ReadOnly = True
-        '
-        'notification_backcolor
-        '
-        Me.notification_backcolor.DataPropertyName = "notification_backcolor"
-        Me.notification_backcolor.HeaderText = "Notification BackColor"
-        Me.notification_backcolor.Name = "notification_backcolor"
-        Me.notification_backcolor.ReadOnly = True
-        Me.notification_backcolor.Width = 90
-        '
-        'notification_forecolor
-        '
-        Me.notification_forecolor.DataPropertyName = "notification_forecolor"
-        Me.notification_forecolor.HeaderText = "Notification ForeColor"
-        Me.notification_forecolor.Name = "notification_forecolor"
-        Me.notification_forecolor.ReadOnly = True
-        Me.notification_forecolor.Width = 90
-        '
-        'notification_meta_forecolor
-        '
-        Me.notification_meta_forecolor.DataPropertyName = "notification_meta_forecolor"
-        Me.notification_meta_forecolor.HeaderText = "Notification Meta Color"
-        Me.notification_meta_forecolor.Name = "notification_meta_forecolor"
-        Me.notification_meta_forecolor.ReadOnly = True
-        '
-        'notification_width
-        '
-        Me.notification_width.DataPropertyName = "notification_width"
-        Me.notification_width.HeaderText = "Notification Width"
-        Me.notification_width.Name = "notification_width"
-        Me.notification_width.ReadOnly = True
-        Me.notification_width.Width = 90
-        '
-        'notification_height
-        '
-        Me.notification_height.DataPropertyName = "notification_height"
-        Me.notification_height.HeaderText = "Notification Height"
-        Me.notification_height.Name = "notification_height"
-        Me.notification_height.ReadOnly = True
-        Me.notification_height.Width = 90
+        Me.ttFieldInfoTooltip.AutomaticDelay = 100
+        Me.ttFieldInfoTooltip.AutoPopDelay = 10000
+        Me.ttFieldInfoTooltip.BackColor = System.Drawing.Color.Purple
+        Me.ttFieldInfoTooltip.ForeColor = System.Drawing.Color.White
+        Me.ttFieldInfoTooltip.InitialDelay = 0
+        Me.ttFieldInfoTooltip.ReshowDelay = 20
+        Me.ttFieldInfoTooltip.ShowAlways = True
         '
         'FrmMain
         '
@@ -1691,6 +1768,10 @@ Partial Class FrmMain
     Friend WithEvents btnCloneReminder As PictureBox
     Friend WithEvents Label5 As Label
     Friend WithEvents colorPickerMetaForeColor As ElaColorChooser.ElaColorPicker
+    Friend WithEvents ttFieldInfoTooltip As ToolTip
+    Friend WithEvents Label6 As Label
+    Friend WithEvents btnShowNotificationMetaFontDialog As Button
+    Friend WithEvents txtNotificaitonMetaFont As RichTextBox
     Friend WithEvents reminder_id As DataGridViewTextBoxColumn
     Friend WithEvents reminder_type As DataGridViewTextBoxColumn
     Friend WithEvents reminder_repeat_max As DataGridViewTextBoxColumn
@@ -1711,6 +1792,7 @@ Partial Class FrmMain
     Friend WithEvents notification_font As DataGridViewTextBoxColumn
     Friend WithEvents notification_backcolor As DataGridViewTextBoxColumn
     Friend WithEvents notification_forecolor As DataGridViewTextBoxColumn
+    Friend WithEvents notification_meta_font As DataGridViewTextBoxColumn
     Friend WithEvents notification_meta_forecolor As DataGridViewTextBoxColumn
     Friend WithEvents notification_width As DataGridViewTextBoxColumn
     Friend WithEvents notification_height As DataGridViewTextBoxColumn

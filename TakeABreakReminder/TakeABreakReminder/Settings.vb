@@ -7,6 +7,7 @@ Public Class Settings
         radMinimizeOnClose.Checked = My.Settings.minimize_on_close
         radExitOnClose.Checked = Not My.Settings.minimize_on_close
         chkConfirmDeletion.Checked = My.Settings.confirm_before_delete
+        chkNotifyAnimation.Checked = My.Settings.notify_with_animation
     End Sub
 
     Private Sub chkStartOnBoot_CheckedChanged(sender As Object, e As EventArgs) Handles chkStartOnBoot.CheckedChanged
@@ -46,5 +47,10 @@ Public Class Settings
 
     Private Sub MainForm_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
         If e.KeyCode = Keys.Escape Then Me.Close()
+    End Sub
+
+    Private Sub chkNotifyAnimation_CheckedChanged(sender As Object, e As EventArgs) Handles chkNotifyAnimation.CheckedChanged
+        My.Settings.notify_with_animation = chkNotifyAnimation.Checked
+        My.Settings.Save()
     End Sub
 End Class

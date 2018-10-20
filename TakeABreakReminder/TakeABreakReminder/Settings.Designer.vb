@@ -37,10 +37,14 @@ Partial Class Settings
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.chkConfirmDeletion = New System.Windows.Forms.CheckBox()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.chkNotifyAnimation = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         Me.SuspendLayout()
         '
         'chkStartOnBoot
@@ -179,7 +183,7 @@ Partial Class Settings
         Me.GroupBox4.Controls.Add(Me.Label3)
         Me.GroupBox4.Controls.Add(Me.chkConfirmDeletion)
         Me.GroupBox4.Font = New System.Drawing.Font("Cambria", 12.0!)
-        Me.GroupBox4.Location = New System.Drawing.Point(21, 523)
+        Me.GroupBox4.Location = New System.Drawing.Point(21, 516)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(1068, 98)
         Me.GroupBox4.TabIndex = 4
@@ -209,11 +213,47 @@ Partial Class Settings
         Me.chkConfirmDeletion.Text = "Confirm before delete"
         Me.chkConfirmDeletion.UseVisualStyleBackColor = True
         '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.Label6)
+        Me.GroupBox5.Controls.Add(Me.chkNotifyAnimation)
+        Me.GroupBox5.Font = New System.Drawing.Font("Cambria", 12.0!)
+        Me.GroupBox5.Location = New System.Drawing.Point(21, 640)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(1068, 98)
+        Me.GroupBox5.TabIndex = 5
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Notification Popup Animation "
+        '
+        'Label6
+        '
+        Me.Label6.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label6.Location = New System.Drawing.Point(69, 61)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(976, 18)
+        Me.Label6.TabIndex = 1
+        Me.Label6.Text = "If enabled, the notification popup will be shown with slide-in animation. Otherwi" &
+    "se the popup will appear directly without any animation." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'chkNotifyAnimation
+        '
+        Me.chkNotifyAnimation.AutoSize = True
+        Me.chkNotifyAnimation.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkNotifyAnimation.Location = New System.Drawing.Point(52, 37)
+        Me.chkNotifyAnimation.Name = "chkNotifyAnimation"
+        Me.chkNotifyAnimation.Size = New System.Drawing.Size(193, 23)
+        Me.chkNotifyAnimation.TabIndex = 0
+        Me.chkNotifyAnimation.Text = "Show slide-in animation"
+        Me.chkNotifyAnimation.UseVisualStyleBackColor = True
+        '
         'Settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1114, 893)
+        Me.ClientSize = New System.Drawing.Size(1114, 771)
+        Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox3)
@@ -231,6 +271,8 @@ Partial Class Settings
         Me.GroupBox2.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
+        Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox5.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -249,4 +291,7 @@ Partial Class Settings
     Friend WithEvents GroupBox4 As GroupBox
     Friend WithEvents Label3 As Label
     Friend WithEvents chkConfirmDeletion As CheckBox
+    Friend WithEvents GroupBox5 As GroupBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents chkNotifyAnimation As CheckBox
 End Class

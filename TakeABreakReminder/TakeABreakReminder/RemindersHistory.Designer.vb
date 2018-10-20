@@ -57,6 +57,7 @@ Partial Class RemindersHistory
         Me.notification_font = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.notification_backcolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.notification_forecolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.notification_meta_font = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.notification_meta_forecolor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.notification_width = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.notification_height = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -83,7 +84,7 @@ Partial Class RemindersHistory
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgReminderHistoryDetails.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgReminderHistoryDetails.ColumnHeadersHeight = 65
-        Me.dgReminderHistoryDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.reminder_id, Me.reminder_type, Me.reminder_created_time, Me.reminder_updated_time, Me.reminder_deleted_time, Me.reminder_repeat_max, Me.reminder_repeat_elapsed, Me.reminder_status, Me.reminder_interval, Me.reminder_daily, Me.reminder_specific_time, Me.reminder_started_time, Me.reminder_notified_time, Me.reminder_next_notify_time, Me.notification_duration, Me.notification_sound, Me.notification_message, Me.notification_font, Me.notification_backcolor, Me.notification_forecolor, Me.notification_meta_forecolor, Me.notification_width, Me.notification_height})
+        Me.dgReminderHistoryDetails.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.reminder_id, Me.reminder_type, Me.reminder_created_time, Me.reminder_updated_time, Me.reminder_deleted_time, Me.reminder_repeat_max, Me.reminder_repeat_elapsed, Me.reminder_status, Me.reminder_interval, Me.reminder_daily, Me.reminder_specific_time, Me.reminder_started_time, Me.reminder_notified_time, Me.reminder_next_notify_time, Me.notification_duration, Me.notification_sound, Me.notification_message, Me.notification_font, Me.notification_backcolor, Me.notification_forecolor, Me.notification_meta_font, Me.notification_meta_forecolor, Me.notification_width, Me.notification_height})
         DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle12.BackColor = System.Drawing.Color.LightSteelBlue
         DataGridViewCellStyle12.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold)
@@ -301,10 +302,17 @@ Partial Class RemindersHistory
         Me.notification_forecolor.ReadOnly = True
         Me.notification_forecolor.Width = 90
         '
+        'notification_meta_font
+        '
+        Me.notification_meta_font.DataPropertyName = "notification_meta_font"
+        Me.notification_meta_font.HeaderText = "Notification Info Font"
+        Me.notification_meta_font.Name = "notification_meta_font"
+        Me.notification_meta_font.ReadOnly = True
+        '
         'notification_meta_forecolor
         '
         Me.notification_meta_forecolor.DataPropertyName = "notification_meta_forecolor"
-        Me.notification_meta_forecolor.HeaderText = "Notification Meta Color"
+        Me.notification_meta_forecolor.HeaderText = "Notification Info Color"
         Me.notification_meta_forecolor.Name = "notification_meta_forecolor"
         Me.notification_meta_forecolor.ReadOnly = True
         '
@@ -360,6 +368,7 @@ Partial Class RemindersHistory
     Friend WithEvents notification_font As DataGridViewTextBoxColumn
     Friend WithEvents notification_backcolor As DataGridViewTextBoxColumn
     Friend WithEvents notification_forecolor As DataGridViewTextBoxColumn
+    Friend WithEvents notification_meta_font As DataGridViewTextBoxColumn
     Friend WithEvents notification_meta_forecolor As DataGridViewTextBoxColumn
     Friend WithEvents notification_width As DataGridViewTextBoxColumn
     Friend WithEvents notification_height As DataGridViewTextBoxColumn

@@ -32,26 +32,24 @@ Public Class ReminderNotification
     Public Sub showNotification(reminderRow As DataRow)
         gReminderRow = reminderRow
         Me.Size = New Size(gReminderRow.Item(COL_NOTIFICATION_WIDTH), gReminderRow.Item(COL_NOTIFICATION_HEIGHT))
-        'Dim xPosition As Integer = Screen.PrimaryScreen.Bounds.Width - Me.Width - NOTIFICATION_GAP_OFFSET
-        'Dim yPosition As Integer = Screen.PrimaryScreen.WorkingArea.Height - (Me.Height + NOTIFICATION_GAP_OFFSET + getVisibleNotificationsTotalHeight())
-        'Me.Location = New Point(xPosition, yPosition)
-        log.Debug("Screen.PrimaryScreen.Bounds.Width: " + Screen.PrimaryScreen.Bounds.Width.ToString)
-        log.Debug("Expected Me.X: " + (Screen.PrimaryScreen.Bounds.Width - Me.Width - NOTIFICATION_GAP_OFFSET).ToString)
-        Dim xPosition As Integer = Screen.PrimaryScreen.Bounds.Width
-        Dim yPosition As Integer = Screen.PrimaryScreen.WorkingArea.Height - (Me.Height + NOTIFICATION_GAP_OFFSET + getVisibleNotificationsTotalHeight())
-        Me.Location = New Point(xPosition, yPosition)
+
         LblClose.Location = New Point(Me.Width - LblClose.Width, 0)
         LblClose.ForeColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_META_FORECOLOR))
-        lblReminderId.Text = gReminderRow.Item(COL_REMINDER_ID)
-        lblReminderType.Text = gReminderRow.Item(COL_REMINDER_TYPE)
+        lblReminderId.Location = New Point(10, 0)
+        lblReminderId.Text = "Id: " + gReminderRow.Item(COL_REMINDER_ID).ToString
+        lblReminderType.Text = "Type: " + gReminderRow.Item(COL_REMINDER_TYPE)
+        log.Debug("lblReminderType Width: " + lblReminderType.Width.ToString)
+        lblReminderType.Location = New Point((Me.Width / 2) - lblReminderType.Width, 0)
         lblMessage.Text = gReminderRow.Item(COL_NOTIFICATION_MESSAGE)
         lblMessage.ForeColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_FORECOLOR))
         Me.BackColor = Color.FromName(gReminderRow.Item(COL_NOTIFICATION_BACKCOLOR))
         lblMessage.Font = getFontObjFromDisplayFormat(gReminderRow.Item(COL_NOTIFICATION_FONT))
+        panelNotificationHeader.Font = getFontObjFromDisplayFormat(gReminderRow.Item(COL_NOTIFICATION_META_FONT))
         panelNotificationHeader.ForeColor = Color.FromName(reminderRow(COL_NOTIFICATION_META_FORECOLOR))
 
         gNotificationSeconds = gReminderRow.Item(COL_NOTIFICATION_DURATION)
-        lblcloseTimeCounter.Text = gNotificationSeconds
+        lblcloseTimeCounter.Text = "Closes in: " + gNotificationSeconds.ToString
+        lblcloseTimeCounter.Location = New Point(Me.Width - lblcloseTimeCounter.Width - 40, 0)
         Dim notificationDuration As Double = gNotificationSeconds * 1000
         Dim fadeTriggerTime As Double = 2000
         gCloseTime = DateTime.Now.AddMilliseconds(notificationDuration - fadeTriggerTime)
@@ -60,14 +58,20 @@ Public Class ReminderNotification
         ''timerClose.Interval = notificationDuration - fadeTriggerTime
         timerFade.Interval = fadeTriggerTime / 100
 
+        Dim yPosition As Integer = Screen.PrimaryScreen.WorkingArea.Height - (Me.Height + NOTIFICATION_GAP_OFFSET + getVisibleNotificationsTotalHeight())
 
-        ''calculation for sliding animation
-        Dim slidingInterval As Double = SLIDE_TIME_MAX / SLIDE_COUNT_MAX
-        timerSlideIn.Interval = slidingInterval
-        log.Debug("slidingInterval: " + slidingInterval.ToString)
-        moveXAxisByValue = Me.Width / SLIDE_COUNT_MAX
-        log.Debug("gSlideIncrement: " + moveXAxisByValue.ToString)
-        timerSlideIn.Start()
+        If My.Settings.notify_with_animation = True Then
+            Dim xPosition As Integer = Screen.PrimaryScreen.Bounds.Width
+            Me.Location = New Point(xPosition, yPosition)
+            ''calculation for sliding animation
+            Dim slidingInterval As Double = SLIDE_TIME_MAX / SLIDE_COUNT_MAX
+            timerSlideIn.Interval = slidingInterval
+            moveXAxisByValue = Me.Width / SLIDE_COUNT_MAX
+            timerSlideIn.Start()
+        Else
+            Dim xPosition As Integer = Screen.PrimaryScreen.Bounds.Width - Me.Width - NOTIFICATION_GAP_OFFSET
+            Me.Location = New Point(xPosition, yPosition)
+        End If
 
         If gReminderRow.Item(COL_NOTIFICATION_SOUND) <> "None" Then
             My.Computer.Audio.Play(My.Resources.ResourceManager.GetObject(gReminderRow.Item(COL_NOTIFICATION_SOUND)), AudioPlayMode.Background)
@@ -79,7 +83,7 @@ Public Class ReminderNotification
     End Sub
 
     Private Sub timerClose_Tick(sender As Object, e As EventArgs) Handles timerClose.Tick
-        lblcloseTimeCounter.Text = gNotificationSeconds
+        lblcloseTimeCounter.Text = "Closes in: " + gNotificationSeconds.ToString
         gNotificationSeconds -= 1
         Dim currentTime As DateTime = DateTime.Now
         If currentTime >= gCloseTime Then

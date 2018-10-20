@@ -125,7 +125,7 @@ Public NotInheritable Class ReminderManager
         Dim fileReader As New FileStream(getRemindersDBPath(), FileMode.OpenOrCreate, FileAccess.Read)
         Dim binaryFormatter As New BinaryFormatter
         gReminderTable = New DataTable
-        gReminderTable.Columns.AddRange(New DataColumn(22) _
+        gReminderTable.Columns.AddRange(New DataColumn(23) _
                 {New DataColumn(COL_REMINDER_ID, GetType(Integer)),
                 New DataColumn(COL_REMINDER_TYPE, GetType(String)),
                 New DataColumn(COL_REMINDER_REPEAT_MAX, GetType(Integer)),
@@ -146,6 +146,7 @@ Public NotInheritable Class ReminderManager
                 New DataColumn(COL_NOTIFICATION_FONT, GetType(String)),
                 New DataColumn(COL_NOTIFICATION_BACKCOLOR, GetType(String)),
                 New DataColumn(COL_NOTIFICATION_FORECOLOR, GetType(String)),
+                New DataColumn(COL_NOTIFICATION_META_FONT, GetType(String)),
                 New DataColumn(COL_NOTIFICATION_META_FORECOLOR, GetType(String)),
                 New DataColumn(COL_NOTIFICATION_WIDTH, GetType(Integer)),
                 New DataColumn(COL_NOTIFICATION_HEIGHT, GetType(Integer))})
@@ -298,6 +299,7 @@ Public NotInheritable Class ReminderManager
         reminderRowClone(COL_NOTIFICATION_FONT) = reminderRow(COL_NOTIFICATION_FONT)
         reminderRowClone(COL_NOTIFICATION_BACKCOLOR) = reminderRow(COL_NOTIFICATION_BACKCOLOR)
         reminderRowClone(COL_NOTIFICATION_FORECOLOR) = reminderRow(COL_NOTIFICATION_FORECOLOR)
+        reminderRowClone(COL_NOTIFICATION_META_FONT) = reminderRow(COL_NOTIFICATION_META_FONT)
         reminderRowClone(COL_NOTIFICATION_META_FORECOLOR) = reminderRow(COL_NOTIFICATION_META_FORECOLOR)
         reminderRowClone(COL_NOTIFICATION_WIDTH) = reminderRow(COL_NOTIFICATION_WIDTH)
         reminderRowClone(COL_NOTIFICATION_HEIGHT) = reminderRow(COL_NOTIFICATION_HEIGHT)
