@@ -44,7 +44,7 @@ Public Class FrmMain
         ''gWindowState = Me.WindowState
         ''log.Debug("Environment.GetCommandLineArgs().Count: " + Environment.GetCommandLineArgs().Count.ToString)
         If Environment.GetCommandLineArgs().Count >= 2 Then
-            log.Debug("Minimizing")
+            ''log.Debug("Minimizing")
             Me.WindowState = FormWindowState.Minimized
         End If
 
