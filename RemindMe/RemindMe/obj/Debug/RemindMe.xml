@@ -132,11 +132,6 @@ RemindMe
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
-<member name="P:RemindMe.My.Resources.Resources.contentbg">
-<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
-</member>
 <member name="P:RemindMe.My.Resources.Resources.delete">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
@@ -250,11 +245,6 @@ RemindMe
 <member name="P:RemindMe.My.Resources.Resources.ringout">
 <summary>
   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-</summary>
-</member>
-<member name="P:RemindMe.My.Resources.Resources.sidemenubg">
-<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
 <member name="P:RemindMe.My.Resources.Resources.Speech_Disambiguation">

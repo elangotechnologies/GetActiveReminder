@@ -262,11 +262,13 @@ Public Class FrmMain
             If Me.WindowState = FormWindowState.Minimized Then
                 trayIcon.Visible = True
                 ShowInTaskbar = False
+                Me.FormBorderStyle = FormBorderStyle.FixedToolWindow
                 If My.Settings.notify_on_minimize_to_tray = True Then
                     trayIcon.ShowBalloonTip(1, "RemindMe Application", "I'm running in background. You can launch me from system tray.", ToolTipIcon.Info)
                 End If
             Else
                 trayIcon.Visible = False
+                Me.FormBorderStyle = FormBorderStyle.Fixed3D
                 ShowInTaskbar = True
             End If
 

@@ -196,6 +196,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\remindeme_icon.ico" />
     <None Include="Resources\clone.png" />
     <None Include="Resources\clone_disabled.png" />
     <None Include="Resources\clear_disabled.png" />
