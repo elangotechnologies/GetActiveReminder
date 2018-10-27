@@ -8,6 +8,7 @@ Public Class Settings
         radExitOnClose.Checked = Not My.Settings.minimize_on_close
         chkConfirmDeletion.Checked = My.Settings.confirm_before_delete
         chkNotifyAnimation.Checked = My.Settings.notify_with_animation
+        chkConfirmExit.Checked = My.Settings.confirm_before_exit
     End Sub
 
     Private Sub chkStartOnBoot_CheckedChanged(sender As Object, e As EventArgs) Handles chkStartOnBoot.CheckedChanged
@@ -51,6 +52,11 @@ Public Class Settings
 
     Private Sub chkNotifyAnimation_CheckedChanged(sender As Object, e As EventArgs) Handles chkNotifyAnimation.CheckedChanged
         My.Settings.notify_with_animation = chkNotifyAnimation.Checked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub chkConfirmExit_CheckedChanged(sender As Object, e As EventArgs) Handles chkConfirmExit.CheckedChanged
+        My.Settings.confirm_before_exit = chkConfirmExit.Checked
         My.Settings.Save()
     End Sub
 End Class

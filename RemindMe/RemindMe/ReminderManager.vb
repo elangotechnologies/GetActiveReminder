@@ -194,7 +194,7 @@ Public NotInheritable Class ReminderManager
             Dim reminderStatus As String = reminderRow(COL_REMINDER_STATUS)
             If reminderStatus = REMINDER_STATUS_RUNNING Then
                 Dim reminderId As Integer = reminderRow.Item(COL_REMINDER_ID)
-                startReminder(reminderId)
+                startReminder(reminderId, False)
             End If
         Next
 
@@ -341,7 +341,7 @@ Public NotInheritable Class ReminderManager
         reminderRow.Item(COL_REMINDER_STATUS) = reminderStatus
     End Sub
 
-    Public Sub startReminder(reminderId As Integer)
+    Public Sub startReminder(reminderId As Integer, Optional isUpdateStatusBar As Boolean = True)
         If gReminderTimer.Enabled = False Then
             gReminderTimer.Start()
         End If
@@ -360,7 +360,9 @@ Public NotInheritable Class ReminderManager
         updateNextNotifyTime(reminderRow)
 
         'Dont change the order. This line shoule come after updating the reminder to 'running' status.
-        updateStatusBar(reminderRow)
+        If isUpdateStatusBar Then
+            updateStatusBar(reminderRow)
+        End If
 
         commitUpdatedReminderRow(reminderRow)
 

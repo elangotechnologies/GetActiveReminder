@@ -21,7 +21,7 @@ Public Class ReminderNotification
         If e.KeyCode = Keys.Escape Then Me.Close()
     End Sub
 
-    Private Sub ToastNotificationForm_DoubleClick(sender As Object, e As EventArgs) Handles MyBase.DoubleClick
+    Private Sub ToastNotificationForm_DoubleClick(sender As Object, e As EventArgs) Handles MyBase.DoubleClick, lblMessage.DoubleClick, panelNotificationHeader.DoubleClick
         FrmMain.showMainForm()
     End Sub
 

@@ -65,10 +65,8 @@ Public Class FrmMain
         numNotificationWidth.Maximum = Screen.PrimaryScreen.Bounds.Width
         numNotificationHeight.Maximum = Screen.PrimaryScreen.Bounds.Height
 
-        setVisibilityByByOperation(OPERATION_SCREEN_LOADED)
-
-        'this should be in last
         gReminderManager.startAllRunningStatusReminders()
+        setVisibilityByByOperation(OPERATION_SCREEN_LOADED)
     End Sub
 
     Private Sub setlblReminderTypes()
@@ -243,9 +241,15 @@ Public Class FrmMain
     End Sub
 
     Private Sub exitApp()
-        trayIcon.Visible = False
-        gIsExitClicked = True
-        Application.Exit()
+        If My.Settings.confirm_before_exit = False OrElse
+                (My.Settings.confirm_before_exit = True And
+                MessageBox.Show("Do you really want to exit RemindMe application?. If you exit the application then there will be no reminders shown until you re-open the application.", "CONFIRMATION",
+                                System.Windows.Forms.MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes) Then
+            trayIcon.Visible = False
+            gIsExitClicked = True
+            Application.Exit()
+        End If
+
     End Sub
 
     Private Sub notifyIconForTray_DoubleClick(sender As Object, e As EventArgs) Handles trayIcon.DoubleClick
@@ -268,7 +272,7 @@ Public Class FrmMain
                 End If
             Else
                 trayIcon.Visible = False
-                Me.FormBorderStyle = FormBorderStyle.Fixed3D
+                Me.FormBorderStyle = FormBorderStyle.Sizable
                 ShowInTaskbar = True
             End If
 

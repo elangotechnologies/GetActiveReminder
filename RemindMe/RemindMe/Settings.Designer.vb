@@ -40,11 +40,15 @@ Partial Class Settings
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.chkNotifyAnimation = New System.Windows.Forms.CheckBox()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.chkConfirmExit = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
         Me.SuspendLayout()
         '
         'chkStartOnBoot
@@ -248,11 +252,47 @@ Partial Class Settings
         Me.chkNotifyAnimation.Text = "Show slide-in animation"
         Me.chkNotifyAnimation.UseVisualStyleBackColor = True
         '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.Label7)
+        Me.GroupBox6.Controls.Add(Me.chkConfirmExit)
+        Me.GroupBox6.Font = New System.Drawing.Font("Cambria", 12.0!)
+        Me.GroupBox6.Location = New System.Drawing.Point(21, 765)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Size = New System.Drawing.Size(1068, 98)
+        Me.GroupBox6.TabIndex = 5
+        Me.GroupBox6.TabStop = False
+        Me.GroupBox6.Text = "Exit RemindMe Application"
+        '
+        'Label7
+        '
+        Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label7.Location = New System.Drawing.Point(69, 62)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(976, 18)
+        Me.Label7.TabIndex = 1
+        Me.Label7.Text = "Asks you to confirm before exiting the application. "
+        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'chkConfirmExit
+        '
+        Me.chkConfirmExit.AutoSize = True
+        Me.chkConfirmExit.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkConfirmExit.Location = New System.Drawing.Point(52, 38)
+        Me.chkConfirmExit.Name = "chkConfirmExit"
+        Me.chkConfirmExit.Size = New System.Drawing.Size(163, 23)
+        Me.chkConfirmExit.TabIndex = 0
+        Me.chkConfirmExit.Text = "Confirm before exit"
+        Me.chkConfirmExit.UseVisualStyleBackColor = True
+        '
         'Settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1114, 771)
+        Me.AutoScroll = True
+        Me.ClientSize = New System.Drawing.Size(1114, 887)
+        Me.Controls.Add(Me.GroupBox6)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox2)
@@ -273,6 +313,8 @@ Partial Class Settings
         Me.GroupBox4.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox6.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -294,4 +336,7 @@ Partial Class Settings
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents Label6 As Label
     Friend WithEvents chkNotifyAnimation As CheckBox
+    Friend WithEvents GroupBox6 As GroupBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents chkConfirmExit As CheckBox
 End Class
