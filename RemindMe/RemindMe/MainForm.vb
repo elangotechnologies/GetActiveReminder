@@ -1141,5 +1141,6 @@ Public Class FrmMain
             txtNotificaitonMetaFont.Text = getFontInDisplayFormat(fontdialogNotificationFont.Font)
         End If
     End Sub
+
 End Class
 
